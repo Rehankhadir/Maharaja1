@@ -1,0 +1,47 @@
+.about-container {
+  background: url('indian-food-bg.png') no-repeat center center;
+  background-size: cover;
+  padding: 80px 20px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+}
+
+.about-container::before {
+  content: "";
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.about-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 40px;
+  backdrop-filter: blur(8px);
+}
+
+.about-title {
+  font-size: 2.5rem;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 30px;
+  color: #ffe28a;
+}
+
+.divider {
+  height: 2px;
+  width: 100px;
+  background: gold;
+  margin: 30px auto;
+}
+
+.about-content p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
