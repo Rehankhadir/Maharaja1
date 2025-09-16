@@ -434,7 +434,7 @@ useEffect(() => {
             <div className="container-fluid glass-card nav-items py-lg-2">
               <Link to="/" className="navbar-brand p-0">
                 <h1 className="text-primary m-0">
-                  <i className="fa fa-utensils me-3"></i>Sangeeth
+                  <i className="fa fa-utensils me-3"></i>Sang Eats
                 </h1>
               </Link>
               <button
@@ -656,12 +656,12 @@ useEffect(() => {
                 </h5>
                 <h1 className="mb-4">
                   Welcome to <i className="fa fa-utensils text-primary me-2"></i>
-                  Sangeeth
+                  Sang Eats
                 </h1>
                 <h1 className="mb-4">An Experience of Royal Indian Dining</h1>
                 <div className="divider"></div>
                 <p className="mb-4">
-                  At Sangeeth, we bring the flavors of royal Indian cuisine to
+                  At Sang Eats, we bring the flavors of royal Indian cuisine to
                   your table. From fragrant biryanis to elaborate thalis, each
                   dish is a celebration of tradition, taste, and hospitality.
                 </p>
@@ -1231,7 +1231,7 @@ useEffect(() => {
               Testimonials
             </h5>
             <h1 className="mb-4">What Our Clients Say</h1>
-            <p className="w-75 mx-auto mb-5">Hear from our satisfied customers about their dining experience at Sangeeth</p>
+            <p className="w-75 mx-auto mb-5">Hear from our satisfied customers about their dining experience at Sang Eats</p>
           </div>
           
           <div className="testimonial-carousel">
@@ -1248,7 +1248,7 @@ useEffect(() => {
                   <div className="testimonial-content">
                     <i className="fa fa-quote-left quote-icon"></i>
                     <p className="testimonial-text">
-                      The food at Sangeeth is absolutely incredible! The flavors are authentic and every dish tells a story. The Chicken Tikka was perfectly spiced and cooked to perfection.
+                      The food at Sang Eats is absolutely incredible! The flavors are authentic and every dish tells a story. The Chicken Tikka was perfectly spiced and cooked to perfection.
                     </p>
                     <i className="fa fa-quote-right quote-icon"></i>
                   </div>
@@ -1278,7 +1278,7 @@ useEffect(() => {
                   <div className="testimonial-content">
                     <i className="fa fa-quote-left quote-icon"></i>
                     <p className="testimonial-text">
-                      I've been to many Indian restaurants, but Sangeeth stands out with its exceptional service and authentic flavors. The Brioche Omelette is now my weekend favorite!
+                      I've been to many Indian restaurants, but Sang Eats stands out with its exceptional service and authentic flavors. The Brioche Omelette is now my weekend favorite!
                     </p>
                     <i className="fa fa-quote-right quote-icon"></i>
                   </div>
@@ -1308,7 +1308,7 @@ useEffect(() => {
                   <div className="testimonial-content">
                     <i className="fa fa-quote-left quote-icon"></i>
                     <p className="testimonial-text">
-                      The ambiance and food quality make Sangeeth perfect for family dinners. We celebrated my daughter's birthday here and the staff went above and beyond to make it special.
+                      The ambiance and food quality make Sang Eats perfect for family dinners. We celebrated my daughter's birthday here and the staff went above and beyond to make it special.
                     </p>
                     <i className="fa fa-quote-right quote-icon"></i>
                   </div>
@@ -1338,7 +1338,7 @@ useEffect(() => {
                   <div className="testimonial-content">
                     <i className="fa fa-quote-left quote-icon"></i>
                     <p className="testimonial-text">
-                      As someone from India, I can attest to the authenticity of the flavors at Sangeeth. Their Signature Roast Chicken Superbow reminds me of home. Highly recommended!
+                      As someone from India, I can attest to the authenticity of the flavors at Sang Eats. Their Signature Roast Chicken Superbow reminds me of home. Highly recommended!
                     </p>
                     <i className="fa fa-quote-right quote-icon"></i>
                   </div>
@@ -1396,7 +1396,7 @@ useEffect(() => {
                     </h5>
                     <p>
                       <i className="fa fa-envelope-open text-primary me-2"></i>
-                      book@sangeeth.com
+                      book@sangeats.com
                     </p>
                   </div>
                   <div className="col-md-4">
@@ -1405,7 +1405,7 @@ useEffect(() => {
                     </h5>
                     <p>
                       <i className="fa fa-envelope-open text-primary me-2"></i>
-                      info@sangeeth.com
+                      info@sangeats.com
                     </p>
                   </div>
                   <div className="col-md-4">
@@ -1414,7 +1414,7 @@ useEffect(() => {
                     </h5>
                     <p>
                       <i className="fa fa-envelope-open text-primary me-2"></i>
-                      tech@sangeeth.com
+                      tech@sangeats.com
                     </p>
                   </div>
                 </div>
@@ -1581,7 +1581,7 @@ useEffect(() => {
             <div className="copyright">
               <div className="row">
                 <div className="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                  &copy; <Link to="/">Sangeeth</Link>, All Right Reserved.
+                  &copy; <Link to="/">Sang Eats</Link>, All Right Reserved.
                 </div>
                 <div className="col-md-6 text-center text-md-end">
                   <div className="footer-menu">
