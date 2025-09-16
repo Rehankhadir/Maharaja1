@@ -422,6 +422,329 @@ useEffect(() => {
 </div> */}
 // menu item ends
 
+
+// checkout UI starts
+
+// const [showCheckout, setShowCheckout] = useState(false);
+
+// const handleCheckout = () => {
+//   // Close the sidebar programmatically
+//   const cartSidebar = document.getElementById('cartSidebar');
+//   if (cartSidebar) {
+//     const bsOffcanvas = bootstrap.Offcanvas.getInstance(cartSidebar);
+//     if (bsOffcanvas) bsOffcanvas.hide();
+//   }
+//   // Open the checkout modal
+//   setShowCheckout(true);
+// };
+
+const [showSidebar, setShowSidebar] = useState(false);
+const [showCheckout, setShowCheckout] = useState(false);
+
+const handleCheckout = () => {
+  setShowSidebar(false);   // close sidebar
+  setShowCheckout(true);   // open checkout modal
+};
+
+
+
+// Checkout UI Ends
+
+
+// const [checkoutStep, setCheckoutStep] = useState(1);
+const [deliveryAddress, setDeliveryAddress] = useState({
+  name: '',
+  mobile: '',
+  address: 'Himayath Nagar, Hyderabad',
+  city: 'Hyderabad',
+  state: 'Telangana',
+  pincode: '500081'
+});
+// const [paymentMethod, setPaymentMethod] = useState('');
+const [upiId, setUpiId] = useState('');
+
+
+const [checkoutStep, setCheckoutStep] = useState(1);
+const [userLoggedIn, setUserLoggedIn] = useState(false);
+const [noContactDelivery, setNoContactDelivery] = useState(true);
+const [paymentMethod, setPaymentMethod] = useState('upi');
+
+
+// Function to reset checkout state
+const resetCheckoutState = () => {
+  setCheckoutStep(1);
+  setUserLoggedIn(false);
+  setNoContactDelivery(true);
+  setPaymentMethod('upi');
+};
+
+
+// Add this useEffect hook to your component
+useEffect(() => {
+  let scrollPosition = 0;
+  
+  if (showCheckout || showAddressForm) {
+    // Save the current scroll position
+    scrollPosition = window.scrollY;
+    
+    // Add the modal-open class to prevent scrolling
+    document.body.classList.add('modal-open');
+    
+    // Apply the scroll position to the body to maintain visual position
+    document.body.style.top = `-${scrollPosition}px`;
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+  } else {
+    // Remove the modal-open class
+    document.body.classList.remove('modal-open');
+    
+    // Get the saved scroll position
+    const savedScrollPosition = parseInt(document.body.style.top || '0');
+    
+    // Restore the scroll position
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    
+    // Scroll back to the original position
+    window.scrollTo(0, Math.abs(savedScrollPosition));
+  }
+  
+  return () => {
+    // Cleanup on unmount
+    document.body.classList.remove('modal-open');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+  };
+}, [showCheckout]);
+
+
+// Function to handle closing the checkout modal
+const handleCloseCheckout = () => {
+  resetCheckoutState();
+  setShowCheckout(false);
+   document.body.classList.remove('modal-open');
+};
+
+// Function to handle successful order placement
+// success placing order modal starts
+const [showSuccessModal, setShowSuccessModal] = useState(false);
+const handlePlaceOrder = () => {
+  // Show success modal
+  setShowSuccessModal(true);
+  
+  // Clear cart and reset checkout state after a delay
+  setTimeout(() => {
+    setCart([]);
+    resetCheckoutState();
+    setShowCheckout(false);
+    
+    // Hide success modal after animation completes
+    setTimeout(() => {
+      setShowSuccessModal(false);
+    }, 3000);
+  }, 2500); // Wait for the animation to complete before closing checkout
+};
+
+
+// Add this state variable to your component
+const [showAddressForm, setShowAddressForm] = useState(false);
+const [newAddress, setNewAddress] = useState({
+  type: 'home',
+  name: '',
+  mobile: '',
+  address: '',
+  locality: '',
+  city: '',
+  state: '',
+  pincode: '',
+  landmark: ''
+});
+
+// Function to handle adding a new address
+// const handleAddNewAddress = () => {
+//   // Create a new address object with a unique ID
+//   const newAddressToAdd = {
+//     id: Date.now(), // Simple unique ID using timestamp
+//     ...newAddress,
+//     isDefault: false // New addresses are not default by default
+//   };
+  
+//   // Add the new address to the saved addresses
+//   setSavedAddresses(prevAddresses => [...prevAddresses, newAddressToAdd]);
+  
+//   // Select the new address
+//   setSelectedAddressId(newAddressToAdd.id);
+  
+//   // Close the form and reset
+//   setShowAddressForm(false);
+//   setNewAddress({
+//     type: 'home',
+//     name: '',
+//     mobile: '',
+//     address: '',
+//     locality: '',
+//     city: '',
+//     state: '',
+//     pincode: '',
+//     landmark: ''
+//   });
+  
+//   // Optional: Show success message
+//   alert('Address added successfully!');
+// };
+
+// Function to handle overlay click (close only when clicking outside form)
+const handleOverlayClick = (e) => {
+  if (e.target === e.currentTarget) {
+    setShowAddressForm(false);
+  }
+};
+
+
+
+const [savedAddresses, setSavedAddresses] = useState([
+  {
+    id: 1,
+    type: 'home',
+    name: 'John Doe',
+    mobile: '9876543210',
+    address: 'Himayath Nagar',
+    locality: 'Himayath Nagar',
+    city: 'Hyderabad',
+    state: 'Telangana',
+    pincode: '500029',
+    landmark: 'Near Metro Station',
+    isDefault: true
+  },
+  {
+    id: 2,
+    type: 'work',
+    name: 'John Doe',
+    mobile: '9876543210',
+    address: 'Miracle Xprs',
+    locality: 'Hi-Tech City',
+    city: 'Hyderabad',
+    state: 'Telangana',
+    pincode: '500081',
+    landmark: 'Office Building',
+    isDefault: false
+  }
+]);
+
+const [selectedAddressId, setSelectedAddressId] = useState(1); // Default to home address
+
+const selectedAddress = savedAddresses.find(address => address.id === selectedAddressId);
+const [editingAddress, setEditingAddress] = useState(null);
+
+
+
+// Handle adding a new address
+const handleAddNewAddress = () => {
+  const newAddressToAdd = {
+    id: Date.now(),
+    ...newAddress,
+    isDefault: savedAddresses.length === 0 // Set as default if it's the first address
+  };
+  
+  setSavedAddresses(prevAddresses => [...prevAddresses, newAddressToAdd]);
+  setSelectedAddressId(newAddressToAdd.id);
+  
+  // Reset form and close
+  setShowAddressForm(false);
+  setNewAddress({
+    type: 'home',
+    name: '',
+    mobile: '',
+    address: '',
+    locality: '',
+    city: '',
+    state: '',
+    pincode: '',
+    landmark: ''
+  });
+};
+
+// Handle updating an existing address
+const handleUpdateAddress = () => {
+  setSavedAddresses(prev => 
+    prev.map(address => 
+      address.id === editingAddress.id 
+        ? { ...newAddress, id: editingAddress.id, isDefault: address.isDefault }
+        : address
+    )
+  );
+  
+  // Reset form and close
+  setShowAddressForm(false);
+  setEditingAddress(null);
+  setNewAddress({
+    type: 'home',
+    name: '',
+    mobile: '',
+    address: '',
+    locality: '',
+    city: '',
+    state: '',
+    pincode: '',
+    landmark: ''
+  });
+};
+
+// Handle deleting an address
+const handleDeleteAddress = (id) => {
+  if (savedAddresses.length <= 1) {
+    alert("You must have at least one address");
+    return;
+  }
+  
+  setSavedAddresses(prev => prev.filter(address => address.id !== id));
+  
+  // If deleting the selected address, select another one
+  if (selectedAddressId === id) {
+    const remainingAddress = savedAddresses.find(addr => addr.id !== id);
+    if (remainingAddress) {
+      setSelectedAddressId(remainingAddress.id);
+    }
+  }
+};
+
+// Handle setting an address as default
+const handleSetDefaultAddress = (id) => {
+  setSavedAddresses(prev => 
+    prev.map(address => ({
+      ...address,
+      isDefault: address.id === id
+    }))
+  );
+};
+
+// Function to open edit form
+const handleEditAddress = (address) => {
+  setEditingAddress(address);
+  setNewAddress({
+    type: address.type,
+    name: address.name,
+    mobile: address.mobile,
+    address: address.address,
+    locality: address.locality,
+    city: address.city,
+    state: address.state,
+    pincode: address.pincode,
+    landmark: address.landmark || ''
+  });
+  setShowAddressForm(true);
+};
+
+
+
+
+
+
+
+
+
   return (
     <>
       <div className="container-xxl bg-white p-0">
@@ -867,21 +1190,6 @@ useEffect(() => {
         </button>
       </div>
     )}
-    
-
-    {/* <div className="scroll-instruction">
-      <div className="mouse-container">
-        <div className="mouse">
-          <div className="wheel"></div>
-        </div>
-        <div className="scroll-arrow"></div>
-      </div>
-      <p>Scroll vertically or hover and scroll horizontally on any row</p>
-      <div className="scroll-directions">
-        <span className="scroll-direction">↑↓ Vertical</span>
-        <span className="scroll-direction">←→ Horizontal</span>
-      </div>
-    </div> */}
   </div>
 </div>
 
@@ -967,7 +1275,10 @@ useEffect(() => {
                     <h5>Total:</h5>
                     <h5>₹{total}</h5>
                   </div>
-                  <button className="btn btn-primary w-100 mt-3">
+                  <button className="btn btn-primary w-100 mt-3"  data-bs-dismiss="offcanvas" onClick={() => {
+    resetCheckoutState();
+    setShowCheckout(true);
+  }}>
                     Checkout
                   </button>
                 </div>
@@ -975,6 +1286,888 @@ useEffect(() => {
             )}
           </div>
         </div>
+
+
+
+{/* // Update your checkout modal JSX */}
+{showCheckout && (
+  <div 
+    className="modal fade show d-block checkout-modal" 
+    tabIndex="-1" 
+    role="dialog"
+    style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
+  >
+    <div className="modal-dialog modal-xl modal-dialog-centered" role="document" style={{ maxWidth: '1100px' }}>
+      <div className="modal-content" style={{ borderRadius: '15px', overflow: 'hidden', maxHeight: '90vh' }}>
+        {/* Header with Animated Timeline */}
+        <div className="modal-header position-relative border-0 pb-0 pt-4">
+          <div className="w-100 timeline-border" >
+            {/* Animated Timeline */}
+            <div className="animated-timeline mb-4">
+              <div className="timeline-container">
+                <div className="timeline-progress" style={{ width: checkoutStep === 1 ? '0%' : checkoutStep === 2 ? '50%' : '100%' }}></div>
+                <div 
+                  className={`timeline-step ${checkoutStep >= 1 ? 'active' : ''}`}
+                  onClick={() => setCheckoutStep(1)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <div className="step-bubble">
+                    {checkoutStep > 1 ? (
+                      <i className="fas fa-check"></i>
+                    ) : (
+                      <span>1</span>
+                    )}
+                  </div>
+                  <div className="step-label">Account</div>
+                </div>
+                <div 
+                  className={`timeline-step ${checkoutStep >= 2 ? 'active' : ''}`}
+                  onClick={() => checkoutStep > 1 && setCheckoutStep(2)}
+                  style={{ cursor: checkoutStep > 1 ? 'pointer' : 'default' }}
+                >
+                  <div className="step-bubble">
+                    {checkoutStep > 2 ? (
+                      <i className="fas fa-check"></i>
+                    ) : (
+                      <span>2</span>
+                    )}
+                  </div>
+                  <div className="step-label">Address</div>
+                </div>
+                <div 
+                  className={`timeline-step ${checkoutStep >= 3 ? 'active' : ''}`}
+                  onClick={() => checkoutStep > 2 && setCheckoutStep(3)}
+                  style={{ cursor: checkoutStep > 2 ? 'pointer' : 'default' }}
+                >
+                  <div className="step-bubble">
+                    <span>3</span>
+                  </div>
+                  <div className="step-label">Payment</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <button 
+            type="button" 
+            className="btn-close position-absolute" 
+            style={{ top: '15px', right: '15px' }}
+            onClick={handleCloseCheckout}
+          ></button>
+        </div>
+        
+        <div className="modal-body p-0" style={{ overflowY: 'auto' }}>
+          <div className="row g-0">
+            {/* Left Column - Checkout Process */}
+            <div className="col-md-7 p-4" style={{ borderRight: '1px solid #eee' }}>
+              {/* Step 1: Login/Signup */}
+              {/* Step 1: Login/Signup */}
+{checkoutStep === 1 && (
+  <div className="checkout-step animate-fade-in">
+    {/* <div className="text-center mb-5">
+      <div className="mb-4">
+        <div className="auth-icon-container mb-3">
+          <i className="fas fa-user-circle auth-main-icon"></i>
+        </div>
+        <h3 className="fw-bold text-gradient">Welcome to Sang Eats</h3>
+        <p className="text-muted">Sign in or create an account to continue with your order</p>
+      </div>
+    </div> */}
+    
+    <div className="row g-4">
+      {/* Login Section */}
+      <div className="col-lg-6">
+        <div className="auth-card card h-100 border-0 shadow-sm hover-lift">
+          <div className="card-body p-2 text-center">
+            <div className="auth-icon mb-4">
+              <i className="fas fa-sign-in-alt"></i>
+            </div>
+            <h5 className="card-title mb-3">Existing Customer</h5>
+            <p className="text-muted small mb-4">Welcome back! Sign in to your account</p>
+            
+            <div className="mb-4">
+              <div className="form-floating mb-3">
+                <input
+                  type="number"
+                  className="form-control"
+                  id="mobileNumber"
+                  placeholder="9876543210"
+                />
+                <label htmlFor="loginEmail">Mobile Number</label>
+              </div>
+              
+              <div className="form-check text-start mb-3">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="rememberMe"
+                />
+                <label className="form-check-label small" htmlFor="rememberMe">
+                  Remember me
+                </label>
+              </div>
+            </div>
+            
+            <button 
+              className="btn btn-primary w-100 py-3 mb-3 fw-bold"
+              onClick={() => {
+                setUserLoggedIn(true);
+                setCheckoutStep(2);
+              }}
+            >
+              SIGN IN
+            </button>
+            
+            {/* <div className="text-center">
+              <a href="#forgot" className="text-decoration-none small text-muted">
+                Forgot your password?
+              </a>
+            </div> */}
+          </div>
+        </div>
+      </div>
+      
+      {/* Signup Section */}
+      <div className="col-lg-6">
+        <div className="auth-card card h-100 border-0 shadow-sm hover-lift">
+          <div className="card-body p-2 text-center">
+            <div className="auth-icon mb-4">
+              <i className="fas fa-user-plus"></i>
+            </div>
+            <h5 className="card-title mb-3">New Customer</h5>
+            <p className="text-muted small mb-4">Create an account for faster checkout and order tracking</p>
+            
+            <div className="mb-4">
+              <div className="form-floating mb-3">
+                <input
+                  type="number"
+                  className="form-control"
+                  id="signUpMobileNummber"
+                  placeholder="9876543210"
+                />
+                <label htmlFor="signupPassword">Mobile Number</label>
+              </div>
+              <div className="form-floating mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="signupName"
+                  placeholder="Name"
+                />
+                <label htmlFor="signupName"> Name</label>
+              </div>
+              <div className="form-floating mb-3">
+                <input
+                  type="email"
+                  className="form-control"
+                  id="signupEmail"
+                  placeholder="name@example.com"
+                />
+                <label htmlFor="signupEmail">Email address</label>
+              </div>
+            </div>
+            
+            <div className="form-check text-start mb-4">
+              <input
+                className="form-check-input"
+                type="checkbox"
+                id="termsAgree"
+              />
+              <label className="form-check-label small" htmlFor="termsAgree">
+                I agree to the <a href="#terms" className="text-decoration-none">Terms of Service</a> and <a href="#privacy" className="text-decoration-none">Privacy Policy</a>
+              </label>
+            </div>
+            
+            <button 
+              className="btn btn-success w-100 py-3 fw-bold"
+              onClick={() => {
+                setUserLoggedIn(true);
+                setCheckoutStep(2);
+              }}
+            >
+              CREATE ACCOUNT
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div className="divider my-5">
+      <span className="px-3 bg-white text-muted">or</span>
+    </div>
+    
+    {/* Social Login */}
+    <div className="text-center mb-4">
+      <h6 className="mb-3">Quick sign in with</h6>
+      <div className="d-flex justify-content-center gap-3 mb-4">
+        <button className="btn btn-outline-secondary rounded-circle social-btn">
+          <i className="fab fa-google"></i>
+        </button>
+        <button className="btn btn-outline-secondary rounded-circle social-btn">
+          <i className="fab fa-facebook-f"></i>
+        </button>
+        <button className="btn btn-outline-secondary rounded-circle social-btn">
+          <i className="fab fa-apple"></i>
+        </button>
+      </div>
+    </div>
+    
+    {/* Guest Checkout */}
+    <div className="guest-option text-center">
+      <button 
+        className="btn btn-outline-primary px-5 py-2"
+        onClick={() => {
+          setUserLoggedIn(false);
+          setCheckoutStep(2);
+        }}
+      >
+        <i className="fas fa-shopping-bag me-2"></i>
+        Continue as Guest
+      </button>
+      <p className="text-muted small mt-2">
+        You can create an account later with your order details
+      </p>
+    </div>
+  </div>
+)}
+              
+              {/* Step 2: Delivery Address */}
+              {checkoutStep === 2 && (
+                <div className="checkout-step animate-fade-in">
+                  <h5 className="mb-4 fw-bold">Delivery address</h5>
+                  
+                  {/* Saved Addresses */}
+                  {/* Saved Addresses */}
+{/* Saved Addresses */}
+<div className="saved-addresses mb-4">
+  {savedAddresses.map(address => (
+    <div 
+      key={address.id} 
+      className={`address-card ${selectedAddressId === address.id ? 'active' : ''}`}
+    >
+      <div className="form-check">
+        <input 
+          className="form-check-input" 
+          type="radio" 
+          name="address" 
+          id={`address-${address.id}`}
+          checked={selectedAddressId === address.id}
+          onChange={() => setSelectedAddressId(address.id)}
+        />
+        <label className="form-check-label w-100" htmlFor={`address-${address.id}`}>
+          <div className="d-flex justify-content-between align-items-start">
+            <div>
+              <strong className="text-capitalize">{address.type}</strong>
+              {address.isDefault && (
+                <span className="badge bg-primary ms-2">Default</span>
+              )}
+            </div>
+            <div className="address-actions">
+              <button 
+                className="btn btn-sm btn-outline-secondary me-1"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleEditAddress(address);
+                }}
+                title="Edit address"
+              >
+                <i className="fas fa-edit"></i>
+              </button>
+              {!address.isDefault && (
+                <button 
+                  className="btn btn-sm btn-outline-danger"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (window.confirm('Are you sure you want to delete this address?')) {
+                      handleDeleteAddress(address.id);
+                    }
+                  }}
+                  title="Delete address"
+                >
+                  <i className="fas fa-trash"></i>
+                </button>
+              )}
+            </div>
+          </div>
+          <p className="mb-1 mt-2">{address.name} • {address.mobile}</p>
+          <p className="mb-0 text-muted small">
+            {address.address}, {address.locality}, {address.city}, {address.state} - {address.pincode}
+            {address.landmark && `, Landmark: ${address.landmark}`}
+          </p>
+          
+          {!address.isDefault && (
+            <div className="mt-2">
+              <button 
+                className="btn btn-sm btn-link p-0 text-primary"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSetDefaultAddress(address.id);
+                }}
+              >
+                Set as default
+              </button>
+            </div>
+          )}
+        </label>
+      </div>
+    </div>
+  ))}
+  
+  <button 
+    className="btn btn-outline-primary w-100 mt-3" 
+    onClick={() => {
+      setEditingAddress(null);
+      setNewAddress({
+        type: 'home',
+        name: '',
+        mobile: '',
+        address: '',
+        locality: '',
+        city: '',
+        state: '',
+        pincode: '',
+        landmark: ''
+      });
+      setShowAddressForm(true);
+    }}
+  >
+    <i className="fas fa-plus me-2"></i>Add New Address
+  </button>
+</div>
+                  
+                  {/* No-contact delivery option */}
+                  <div className="no-contact-delivery mb-4">
+                    <div className="form-check form-switch">
+                      <input 
+                        className="form-check-input" 
+                        type="checkbox" 
+                        id="noContactDelivery" 
+                        checked={noContactDelivery}
+                        onChange={(e) => setNoContactDelivery(e.target.checked)}
+                      />
+                      <label className="form-check-label" htmlFor="noContactDelivery">
+                        <strong>Opt in for No-contact Delivery</strong>
+                        <p className="mb-0 small text-muted">
+                          Unwell, or avoiding contact? Please select no-contact delivery. 
+                          Partner will safely place the order outside your door (not for COD)
+                        </p>
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <div className="d-flex justify-content-between mt-4">
+                    <button 
+                      className="btn btn-outline-secondary"
+                      onClick={() => setCheckoutStep(1)}
+                    >
+                      Back
+                    </button>
+                    <button 
+                      className="btn btn-primary px-4"
+                      onClick={() => setCheckoutStep(3)}
+                    >
+                      Continue to Payment
+                    </button>
+                  </div>
+                </div>
+              )}
+              
+              {/* Step 3: Payment */}
+              {checkoutStep === 3 && (
+                <div className="checkout-step animate-fade-in">
+                  <h5 className="mb-4 fw-bold">Payment</h5>
+                  
+                  {/* Payment Methods */}
+                  <div className="payment-methods mb-4">
+                    <h6 className="mb-3">Select payment method</h6>
+                    
+                    <div className={`payment-option-card mb-2 ${paymentMethod === 'upi' ? 'active' : ''}`}>
+                      <div className="form-check">
+                        <input 
+                          className="form-check-input" 
+                          type="radio" 
+                          name="paymentMethod" 
+                          id="upiPayment" 
+                          checked={paymentMethod === 'upi'}
+                          onChange={() => setPaymentMethod('upi')}
+                        />
+                        <label className="form-check-label w-100" htmlFor="upiPayment">
+                          <div className="d-flex align-items-center">
+                            <div className="payment-icon">
+                              <i className="fas fa-mobile-alt"></i>
+                            </div>
+                            <div className="ms-3">
+                              <strong>UPI</strong>
+                              <p className="mb-0 small text-muted">Pay using UPI apps</p>
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div className={`payment-option-card mb-2 ${paymentMethod === 'card' ? 'active' : ''}`}>
+                      <div className="form-check">
+                        <input 
+                          className="form-check-input" 
+                          type="radio" 
+                          name="paymentMethod" 
+                          id="cardPayment" 
+                          checked={paymentMethod === 'card'}
+                          onChange={() => setPaymentMethod('card')}
+                        />
+                        <label className="form-check-label w-100" htmlFor="cardPayment">
+                          <div className="d-flex align-items-center">
+                            <div className="payment-icon">
+                              <i className="far fa-credit-card"></i>
+                            </div>
+                            <div className="ms-3">
+                              <strong>Credit/Debit Card</strong>
+                              <p className="mb-0 small text-muted">Add and secure your card as per RBI guidelines</p>
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div className={`payment-option-card ${paymentMethod === 'cod' ? 'active' : ''}`}>
+                      <div className="form-check">
+                        <input 
+                          className="form-check-input" 
+                          type="radio" 
+                          name="paymentMethod" 
+                          id="codPayment" 
+                          checked={paymentMethod === 'cod'}
+                          onChange={() => setPaymentMethod('cod')}
+                        />
+                        <label className="form-check-label w-100" htmlFor="codPayment">
+                          <div className="d-flex align-items-center">
+                            <div className="payment-icon">
+                              <i className="fas fa-money-bill-wave"></i>
+                            </div>
+                            <div className="ms-3">
+                              <strong>Cash on Delivery</strong>
+                              <p className="mb-0 small text-muted">Pay when you receive the order</p>
+                            </div>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Suggestions */}
+                  <div className="suggestions mb-4">
+                    <h6 className="mb-3">Any suggestions? We will pass it on...</h6>
+                    <textarea 
+                      className="form-control" 
+                      placeholder="Add preparation instructions (if any)" 
+                      rows="3"
+                    ></textarea>
+                  </div>
+                  
+                  <div className="d-flex justify-content-between mt-4">
+                    <button 
+                      className="btn btn-outline-secondary"
+                      onClick={() => setCheckoutStep(2)}
+                    >
+                      Back
+                    </button>
+                    <button 
+                      className="btn btn-success px-4 py-2 fw-bold"
+                      onClick={handlePlaceOrder}
+                    >
+                      Place Order
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+            
+            {/* Right Column - Order Summary */}
+            <div className="col-md-5 p-4" style={{ backgroundColor: '#f8f9fa' }}>
+              <div className="sticky-top" style={{ top: '20px' }}>
+                <h5 className="mb-4 fw-bold">Order Summary</h5>
+                
+                <div className="order-items mb-4">
+                  {cart.map((item) => {
+                    const cartItem = cart.find((i) => i.id === item.id);
+                    return (
+                      <div key={item.id} className="order-item-card mb-3">
+                        <div className="d-flex align-items-center">
+                          <img 
+                            src={item.img} 
+                            alt={item.name} 
+                            className="rounded me-3"
+                            style={{ width: "60px", height: "60px", objectFit: "cover" }}
+                          />
+                          <div className="flex-grow-1">
+                            <h6 className="mb-0">{item.name}</h6>
+                            <p className="mb-0 text-muted">₹{item.price}</p>
+                          </div>
+                          <div className="quantity-controls">
+                            <button
+                              className="quantity-btn"
+                              onClick={() =>
+                                setCart(
+                                  (prevCart) =>
+                                    prevCart
+                                      .map((i) =>
+                                        i.id === item.id
+                                          ? { ...i, qty: i.qty - 1 }
+                                          : i
+                                      )
+                                      .filter((i) => i.qty > 0)
+                                )
+                              }
+                            >
+                              -
+                            </button>
+                            <span className="quantity-value mx-2">
+                              {cartItem.qty}
+                            </span>
+                            <button
+                              className="quantity-btn"
+                              onClick={() => addToCart(item)}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                        <div className="d-flex justify-content-between mt-2">
+                          <span className="text-muted">Item Total</span>
+                          <span className="fw-bold">₹{item.price * item.qty}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                
+                {/* Bill Details */}
+                <div className="bill-details-card">
+                  <h6 className="mb-3 fw-bold">Bill Details</h6>
+                  
+                  <div className="bill-item d-flex justify-content-between mb-2">
+                    <span>Item Total</span>
+                    <span>₹{total}</span>
+                  </div>
+                  
+                  <div className="bill-item d-flex justify-content-between mb-2">
+                    <span>Delivery Fee | 6.0 kms</span>
+                    <span className="text-success">₹30</span>
+                  </div>
+                  
+                  <div className="bill-item d-flex justify-content-between mb-2">
+                    <span>GST & Restaurant Charges</span>
+                    <span>₹{Math.round(total * 0.05)}</span>
+                  </div>
+                  
+                  <hr />
+                  
+                  <div className="bill-total d-flex justify-content-between fw-bold fs-5 mb-3">
+                    <span>TO PAY</span>
+                    <span>₹{total + 30 + Math.round(total * 0.05)}</span>
+                  </div>
+                  
+                  {checkoutStep === 3 && (
+                    <button 
+                      className="btn btn-success w-100 py-3 fw-bold"
+                      onClick={handlePlaceOrder}
+                    >
+                      Place Order
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+
+
+
+{/* // Add the address form modal right after the address cards section */}
+{showAddressForm && (
+  <div className="address-form-modal" onClick={handleOverlayClick}>
+    <div className="address-form-container" onClick={(e) => e.stopPropagation()}>
+      <div className="address-form-header">
+        <h5>{editingAddress ? 'Edit Address' : 'Add New Address'}</h5>
+        <button 
+          type="button" 
+          className="btn-close" 
+          onClick={() => {
+            setShowAddressForm(false);
+            setEditingAddress(null);
+            setNewAddress({
+              type: 'home',
+              name: '',
+              mobile: '',
+              address: '',
+              locality: '',
+              city: '',
+              state: '',
+              pincode: '',
+              landmark: ''
+            });
+          }}
+        ></button>
+      </div>
+      
+      <div className="address-form-body">
+        <div className="address-type-selector mb-3">
+          <label className="form-label">Address Type</label>
+          <div className="d-flex gap-2 flex-wrap">
+            <button
+              type="button"
+              className={`btn ${newAddress.type === 'home' ? 'btn-primary' : 'btn-outline-primary'}`}
+              onClick={() => setNewAddress({...newAddress, type: 'home'})}
+            >
+              <i className="fas fa-home me-2"></i>Home
+            </button>
+            <button
+              type="button"
+              className={`btn ${newAddress.type === 'work' ? 'btn-primary' : 'btn-outline-primary'}`}
+              onClick={() => setNewAddress({...newAddress, type: 'work'})}
+            >
+              <i className="fas fa-building me-2"></i>Work
+            </button>
+            <button
+              type="button"
+              className={`btn ${newAddress.type === 'other' ? 'btn-primary' : 'btn-outline-primary'}`}
+              onClick={() => setNewAddress({...newAddress, type: 'other'})}
+            >
+              <i className="fas fa-map-marker-alt me-2"></i>Other
+            </button>
+          </div>
+        </div>
+        
+        <div className="row g-3">
+          <div className="col-md-6">
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="fullName"
+                placeholder="Full Name"
+                value={newAddress.name}
+                onChange={(e) => setNewAddress({...newAddress, name: e.target.value})}
+              />
+              <label htmlFor="fullName">Full Name *</label>
+            </div>
+          </div>
+          
+          <div className="col-md-6">
+            <div className="form-floating">
+              <input
+                type="tel"
+                className="form-control"
+                id="mobileNumber"
+                placeholder="Mobile Number"
+                value={newAddress.mobile}
+                onChange={(e) => setNewAddress({...newAddress, mobile: e.target.value})}
+              />
+              <label htmlFor="mobileNumber">Mobile Number *</label>
+            </div>
+          </div>
+          
+          <div className="col-12">
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="flatHouseNo"
+                placeholder="Flat, House no., Building, Company, Apartment"
+                value={newAddress.address}
+                onChange={(e) => setNewAddress({...newAddress, address: e.target.value})}
+              />
+              <label htmlFor="flatHouseNo">Flat, House no., Building, Company, Apartment *</label>
+            </div>
+          </div>
+          
+          <div className="col-12">
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="areaLocality"
+                placeholder="Area, Locality"
+                value={newAddress.locality}
+                onChange={(e) => setNewAddress({...newAddress, locality: e.target.value})}
+              />
+              <label htmlFor="areaLocality">Area, Locality *</label>
+            </div>
+          </div>
+          
+          <div className="col-md-6">
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="city"
+                placeholder="City"
+                value={newAddress.city}
+                onChange={(e) => setNewAddress({...newAddress, city: e.target.value})}
+              />
+              <label htmlFor="city">City *</label>
+            </div>
+          </div>
+          
+          <div className="col-md-6">
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="state"
+                placeholder="State"
+                value={newAddress.state}
+                onChange={(e) => setNewAddress({...newAddress, state: e.target.value})}
+              />
+              <label htmlFor="state">State *</label>
+            </div>
+          </div>
+          
+          <div className="col-md-6">
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="pincode"
+                placeholder="Pincode"
+                value={newAddress.pincode}
+                onChange={(e) => setNewAddress({...newAddress, pincode: e.target.value})}
+              />
+              <label htmlFor="pincode">Pincode *</label>
+            </div>
+          </div>
+          
+          <div className="col-md-6">
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="landmark"
+                placeholder="Landmark (Optional)"
+                value={newAddress.landmark}
+                onChange={(e) => setNewAddress({...newAddress, landmark: e.target.value})}
+              />
+              <label htmlFor="landmark">Landmark (Optional)</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="address-form-footer">
+        {/* {editingAddress && (
+          <button 
+            type="button" 
+            className="btn btn-danger me-auto"
+            onClick={() => {
+              if (window.confirm('Are you sure you want to delete this address?')) {
+                handleDeleteAddress(editingAddress.id);
+                setShowAddressForm(false);
+                setEditingAddress(null);
+              }
+            }}
+          >
+            <i className="fas fa-trash me-2"></i>Delete
+          </button>
+        )} */}
+        <button 
+          type="button" 
+          className="btn btn-outline-secondary"
+          onClick={() => {
+            setShowAddressForm(false);
+            setEditingAddress(null);
+            setNewAddress({
+              type: 'home',
+              name: '',
+              mobile: '',
+              address: '',
+              locality: '',
+              city: '',
+              state: '',
+              pincode: '',
+              landmark: ''
+            });
+          }}
+        >
+          Cancel
+        </button>
+        <button 
+          type="button" 
+          className="btn btn-primary"
+          onClick={editingAddress ? handleUpdateAddress : handleAddNewAddress}
+          disabled={!newAddress.name || !newAddress.mobile || !newAddress.address || !newAddress.locality || !newAddress.city || !newAddress.state || !newAddress.pincode}
+        >
+          {editingAddress ? 'Update Address' : 'Save Address'}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+
+{/* Success Modal */}
+{showSuccessModal && (
+  <div className="success-modal-overlay">
+    <div className="success-modal">
+      <div className="success-animation">
+        <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+          <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+          <path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+        
+        <div className="confetti">
+          {[...Array(15)].map((_, i) => (
+            <div key={i} className="confetti-piece"></div>
+          ))}
+        </div>
+        
+        <div className="success-icon">
+          <i className="fas fa-utensils"></i>
+        </div>
+      </div>
+      
+      <div className="success-content">
+        <h3>Order Placed Successfully!</h3>
+        <p>Your delicious food is being prepared. You'll receive a confirmation shortly.</p>
+        
+        <div className="order-details">
+          <div className="detail-item">
+            <span className="label">Order ID:</span>
+            <span className="value">#{Math.floor(100000 + Math.random() * 900000)}</span>
+          </div>
+          <div className="detail-item">
+            <span className="label">Estimated Delivery:</span>
+            <span className="value">30-45 minutes</span>
+          </div>
+          <div className="detail-item">
+            <span className="label">Total Amount:</span>
+            <span className="value">₹{total + 30 + Math.round(total * 0.05)}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div className="success-actions">
+        <button 
+          className="btn btn-primary"
+          onClick={() => setShowSuccessModal(false)}
+        >
+          Track My Order
+        </button>
+        <button 
+          className="btn btn-outline-secondary"
+          onClick={() => setShowSuccessModal(false)}
+        >
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
 
 
         {/* <!-- Reservation Start --> */}
