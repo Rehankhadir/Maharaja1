@@ -430,7 +430,7 @@ useEffect(() => {
       <div className="container-xxl bg-white p-0">
         {/* Parallax Hero Section */}
         <div className="container-xxl position-relative p-0 landing-container">
-          <nav className="navbar position-fixed navbar-expand-lg navbar-dark px-4 py-3" style={{top: '15px', zIndex: 1000}}>
+          <nav className="navbar position-fixed navbar-expand-lg navbar-dark px-4 py-3 nav-mobile nav-position">
             <div className="container-fluid glass-card nav-items py-lg-2">
               <Link to="/" className="navbar-brand p-0">
                 <h1 className="text-primary m-0">
@@ -446,10 +446,10 @@ useEffect(() => {
                 <span className="fa fa-bars"></span>
               </button>
               <div className="collapse navbar-collapse" id="navbarCollapse">
-                <div className="navbar-nav ms-auto py-0 pe-4">
+                <div className="navbar-nav ms-auto py-0">
                   <button
                     type="button"
-                    className="nav-item nav-link btn btn-link p-0 text-primary"
+                    className="nav-item nav-link btn btn-link p-0 text-primary mobile-margin"
                     onClick={() => scrollToSection("home")}
                   >
                     Home
@@ -457,7 +457,7 @@ useEffect(() => {
 
                   <button
                     type="button"
-                    className="nav-item nav-link btn btn-link p-0 text-primary"
+                    className="nav-item nav-link btn btn-link p-0 text-primary mobile-margin"
                     onClick={() => scrollToSection("about")}
                   >
                     About
@@ -465,7 +465,7 @@ useEffect(() => {
 
                   <button
                     type="button"
-                    className="nav-item nav-link btn btn-link p-0 text-primary"
+                    className="nav-item nav-link btn btn-link p-0 text-primarymobile-margin"
                     onClick={() => scrollToSection("order")}
                   >
                     Menu
@@ -473,24 +473,23 @@ useEffect(() => {
 
                   <button
                     type="button"
-                    className="nav-item nav-link btn btn-link p-0 text-primary"
+                    className="nav-item nav-link btn btn-link p-0 text-primary mobile-margin"
                     onClick={() => scrollToSection("contact")}
                   >
                     Contact
                   </button>
-                </div>
 
                 <button
                   type="button"
-                  className="btn btn-primary py-2 px-4 mr-2" style={{ marginRight: "10px", borderRadius: "20px" }}
-                >
+                  className="btn btn-primary py-2 px-4 mr-2 mobile-margin" style={{ marginRight: "10px", borderRadius: "20px" }}
+                  >
                   Book A Table
                 </button>
 
                 <button
                   type="button"
                   className="btn btn-primary py-2 px-4 mr-2" style={{ marginRight: "10px", borderRadius: "20px"  }} onClick={() => scrollToSection("order")}
-                >
+                  >
                   Order Now
                 </button>
 
@@ -498,9 +497,10 @@ useEffect(() => {
                   className="btn py-2 px-2"
                   data-bs-toggle="offcanvas"
                   data-bs-target="#cartSidebar"
-                >
+                  >
                   🛒 <span className="badge bg-light text-dark">{cart.length}</span>
                 </button>
+                  </div>
               </div>
             </div>
           </nav>
@@ -508,7 +508,7 @@ useEffect(() => {
           <div className="parallax-hero" id="home">
             <div className="parallax-layer parallax-back" data-depth="0.1"></div>
             <div className="parallax-layer parallax-base" data-depth="0.5"></div>
-            <div className="parallax-layer parallax-front" data-depth="0.8"></div>
+            <div className="parallax-layer parallax-front" data-depth="0.8"></div> 
             
             <div className="hero-content">
               <div className="container my-5 py-5">
@@ -855,7 +855,7 @@ useEffect(() => {
       </div>
     </div>
 
-    <div className="scroll-instruction">
+    {/* <div className="scroll-instruction">
       <div className="mouse-container">
         <div className="mouse">
           <div className="wheel"></div>
@@ -867,7 +867,7 @@ useEffect(() => {
         <span className="scroll-direction">↑↓ Vertical</span>
         <span className="scroll-direction">←→ Horizontal</span>
       </div>
-    </div>
+    </div> */}
   </div>
 </div>
 

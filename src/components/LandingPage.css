@@ -89,7 +89,32 @@ background: linear-gradient(rgba(15, 23, 43, .9), rgba(15, 23, 43, .9)), url('..
 .nav-item{
   cursor: pointer;
 }
-
+.nav-position{
+  top: 15px;
+  z-index: 1000 ;
+}
+.nav-mobile{
+    width: 100% !important;
+  }
+  .mobile-margin{
+    margin-bottom: 0px;
+  }
+@media screen and (max-width: 768px) {
+  .nav-mobile{
+    width: 100% !important;
+  }
+  .nav-position{
+  top: 0px;
+  z-index: 1000 ;
+}
+ .mobile-margin{
+    margin-bottom: 10px;
+  }
+}
+.navbar-dark .navbar-toggler {
+    color: rgb(254 161 22) !important;
+    border-color: rgb(254 161 22) !important;
+}
 
 
 
@@ -444,7 +469,7 @@ html {
 /* Responsive Design */
 @media (max-width: 768px) {
   .parallax-hero {
-    height: 70vh;
+    height: 122vh;
   }
   
   .hero-content .display-3 {
@@ -452,11 +477,12 @@ html {
   }
   
   .glass-card {
-    backdrop-filter: none;
+    /* backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.95); */
   }
 }
+
 
 /* Smooth scrolling */
 html {
@@ -2045,7 +2071,7 @@ html {
   }
   
   .add-to-cart-btn {
-    padding: 6px 16px;
+    padding: 8px 25px;
     font-size: 12px;
   }
 }
