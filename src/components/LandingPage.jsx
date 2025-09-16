@@ -350,7 +350,7 @@ useEffect(() => {
   };
 }, []);
 
-<div className="container-xxl py-5" id="order">
+{/* <div className="container-xxl py-5" id="order">
   <div className="container">
     <div className="text-center">
       <h5 className="section-title ff-secondary text-center text-primary fw-normal">
@@ -361,7 +361,6 @@ useEffect(() => {
 
     <div className="multi-row-scroll-section">
       <div className="scroll-rows-container">
-        {/* First row */}
         <div className="scroll-row">
           <div className="scroll-row-inner" id="row-1">
             {menuItems.slice(0, 6).map((item) => (
@@ -376,7 +375,6 @@ useEffect(() => {
           </div>
         </div>
 
-        {/* Second row */}
         <div className="scroll-row">
           <div className="scroll-row-inner" id="row-2">
             {menuItems.slice(6, 12).map((item) => (
@@ -391,7 +389,6 @@ useEffect(() => {
           </div>
         </div>
 
-        {/* Third row */}
         <div className="scroll-row">
           <div className="scroll-row-inner" id="row-3">
             {menuItems.slice(12).map((item) => (
@@ -422,7 +419,7 @@ useEffect(() => {
       </div>
     </div>
   </div>
-</div>
+</div> */}
 // menu item ends
 
   return (
@@ -854,6 +851,23 @@ useEffect(() => {
         })()}
       </div>
     </div>
+
+
+     {/* Floating View Cart Button */}
+    {cart.length > 0 && (
+      <div className="floating-cart-btn-container">
+        <button 
+          className="btn btn-primary floating-cart-btn"
+          data-bs-toggle="offcanvas" 
+          data-bs-target="#cartSidebar"
+        >
+          <span className="cart-icon">🛒</span>
+          <span className="cart-text">View Cart</span>
+          <span className="cart-count-badge">{cart.length}</span>
+        </button>
+      </div>
+    )}
+    
 
     {/* <div className="scroll-instruction">
       <div className="mouse-container">
