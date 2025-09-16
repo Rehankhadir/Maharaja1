@@ -76,10 +76,10 @@ const MenuCard = ({ item, cart, addToCart, setCart }) => {
 
 const menuItems = [
   { id: 1, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg" },
-  { id: 2, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img3.jpg" },
+  { id: 2, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg" },
   { id: 3, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg" },
   { id: 4, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg" },
-  { id: 5, name: "Californian Double Chicken Burger", price: 80, img: "img/img6.jpg" },
+  { id: 5, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg" },
   { id: 6, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg" },
   { id: 7, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg" },
   { id: 8, name: "Brioche Omelette", price: 60, img: "img/img1.jpg" },
