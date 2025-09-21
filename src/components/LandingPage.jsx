@@ -3,6 +3,31 @@ import './LandingPage.css';
 import { Link } from "react-router-dom";
 
 
+
+const menuItems = [
+  { id: 1, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg" },
+  { id: 2, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg" },
+  { id: 3, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg" },
+  { id: 4, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg" },
+  { id: 5, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg" },
+  { id: 6, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg" },
+  { id: 7, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg" },
+  { id: 8, name: "Brioche Omelette", price: 60, img: "img/img1.jpg" },
+  { id: 9, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg" },
+  { id: 10, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg" },
+  { id: 11, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg" },
+  { id: 12, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg" },
+  { id: 13, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg" },
+  { id: 14, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg" },
+  { id: 15, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg" },
+  { id: 16, name: "Brioche Omelette", price: 60, img: "img/img1.jpg" },
+  { id: 17, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg" },
+  { id: 18, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg" },
+  { id: 19, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg" },
+  { id: 20, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg" },
+  { id: 21, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png" },
+  { id: 22, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg" },
+];
 // MenuCard Component
 const MenuCard = ({ item, cart, addToCart, setCart }) => {
   const cartItem = cart.find((i) => i.id === item.id);
@@ -74,28 +99,143 @@ const MenuCard = ({ item, cart, addToCart, setCart }) => {
   );
 };
 
-const menuItems = [
-  { id: 1, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg" },
-  { id: 2, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg" },
-  { id: 3, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg" },
-  { id: 4, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg" },
-  { id: 5, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg" },
-  { id: 6, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg" },
-  { id: 7, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg" },
-  { id: 8, name: "Brioche Omelette", price: 60, img: "img/img1.jpg" },
-  { id: 9, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg" },
-  { id: 10, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg" },
-  { id: 11, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg" },
-  { id: 12, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg" },
-  { id: 13, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg" },
-  { id: 14, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg" },
-  { id: 15, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg" },
-  { id: 16, name: "Brioche Omelette", price: 60, img: "img/img1.jpg" },
+// MenuCategory Component
+const MenuCategory = ({ category, isActive, onClick, onHover, image }) => {
+  return (
+    <div 
+      className={`menu-category ${isActive ? 'active' : ''}`}
+      onClick={onClick}
+      onMouseEnter={onHover}
+    >
+      <div className="d-flex align-items-center">
+      <div className="category-icon">
+        <i className={category.icon}></i>
+      </div>
+      <div className="category-content">
+        <h4>{category.name}</h4>
+        <p>{category.description}</p>
+      </div>
+      </div>
+      <i className="fas fa-chevron-right"></i>
+    </div>
+  );
+};
+
+
+
+
+// Define your menu categories and items
+const menuCategories = [
+  {
+    id: 'appetizers',
+    name: 'Appetizers',
+    description: 'Crispy and flavorful starters',
+    image: 'img/appetizers.jpg',
+    icon: 'fas fa-utensils',
+    items: menuItems.filter(item => [1, 2, 3,4,5,6,7,8].includes(item.id))
+  },
+  {
+    id: 'soups-salads',
+    name: 'Soups & Salads',
+    description: 'Fresh and comforting bowls',
+    image: 'img/soups-salads.jpg',
+    icon: 'fas fa-carrot',
+    items: menuItems.filter(item => [4, 5].includes(item.id))
+  },
+  {
+    id: 'side-dishes',
+    name: 'Side Dishes',
+    description: 'Perfect accompaniments',
+    image: 'img/side-dishes.jpg',
+    icon: 'fas fa-hotdog',
+    items: menuItems.filter(item => [6, 7].includes(item.id))
+  },
+  {
+    id: 'breads',
+    name: 'Breads',
+    description: 'Freshly baked traditional breads',
+    image: 'img/breads.jpg',
+    icon: 'fas fa-bread-slice',
+    items: menuItems.filter(item => [8].includes(item.id))
+  },
+  {
+    id: 'tandoori',
+    name: 'Tandoori Specialties',
+    description: 'Clay oven marvels',
+    image: 'img/tandoori.jpg',
+    icon: 'fas fa-fire',
+    items: menuItems.filter(item => [9, 10].includes(item.id))
+  },
+  {
+    id: 'chicken',
+    name: 'Chicken Dishes',
+    description: 'Tender and flavorful chicken',
+    image: 'img/chicken.jpg',
+    icon: 'fas fa-drumstick-bite',
+    items: menuItems.filter(item => [11, 12].includes(item.id))
+  },
+  {
+    id: 'vegetarian',
+    name: 'Vegetarian Delights',
+    description: 'Plant-based goodness',
+    image: 'img/vegetarian.jpg',
+    icon: 'fas fa-leaf',
+    items: menuItems.filter(item => [13, 14].includes(item.id))
+  },
+  {
+    id: 'lamb',
+    name: 'Lamb Specialties',
+    description: 'Rich and aromatic lamb dishes',
+    image: 'img/lamb.jpg',
+     icon: 'fas fa-paw',
+    items: menuItems.filter(item => [22].includes(item.id))
+  },
+  {
+    id: 'seafood',
+    name: 'Seafood',
+    description: 'Fresh catches from the sea',
+    image: 'img/seafood.jpg',
+    icon: 'fas fa-fish',
+    items: menuItems.filter(item => [21].includes(item.id))
+  },
+  {
+    id: 'beverages',
+    name: 'Beverages',
+    description: 'Refreshing drinks',
+    image: 'img/beverages.jpg',
+    icon: 'fas fa-beer',
+    items: menuItems.filter(item => [19, 20].includes(item.id))
+  },
+  {
+    id: 'desserts',
+    name: 'Desserts',
+    description: 'Sweet endings',
+    image: 'img/desserts.jpg',
+     icon: 'fas fa-ice-cream',
+    items: menuItems.filter(item => [17, 18].includes(item.id))
+  }
 ];
+
+
+
 
 const LandingPage = () => {
   const [cart, setCart] = useState([]);
   const [scrollPosition, setScrollPosition] = useState(0);
+
+// In your LandingPage component, add these state variables
+const [activeCategory, setActiveCategory] = useState('appetizers');
+const [hoveredCategory, setHoveredCategory] = useState(null);
+const [categoryImage, setCategoryImage] = useState('img/appetizers.jpg');
+const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const [searchQuery, setSearchQuery] = useState('');
+
+// Filter items based on search query
+const filteredItems = menuCategories
+  .find(c => c.id === activeCategory)
+  ?.items.filter(item => 
+    item.name.toLowerCase().includes(searchQuery.toLowerCase())
+  ) || [];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -739,12 +879,6 @@ const handleEditAddress = (address) => {
 
 
 
-
-
-
-
-
-
   return (
     <>
       <div className="container-xxl bg-white p-0">
@@ -753,8 +887,8 @@ const handleEditAddress = (address) => {
           <nav className="navbar position-fixed navbar-expand-lg navbar-dark px-4 py-3 nav-mobile nav-position">
             <div className="container-fluid glass-card nav-items py-lg-2">
               <Link to="/" className="navbar-brand p-0">
-                <h1 className="text-primary m-0">
-                  <i className="fa fa-utensils me-3"></i>Sang Eats
+                <h1 className="text-primary m-0" style={{ fontSize: "28px" }}>
+                  <i className="fa fa-utensils me-3"></i>SangEat
                 </h1>
               </Link>
               <button
@@ -799,37 +933,46 @@ const handleEditAddress = (address) => {
                     Contact
                   </button>
 
-                <button
-                  type="button"
-                  className="btn btn-primary py-2 px-4 mr-2 mobile-margin" style={{ marginRight: "10px", borderRadius: "20px" }}
+                  <button
+                    type="button"
+                    className="btn btn-primary py-2 px-4 mr-2 mobile-margin" style={{ marginRight: "10px", borderRadius: "20px" }}
                   >
-                  Book A Table
-                </button>
+                    Book A Table
+                  </button>
 
-                <button
-                  type="button"
-                  className="btn btn-primary py-2 px-4 mr-2" style={{ marginRight: "10px", borderRadius: "20px"  }} onClick={() => scrollToSection("order")}
+                  <button
+                    type="button"
+                    className="btn btn-primary py-2 px-4 mr-2" style={{ marginRight: "10px", borderRadius: "20px"  }} onClick={() => scrollToSection("order")}
                   >
-                  Order Now
-                </button>
+                    Order Now
+                  </button>
 
-                <button
-                  className="btn py-2 px-2"
-                  data-bs-toggle="offcanvas"
-                  data-bs-target="#cartSidebar"
+                  <button
+                    className="btn py-2 px-2"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#cartSidebar"
                   >
-                  🛒 <span className="badge bg-light text-dark">{cart.length}</span>
-                </button>
-                  </div>
+                    🛒{" "} <span className="badge bg-light text-dark">{cart.length}</span>
+                  </button>
+                </div>
               </div>
             </div>
           </nav>
 
           <div className="parallax-hero" id="home">
-            <div className="parallax-layer parallax-back" data-depth="0.1"></div>
-            <div className="parallax-layer parallax-base" data-depth="0.5"></div>
-            <div className="parallax-layer parallax-front" data-depth="0.8"></div> 
-            
+            <div
+              className="parallax-layer parallax-back"
+              data-depth="0.1"
+            ></div>
+            <div
+              className="parallax-layer parallax-base"
+              data-depth="0.5"
+            ></div>
+            <div
+              className="parallax-layer parallax-front"
+              data-depth="0.8"
+            ></div>
+
             <div className="hero-content">
               <div className="container my-5 py-5">
                 <div className="row align-items-center g-5">
@@ -840,9 +983,9 @@ const handleEditAddress = (address) => {
                       Delicious Meal
                     </h1>
                     <p className="text-white animated slideInLeft mb-4 pb-2">
-                      Don't wait on hunger! Choose from our wide range of fast food,
-                      desi specials, and healthy bites – delivered piping hot in
-                      minutes.
+                      Don't wait on hunger! Choose from our wide range of fast
+                      food, desi specials, and healthy bites – delivered piping
+                      hot in minutes.
                     </p>
                     <Link
                       to=""
@@ -852,7 +995,11 @@ const handleEditAddress = (address) => {
                     </Link>
                   </div>
                   <div className="col-lg-6 text-center text-lg-end overflow-hidden">
-                    <img className="img-fluid floating" src="img/hero.png" alt="" />
+                    <img
+                      className="img-fluid floating"
+                      src="img/hero.png"
+                      alt=""
+                    />
                   </div>
                 </div>
               </div>
@@ -861,76 +1008,82 @@ const handleEditAddress = (address) => {
         </div>
 
         {/* Service Section */}
-        <div className="container-xxl py-5">
-          <div className="container">
-            <div className="row g-4">
-              <div
-                className="col-lg-3 col-sm-6 wow fadeInUp"
-                data-wow-delay="0.1s"
-              >
-                <div className="service-item rounded pt-3">
-                  <div className="p-4">
-                    <i className="fa fa-3x fa-user-tie text-primary mb-4"></i>
-                    <h5>Master Chefs</h5>
-                    <p>
-                      Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita
-                      amet diam
-                    </p>
+
+        {/* <section className="">
+          <div className="container-xxl py-5">
+            <div className="container">
+              <div className="row g-4">
+                <div
+                  className="col-lg-3 col-sm-6 wow fadeInUp"
+                  data-wow-delay="0.1s"
+                >
+                  <div className="service-item rounded pt-3">
+                    <div className="p-4">
+                      <i className="fa fa-3x fa-user-tie text-primary mb-4"></i>
+                      <h5>Master Chefs</h5>
+                      <p>
+                        Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita
+                        amet diam
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="col-lg-3 col-sm-6 wow fadeInUp"
-                data-wow-delay="0.3s"
-              >
-                <div className="service-item rounded pt-3">
-                  <div className="p-4">
-                    <i className="fa fa-3x fa-utensils text-primary mb-4"></i>
-                    <h5>Quality Food</h5>
-                    <p>
-                      Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita
-                      amet diam
-                    </p>
+                <div
+                  className="col-lg-3 col-sm-6 wow fadeInUp"
+                  data-wow-delay="0.3s"
+                >
+                  <div className="service-item rounded pt-3">
+                    <div className="p-4">
+                      <i className="fa fa-3x fa-utensils text-primary mb-4"></i>
+                      <h5>Quality Food</h5>
+                      <p>
+                        Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita
+                        amet diam
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="col-lg-3 col-sm-6 wow fadeInUp"
-                data-wow-delay="0.5s"
-              >
-                <div className="service-item rounded pt-3">
-                  <div className="p-4">
-                    <i className="fa fa-3x fa-cart-plus text-primary mb-4"></i>
-                    <h5>Online Order</h5>
-                    <p>
-                      Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita
-                      amet diam
-                    </p>
+                <div
+                  className="col-lg-3 col-sm-6 wow fadeInUp"
+                  data-wow-delay="0.5s"
+                >
+                  <div className="service-item rounded pt-3">
+                    <div className="p-4">
+                      <i className="fa fa-3x fa-cart-plus text-primary mb-4"></i>
+                      <h5>Online Order</h5>
+                      <p>
+                        Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita
+                        amet diam
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="col-lg-3 col-sm-6 wow fadeInUp"
-                data-wow-delay="0.7s"
-              >
-                <div className="service-item rounded pt-3">
-                  <div className="p-4">
-                    <i className="fa fa-3x fa-headset text-primary mb-4"></i>
-                    <h5>24/7 Service</h5>
-                    <p>
-                      Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita
-                      amet diam
-                    </p>
+                <div
+                  className="col-lg-3 col-sm-6 wow fadeInUp"
+                  data-wow-delay="0.7s"
+                >
+                  <div className="service-item rounded pt-3">
+                    <div className="p-4">
+                      <i className="fa fa-3x fa-headset text-primary mb-4"></i>
+                      <h5>24/7 Service</h5>
+                      <p>
+                        Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita
+                        amet diam
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </section> */}
 
         {/* About Section with Parallax */}
-        <div className="container-xxl py-5 parallax-about" id="about">
-          <div className="parallax-about-bg" style={{ transform: `translateY(${scrollPosition * 0.2}px)` }}></div>
+        <div
+          className="container-xxl py-5 parallax-about  service-section"
+          id="about"
+        >
+          {/* <div className="parallax-about-bg"  data-depth="0.2"></div> */}
           <div className="container position-relative">
             <div className="row g-5 align-items-center">
               <div className="col-lg-6">
@@ -971,31 +1124,34 @@ const handleEditAddress = (address) => {
                 </div>
               </div>
               <div className="col-lg-6">
-                <h5 className="section-title ff-secondary text-start text-primary fw-normal">
+                <h5 className="section-title ff-secondary text-start text-primary fw-normal col-white">
                   About Us
                 </h5>
-                <h1 className="mb-4">
-                  Welcome to <i className="fa fa-utensils text-primary me-2"></i>
-                  Sang Eats
+                <h1 className="mb-4 col-white">
+                  Welcome to{" "}
+                  <i className="fa fa-utensils text-primary me-2"></i>
+                  SangEat
                 </h1>
-                <h1 className="mb-4">An Experience of Royal Indian Dining</h1>
+                <h1 className="mb-4 col-white">
+                  An Experience of Royal Indian Dining
+                </h1>
                 <div className="divider"></div>
-                <p className="mb-4">
-                  At Sang Eats, we bring the flavors of royal Indian cuisine to
+                <p className="mb-4 col-white">
+                  At SangEat, we bring the flavors of royal Indian cuisine to
                   your table. From fragrant biryanis to elaborate thalis, each
                   dish is a celebration of tradition, taste, and hospitality.
                 </p>
-                <p className="mb-4">
+                <p className="mb-4 col-white">
                   {" "}
                   Immerse yourself in an ambiance of elegance and cultural
                   richness — perfect for family gatherings, celebrations, or
                   simply treating yourself to authentic flavors.
                 </p>
                 <div className="divider"></div>
-                <p className="mb-4">
+                <p className="mb-4 col-white">
                   {" "}
-                  Every plate is carefully crafted using time-honored recipes and
-                  the freshest ingredients to deliver a memorable dining
+                  Every plate is carefully crafted using time-honored recipes
+                  and the freshest ingredients to deliver a memorable dining
                   experience.
                 </p>
                 <div className="row g-4 mb-4">
@@ -1008,7 +1164,7 @@ const handleEditAddress = (address) => {
                         15
                       </h1>
                       <div className="ps-4">
-                        <p className="mb-0">Years of</p>
+                        <p className="mb-0 col-white">Years of</p>
                         <h6 className="text-uppercase mb-0">Experience</h6>
                       </div>
                     </div>
@@ -1022,7 +1178,7 @@ const handleEditAddress = (address) => {
                         50
                       </h1>
                       <div className="ps-4">
-                        <p className="mb-0">Popular</p>
+                        <p className="mb-0 col-white">Popular</p>
                         <h6 className="text-uppercase mb-0">Master Chefs</h6>
                       </div>
                     </div>
@@ -1035,6 +1191,7 @@ const handleEditAddress = (address) => {
             </div>
           </div>
         </div>
+        {/* </div> */}
 
         {/* Menu Section */}
         {/* <div className="container-xxl py-5" id="order">
@@ -1122,69 +1279,163 @@ const handleEditAddress = (address) => {
           </div>
         </div> */}
 
-
-
-
-
-
-      <div className="container-xxl py-5" id="order">
-  <div className="container">
-    <div className="text-center">
+        {/* // Replace the existing menu section with this new implementation */}
+<div className="container-fluid py-5" id="order">
+  <div className="container-fluid">
+    <div className="text-center mb-5">
       <h5 className="section-title ff-secondary text-center text-primary fw-normal">
         Food Menu
       </h5>
-      <h1 className="mb-5">Most Popular Items</h1>
+      <h1 className="mb-4">Explore Our Culinary Categories</h1>
+      <p className="text-muted w-75 mx-auto d-none d-md-block">
+        Discover our delicious offerings across various categories. Select a category to view our specialties.
+      </p>
     </div>
 
-    <div className="multi-row-scroll-section">
-      <div className="scroll-rows-container">
-        {/* Map through all menu items and create rows dynamically */}
-        {(() => {
-          const rows = [];
-          const itemsPerRow = 6;
-          
-          for (let i = 0; i < menuItems.length; i += itemsPerRow) {
-            const rowItems = menuItems.slice(i, i + itemsPerRow);
-            const rowIndex = i / itemsPerRow;
-            
-            rows.push(
-              <div key={`row-${rowIndex}`} className="scroll-row">
-                <div className="scroll-row-inner" id={`row-${rowIndex}`}>
-                  {rowItems.map((item) => (
-                    <MenuCard 
-                      key={item.id} 
-                      item={item} 
-                      cart={cart} 
-                      addToCart={addToCart} 
-                      setCart={setCart} 
-                    />
-                  ))}
-                  {/* Add empty spacers if needed to fill row */}
-                  {rowItems.length < itemsPerRow && 
-                    Array.from({ length: itemsPerRow - rowItems.length }).map((_, idx) => (
-                      <div key={`spacer-${rowIndex}-${idx}`} className="menu-card-spacer"></div>
-                    ))
-                  }
-                </div>
-              </div>
-            );
-          }
-          
-          return rows;
-        })()}
+    {/* Search bar for mobile */}
+    <div className="row mb-4 d-lg-none">
+      <div className="col-12">
+        <div className="menu-search-container">
+          <i className="fas fa-search"></i>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search menu items..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && (
+            <button 
+              className="clear-search"
+              onClick={() => setSearchQuery('')}
+            >
+              <i className="fas fa-times"></i>
+            </button>
+          )}
+        </div>
       </div>
     </div>
 
+    <div className="menu-container">
+      {/* Mobile category tabs (horizontal scroll) */}
+      <div className="d-lg-none mobile-category-tabs">
+        <div className="category-scroll-container">
+          {menuCategories.map(category => (
+            <div
+              key={category.id}
+              className={`mobile-category-tab ${activeCategory === category.id ? 'active' : ''}`}
+              onClick={() => {
+                setActiveCategory(category.id);
+                setCategoryImage(category.image);
+              }}
+            >
+              <div className="tab-icon">
+                <i className={category.icon}></i>
+              </div>
+              <span>{category.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
 
-     {/* Floating View Cart Button */}
+      <div className="menu-content-wrapper">
+        {/* Desktop category sidebar */}
+        <div className="category-sidebar d-none d-lg-block">
+          <div className="search-container mb-3">
+            <i className="fas fa-search"></i>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search menu items..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            {searchQuery && (
+              <button 
+                className="clear-search"
+                onClick={() => setSearchQuery('')}
+              >
+                <i className="fas fa-times"></i>
+              </button>
+            )}
+          </div>
+          
+          <div className="category-list">
+            {menuCategories.map(category => (
+              <MenuCategory
+                key={category.id}
+                category={category}
+                isActive={activeCategory === category.id}
+                onClick={() => {
+                  setActiveCategory(category.id);
+                  setCategoryImage(category.image);
+                }}
+              />
+            ))}
+          </div>
+        </div>
+        
+        {/* Menu items display */}
+        <div className="menu-items-display">
+          <div className="category-header">
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <h2>{menuCategories.find(c => c.id === activeCategory)?.name}</h2>
+                <p className="text-muted category-description">
+                  {menuCategories.find(c => c.id === activeCategory)?.description}
+                </p>
+              </div>
+              <div className="item-count">
+                {filteredItems.length} items
+              </div>
+            </div>
+          </div>
+
+          {filteredItems.length > 0 ? (
+            <div className="menu-items-grid">
+              {filteredItems.map(item => (
+                <MenuCard 
+                  key={item.id} 
+                  item={item} 
+                  cart={cart} 
+                  addToCart={addToCart} 
+                  setCart={setCart} 
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="no-items-found">
+              <i className="fas fa-search fa-3x mb-3"></i>
+              <h4>No items found</h4>
+              <p className="text-muted">
+                {searchQuery 
+                  ? `No items match "${searchQuery}" in this category` 
+                  : 'No items available in this category'
+                }
+              </p>
+              {searchQuery && (
+                <button 
+                  className="btn btn-primary"
+                  onClick={() => setSearchQuery('')}
+                >
+                  Clear Search
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+
+    {/* Floating View Cart Button */}
     {cart.length > 0 && (
       <div className="floating-cart-btn-container">
-        <button 
+        <button
           className="btn btn-primary floating-cart-btn"
-          data-bs-toggle="offcanvas" 
+          data-bs-toggle="offcanvas"
           data-bs-target="#cartSidebar"
         >
-          <span className="cart-icon">🛒</span>
+          <span className="cart-icon"><i class="fas fa-shopping-cart"></i></span>
           <span className="cart-text">View Cart</span>
           <span className="cart-count-badge">{cart.length}</span>
         </button>
@@ -1192,6 +1443,11 @@ const handleEditAddress = (address) => {
     )}
   </div>
 </div>
+
+
+
+
+
 
         {/* Cart Sidebar */}
         <div className="offcanvas offcanvas-end" tabIndex="-1" id="cartSidebar">
@@ -1226,24 +1482,24 @@ const handleEditAddress = (address) => {
               <>
                 {cart.map((item) => (
                   <div className="mb-3">
-                  <div className="d-flex align-items-center mb-3">
-                    <img
-                      src={item.img}
-                      alt={item.name}
-                      className="rounded me-3"
-                      style={{ width: "60px", height: "60px", objectFit: "cover" }}
-                    />
-                    <div className="flex-grow-1">
-                      <h6 className="mb-0">{item.name}</h6>
-                      <div className="d-flex align-items-center">
-                        <small className="text-muted">₹{item.price} x {item.qty}</small>
-                        <div className="ms-auto">
-                          <div className="counter-container">
-                            <button
-                              className="counter-btn"
-                              onClick={() =>
-                                setCart(
-                                  (prevCart) =>
+                    <div className="d-flex align-items-center mb-3">
+                      <img
+                        src={item.img}
+                        alt={item.name}
+                        className="rounded me-3"
+                        style={{ width: "60px", height: "60px", objectFit: "cover" }}
+                      />
+                      <div className="flex-grow-1">
+                        <h6 className="mb-0">{item.name}</h6>
+                        <div className="d-flex align-items-center">
+                          <small className="text-muted">₹{item.price} x {item.qty}</small>
+                          <div className="ms-auto">
+                            <div className="counter-container">
+                              <button
+                                className="counter-btn"
+                                onClick={() =>
+                                  setCart(
+                                    (prevCart) =>
                                     prevCart
                                       .map((i) =>
                                         i.id === item.id
@@ -1251,23 +1507,23 @@ const handleEditAddress = (address) => {
                                           : i
                                       )
                                       .filter((i) => i.qty > 0)
-                                )
-                              }
-                            >
-                              -
-                            </button>
-                            <span className="counter-value">{item.qty}</span>
-                            <button
-                              className="counter-btn"
-                              onClick={() => addToCart(item)}
-                            >
-                              +
-                            </button>
+                                  )
+                                }
+                              >
+                                -
+                              </button>
+                              <span className="counter-value">{item.qty}</span>
+                              <button
+                                className="counter-btn"
+                                onClick={() => addToCart(item)}
+                              >
+                                +
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
                   </div>
                 ))}
                 <div className="border-top pt-3 mt-3">
@@ -1276,9 +1532,9 @@ const handleEditAddress = (address) => {
                     <h5>₹{total}</h5>
                   </div>
                   <button className="btn btn-primary w-100 mt-3"  data-bs-dismiss="offcanvas" onClick={() => {
-    resetCheckoutState();
-    setShowCheckout(true);
-  }}>
+                      resetCheckoutState();
+                      setShowCheckout(true);
+                    }}>
                     Checkout
                   </button>
                 </div>
@@ -1287,84 +1543,116 @@ const handleEditAddress = (address) => {
           </div>
         </div>
 
+        {/* // Update your checkout modal JSX */}
+        {showCheckout && (
+          <div
+            className="modal fade show d-block checkout-modal"
+            tabIndex="-1"
+            role="dialog"
+            style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+          >
+            <div
+              className="modal-dialog modal-xl modal-dialog-centered"
+              role="document"
+              style={{ maxWidth: "1100px" }}
+            >
+              <div
+                className="modal-content"
+                style={{
+                  borderRadius: "15px",
+                  overflow: "hidden",
+                  maxHeight: "90vh",
+                }}
+              >
+                {/* Header with Animated Timeline */}
+                <div className="modal-header position-relative border-0 pb-0 pt-4">
+                  <div className="w-100 timeline-border">
+                    {/* Animated Timeline */}
+                    <div className="animated-timeline mb-4">
+                      <div className="timeline-container">
+                        <div
+                          className="timeline-progress"
+                          style={{
+                            width:
+                              checkoutStep === 1
+                                ? "0%"
+                                : checkoutStep === 2
+                                ? "50%"
+                                : "100%",
+                          }}
+                        ></div>
+                        <div
+                          className={`timeline-step ${
+                            checkoutStep >= 1 ? "active" : ""
+                          }`}
+                          onClick={() => setCheckoutStep(1)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <div className="step-bubble">
+                            {checkoutStep > 1 ? (
+                              <i className="fas fa-check"></i>
+                            ) : (
+                              <span>1</span>
+                            )}
+                          </div>
+                          <div className="step-label">Account</div>
+                        </div>
+                        <div
+                          className={`timeline-step ${
+                            checkoutStep >= 2 ? "active" : ""
+                          }`}
+                          onClick={() => checkoutStep > 1 && setCheckoutStep(2)}
+                          style={{
+                            cursor: checkoutStep > 1 ? "pointer" : "default",
+                          }}
+                        >
+                          <div className="step-bubble">
+                            {checkoutStep > 2 ? (
+                              <i className="fas fa-check"></i>
+                            ) : (
+                              <span>2</span>
+                            )}
+                          </div>
+                          <div className="step-label">Address</div>
+                        </div>
+                        <div
+                          className={`timeline-step ${
+                            checkoutStep >= 3 ? "active" : ""
+                          }`}
+                          onClick={() => checkoutStep > 2 && setCheckoutStep(3)}
+                          style={{
+                            cursor: checkoutStep > 2 ? "pointer" : "default",
+                          }}
+                        >
+                          <div className="step-bubble">
+                            <span>3</span>
+                          </div>
+                          <div className="step-label">Payment</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
+                  <button
+                    type="button"
+                    className="btn-close position-absolute"
+                    style={{ top: "15px", right: "15px" }}
+                    onClick={handleCloseCheckout}
+                  ></button>
+                </div>
 
-{/* // Update your checkout modal JSX */}
-{showCheckout && (
-  <div 
-    className="modal fade show d-block checkout-modal" 
-    tabIndex="-1" 
-    role="dialog"
-    style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
-  >
-    <div className="modal-dialog modal-xl modal-dialog-centered" role="document" style={{ maxWidth: '1100px' }}>
-      <div className="modal-content" style={{ borderRadius: '15px', overflow: 'hidden', maxHeight: '90vh' }}>
-        {/* Header with Animated Timeline */}
-        <div className="modal-header position-relative border-0 pb-0 pt-4">
-          <div className="w-100 timeline-border" >
-            {/* Animated Timeline */}
-            <div className="animated-timeline mb-4">
-              <div className="timeline-container">
-                <div className="timeline-progress" style={{ width: checkoutStep === 1 ? '0%' : checkoutStep === 2 ? '50%' : '100%' }}></div>
-                <div 
-                  className={`timeline-step ${checkoutStep >= 1 ? 'active' : ''}`}
-                  onClick={() => setCheckoutStep(1)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <div className="step-bubble">
-                    {checkoutStep > 1 ? (
-                      <i className="fas fa-check"></i>
-                    ) : (
-                      <span>1</span>
-                    )}
-                  </div>
-                  <div className="step-label">Account</div>
-                </div>
-                <div 
-                  className={`timeline-step ${checkoutStep >= 2 ? 'active' : ''}`}
-                  onClick={() => checkoutStep > 1 && setCheckoutStep(2)}
-                  style={{ cursor: checkoutStep > 1 ? 'pointer' : 'default' }}
-                >
-                  <div className="step-bubble">
-                    {checkoutStep > 2 ? (
-                      <i className="fas fa-check"></i>
-                    ) : (
-                      <span>2</span>
-                    )}
-                  </div>
-                  <div className="step-label">Address</div>
-                </div>
-                <div 
-                  className={`timeline-step ${checkoutStep >= 3 ? 'active' : ''}`}
-                  onClick={() => checkoutStep > 2 && setCheckoutStep(3)}
-                  style={{ cursor: checkoutStep > 2 ? 'pointer' : 'default' }}
-                >
-                  <div className="step-bubble">
-                    <span>3</span>
-                  </div>
-                  <div className="step-label">Payment</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <button 
-            type="button" 
-            className="btn-close position-absolute" 
-            style={{ top: '15px', right: '15px' }}
-            onClick={handleCloseCheckout}
-          ></button>
-        </div>
-        
-        <div className="modal-body p-0" style={{ overflowY: 'auto' }}>
-          <div className="row g-0">
-            {/* Left Column - Checkout Process */}
-            <div className="col-md-7 p-4" style={{ borderRight: '1px solid #eee' }}>
-              {/* Step 1: Login/Signup */}
-              {/* Step 1: Login/Signup */}
-{checkoutStep === 1 && (
-  <div className="checkout-step animate-fade-in">
-    {/* <div className="text-center mb-5">
+                <div className="modal-body p-0" style={{ overflowY: "auto" }}>
+                  <div className="row g-0">
+                    {/* Left Column - Checkout Process */}
+                    <div
+                      className="col-md-7 p-4"
+                      style={{ borderRight: "1px solid #eee" }}
+                    >
+                      {/* Step 1: Login/Signup */}
+                      {/* Step 1: Login/Signup */}
+                      {checkoutStep === 1 && (
+                        <div className="checkout-step animate-fade-in">
+                          {/* <div className="text-center mb-5">
       <div className="mb-4">
         <div className="auth-icon-container mb-3">
           <i className="fas fa-user-circle auth-main-icon"></i>
@@ -1373,693 +1661,796 @@ const handleEditAddress = (address) => {
         <p className="text-muted">Sign in or create an account to continue with your order</p>
       </div>
     </div> */}
-    
-    <div className="row g-4">
-      {/* Login Section */}
-      <div className="col-lg-6">
-        <div className="auth-card card h-100 border-0 shadow-sm hover-lift">
-          <div className="card-body p-2 text-center">
-            <div className="auth-icon mb-4">
-              <i className="fas fa-sign-in-alt"></i>
-            </div>
-            <h5 className="card-title mb-3">Existing Customer</h5>
-            <p className="text-muted small mb-4">Welcome back! Sign in to your account</p>
-            
-            <div className="mb-4">
-              <div className="form-floating mb-3">
-                <input
-                  type="number"
-                  className="form-control"
-                  id="mobileNumber"
-                  placeholder="9876543210"
-                />
-                <label htmlFor="loginEmail">Mobile Number</label>
-              </div>
-              
-              <div className="form-check text-start mb-3">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="rememberMe"
-                />
-                <label className="form-check-label small" htmlFor="rememberMe">
-                  Remember me
-                </label>
-              </div>
-            </div>
-            
-            <button 
-              className="btn btn-primary w-100 py-3 mb-3 fw-bold"
-              onClick={() => {
-                setUserLoggedIn(true);
-                setCheckoutStep(2);
-              }}
-            >
-              SIGN IN
-            </button>
-            
-            {/* <div className="text-center">
-              <a href="#forgot" className="text-decoration-none small text-muted">
-                Forgot your password?
-              </a>
-            </div> */}
-          </div>
-        </div>
-      </div>
-      
-      {/* Signup Section */}
-      <div className="col-lg-6">
-        <div className="auth-card card h-100 border-0 shadow-sm hover-lift">
-          <div className="card-body p-2 text-center">
-            <div className="auth-icon mb-4">
-              <i className="fas fa-user-plus"></i>
-            </div>
-            <h5 className="card-title mb-3">New Customer</h5>
-            <p className="text-muted small mb-4">Create an account for faster checkout and order tracking</p>
-            
-            <div className="mb-4">
-              <div className="form-floating mb-3">
-                <input
-                  type="number"
-                  className="form-control"
-                  id="signUpMobileNummber"
-                  placeholder="9876543210"
-                />
-                <label htmlFor="signupPassword">Mobile Number</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="signupName"
-                  placeholder="Name"
-                />
-                <label htmlFor="signupName"> Name</label>
-              </div>
-              <div className="form-floating mb-3">
-                <input
-                  type="email"
-                  className="form-control"
-                  id="signupEmail"
-                  placeholder="name@example.com"
-                />
+
+                          <div className="row g-4">
+                            {/* Login Section */}
+                            <div className="col-lg-6">
+                              <div className="auth-card card h-100 border-0 shadow-sm hover-lift">
+                                <div className="card-body p-2 text-center">
+                                  <div className="auth-icon mb-4">
+                                    <i className="fas fa-sign-in-alt"></i>
+                                  </div>
+                                  <h5 className="card-title mb-3">
+                                    Existing Customer
+                                  </h5>
+                                  <p className="text-muted small mb-4">
+                                    Welcome back! Sign in to your account
+                                  </p>
+
+                                  <div className="mb-4">
+                                    <div className="form-floating mb-3">
+                                      <input
+                                        type="number"
+                                        className="form-control"
+                                        id="mobileNumber"
+                                        placeholder="9876543210"
+                                      />
+                                      <label htmlFor="loginEmail">
+                                        Mobile Number
+                                      </label>
+                                    </div>
+
+                                    <div className="form-check text-start mb-3">
+                                      <input
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        id="rememberMe"
+                                      />
+                                      <label
+                                        className="form-check-label small"
+                                        htmlFor="rememberMe"
+                                      >
+                                        Remember me
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <button
+                                    className="btn btn-primary w-100 py-3 mb-3 fw-bold"
+                                    onClick={() => {
+                                      setUserLoggedIn(true);
+                                      setCheckoutStep(2);
+                                    }}
+                                  >
+                                    SIGN IN
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Signup Section */}
+                            <div className="col-lg-6">
+                              <div className="auth-card card h-100 border-0 shadow-sm hover-lift">
+                                <div className="card-body p-2 text-center">
+                                  <div className="auth-icon mb-4">
+                                    <i className="fas fa-user-plus"></i>
+                                  </div>
+                                  <h5 className="card-title mb-3">
+                                    New Customer
+                                  </h5>
+                                  <p className="text-muted small mb-4">
+                                    Create an account for faster checkout and
+                                    order tracking
+                                  </p>
+
+                                  <div className="mb-4">
+                                    <div className="form-floating mb-3">
+                                      <input
+                                        type="number"
+                                        className="form-control"
+                                        id="signUpMobileNummber"
+                                        placeholder="9876543210"
+                                      />
+                                      <label htmlFor="signupPassword">
+                                        Mobile Number
+                                      </label>
+                                    </div>
+                                    <div className="form-floating mb-3">
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        id="signupName"
+                                        placeholder="Name"
+                                      />
+                                      <label htmlFor="signupName"> Name</label>
+                                    </div>
+                                    <div className="form-floating mb-3">
+                                      <input
+                                        type="email"
+                                        className="form-control"
+                                        id="signupEmail"
+                                        placeholder="name@example.com"
+                                      />
                 <label htmlFor="signupEmail">Email address</label>
-              </div>
-            </div>
-            
-            <div className="form-check text-start mb-4">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="termsAgree"
-              />
-              <label className="form-check-label small" htmlFor="termsAgree">
-                I agree to the <a href="#terms" className="text-decoration-none">Terms of Service</a> and <a href="#privacy" className="text-decoration-none">Privacy Policy</a>
-              </label>
-            </div>
-            
-            <button 
-              className="btn btn-success w-100 py-3 fw-bold"
-              onClick={() => {
-                setUserLoggedIn(true);
-                setCheckoutStep(2);
-              }}
-            >
-              CREATE ACCOUNT
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div className="divider my-5">
-      <span className="px-3 bg-white text-muted">or</span>
-    </div>
-    
-    {/* Social Login */}
-    <div className="text-center mb-4">
-      <h6 className="mb-3">Quick sign in with</h6>
-      <div className="d-flex justify-content-center gap-3 mb-4">
-        <button className="btn btn-outline-secondary rounded-circle social-btn">
-          <i className="fab fa-google"></i>
-        </button>
-        <button className="btn btn-outline-secondary rounded-circle social-btn">
-          <i className="fab fa-facebook-f"></i>
-        </button>
-        <button className="btn btn-outline-secondary rounded-circle social-btn">
-          <i className="fab fa-apple"></i>
-        </button>
-      </div>
-    </div>
-    
-    {/* Guest Checkout */}
-    <div className="guest-option text-center">
-      <button 
-        className="btn btn-outline-primary px-5 py-2"
-        onClick={() => {
-          setUserLoggedIn(false);
-          setCheckoutStep(2);
-        }}
-      >
-        <i className="fas fa-shopping-bag me-2"></i>
-        Continue as Guest
-      </button>
-      <p className="text-muted small mt-2">
+                                    </div>
+                                  </div>
+
+                                  <div className="form-check text-start mb-4">
+                                    <input
+                                      className="form-check-input"
+                                      type="checkbox"
+                                      id="termsAgree"
+                                    />
+                                    <label
+                                      className="form-check-label small"
+                                      htmlFor="termsAgree"
+                                    >
+                                      I agree to the{" "}
+                                      <a
+                                        href="#terms"
+                                        className="text-decoration-none"
+                                      >
+                                        Terms of Service
+                                      </a>{" "}
+                                      and{" "}
+                                      <a
+                                        href="#privacy"
+                                        className="text-decoration-none"
+                                      >
+                                        Privacy Policy
+                                      </a>
+                                    </label>
+                                  </div>
+
+                                  <button
+                                    className="btn btn-success w-100 py-3 fw-bold"
+                                    onClick={() => {
+                                      setUserLoggedIn(true);
+                                      setCheckoutStep(2);
+                                    }}
+                                  >
+                                    CREATE ACCOUNT
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="divider my-5">
+                            <span className="px-3 bg-white text-muted">or</span>
+                          </div>
+
+                          {/* Social Login */}
+                          <div className="text-center mb-4">
+                            <h6 className="mb-3">Quick sign in with</h6>
+                            <div className="d-flex justify-content-center gap-3 mb-4">
+                              <button className="btn btn-outline-secondary rounded-circle social-btn">
+                                <i className="fab fa-google"></i>
+                              </button>
+                              <button className="btn btn-outline-secondary rounded-circle social-btn">
+                                <i className="fab fa-facebook-f"></i>
+                              </button>
+                              <button className="btn btn-outline-secondary rounded-circle social-btn">
+                                <i className="fab fa-apple"></i>
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Guest Checkout */}
+                          <div className="guest-option text-center">
+                            <button
+                              className="btn btn-outline-primary px-5 py-2"
+                              onClick={() => {
+                                setUserLoggedIn(false);
+                                setCheckoutStep(2);
+                              }}
+                            >
+                              <i className="fas fa-shopping-bag me-2"></i>
+                              Continue as Guest
+                            </button>
+                            <p className="text-muted small mt-2">
         You can create an account later with your order details
-      </p>
-    </div>
-  </div>
-)}
-              
-              {/* Step 2: Delivery Address */}
-              {checkoutStep === 2 && (
-                <div className="checkout-step animate-fade-in">
-                  <h5 className="mb-4 fw-bold">Delivery address</h5>
-                  
-                  {/* Saved Addresses */}
-                  {/* Saved Addresses */}
-{/* Saved Addresses */}
-<div className="saved-addresses mb-4">
-  {savedAddresses.map(address => (
-    <div 
-      key={address.id} 
-      className={`address-card ${selectedAddressId === address.id ? 'active' : ''}`}
-    >
-      <div className="form-check">
-        <input 
-          className="form-check-input" 
-          type="radio" 
-          name="address" 
-          id={`address-${address.id}`}
-          checked={selectedAddressId === address.id}
-          onChange={() => setSelectedAddressId(address.id)}
-        />
-        <label className="form-check-label w-100" htmlFor={`address-${address.id}`}>
-          <div className="d-flex justify-content-between align-items-start">
-            <div>
-              <strong className="text-capitalize">{address.type}</strong>
-              {address.isDefault && (
-                <span className="badge bg-primary ms-2">Default</span>
-              )}
-            </div>
-            <div className="address-actions">
-              <button 
-                className="btn btn-sm btn-outline-secondary me-1"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleEditAddress(address);
-                }}
-                title="Edit address"
-              >
-                <i className="fas fa-edit"></i>
-              </button>
-              {!address.isDefault && (
-                <button 
-                  className="btn btn-sm btn-outline-danger"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    if (window.confirm('Are you sure you want to delete this address?')) {
-                      handleDeleteAddress(address.id);
-                    }
-                  }}
-                  title="Delete address"
-                >
-                  <i className="fas fa-trash"></i>
-                </button>
-              )}
-            </div>
-          </div>
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Step 2: Delivery Address */}
+                      {checkoutStep === 2 && (
+                        <div className="checkout-step animate-fade-in">
+                          <h5 className="mb-4 fw-bold">Delivery address</h5>
+
+                          {/* Saved Addresses */}
+                          {/* Saved Addresses */}
+                          {/* Saved Addresses */}
+                          <div className="saved-addresses mb-4">
+                            {savedAddresses.map((address) => (
+                              <div
+                                key={address.id}
+                                className={`address-card ${
+                                  selectedAddressId === address.id
+                                    ? "active"
+                                    : ""
+                                }`}
+                              >
+                                <div className="form-check">
+                                  <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="address"
+                                    id={`address-${address.id}`}
+                                    checked={selectedAddressId === address.id}
+                                    onChange={() =>
+                                      setSelectedAddressId(address.id)
+                                    }
+                                  />
+                                  <label
+                                    className="form-check-label w-100"
+                                    htmlFor={`address-${address.id}`}
+                                  >
+                                    <div className="d-flex justify-content-between align-items-start">
+                                      <div>
+                                        <strong className="text-capitalize">
+                                          {address.type}
+                                        </strong>
+                                        {address.isDefault && (
+                                          <span className="badge bg-primary ms-2">
+                                            Default
+                                          </span>
+                                        )}
+                                      </div>
+                                      <div className="address-actions">
+                                        <button
+                                          className="btn btn-sm btn-outline-secondary me-1"
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleEditAddress(address);
+                                          }}
+                                          title="Edit address"
+                                        >
+                                          <i className="fas fa-edit"></i>
+                                        </button>
+                                        {!address.isDefault && (
+                                          <button
+                                            className="btn btn-sm btn-outline-danger"
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              if (
+                                                window.confirm(
+                                                  "Are you sure you want to delete this address?"
+                                                )
+                                              ) {
+                                                handleDeleteAddress(address.id);
+                                              }
+                                            }}
+                                            title="Delete address"
+                                          >
+                                            <i className="fas fa-trash"></i>
+                                          </button>
+                                        )}
+                                      </div>
+                                    </div>
           <p className="mb-1 mt-2">{address.name} • {address.mobile}</p>
-          <p className="mb-0 text-muted small">
-            {address.address}, {address.locality}, {address.city}, {address.state} - {address.pincode}
-            {address.landmark && `, Landmark: ${address.landmark}`}
-          </p>
-          
-          {!address.isDefault && (
-            <div className="mt-2">
-              <button 
-                className="btn btn-sm btn-link p-0 text-primary"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleSetDefaultAddress(address.id);
-                }}
-              >
-                Set as default
-              </button>
-            </div>
-          )}
-        </label>
-      </div>
-    </div>
-  ))}
-  
-  <button 
-    className="btn btn-outline-primary w-100 mt-3" 
-    onClick={() => {
-      setEditingAddress(null);
-      setNewAddress({
-        type: 'home',
-        name: '',
-        mobile: '',
-        address: '',
-        locality: '',
-        city: '',
-        state: '',
-        pincode: '',
-        landmark: ''
-      });
-      setShowAddressForm(true);
-    }}
-  >
+                                    <p className="mb-0 text-muted small">
+                                      {address.address}, {address.locality},{" "}
+                                      {address.city}, {address.state} -{" "}
+                                      {address.pincode}
+                                      {address.landmark &&
+                                        `, Landmark: ${address.landmark}`}
+                                    </p>
+
+                                    {!address.isDefault && (
+                                      <div className="mt-2">
+                                        <button
+                                          className="btn btn-sm btn-link p-0 text-primary"
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleSetDefaultAddress(address.id);
+                                          }}
+                                        >
+                                          Set as default
+                                        </button>
+                                      </div>
+                                    )}
+                                  </label>
+                                </div>
+                              </div>
+                            ))}
+
+                            <button
+                              className="btn btn-outline-primary w-100 mt-3"
+                              onClick={() => {
+                                setEditingAddress(null);
+                                setNewAddress({
+                                  type: "home",
+                                  name: "",
+                                  mobile: "",
+                                  address: "",
+                                  locality: "",
+                                  city: "",
+                                  state: "",
+                                  pincode: "",
+                                  landmark: "",
+                                });
+                                setShowAddressForm(true);
+                              }}
+                            >
     <i className="fas fa-plus me-2"></i>Add New Address
-  </button>
-</div>
-                  
-                  {/* No-contact delivery option */}
-                  <div className="no-contact-delivery mb-4">
-                    <div className="form-check form-switch">
-                      <input 
-                        className="form-check-input" 
-                        type="checkbox" 
-                        id="noContactDelivery" 
-                        checked={noContactDelivery}
+                            </button>
+                          </div>
+
+                          {/* No-contact delivery option */}
+                          <div className="no-contact-delivery mb-4">
+                            <div className="form-check form-switch">
+                              <input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="noContactDelivery"
+                                checked={noContactDelivery}
                         onChange={(e) => setNoContactDelivery(e.target.checked)}
-                      />
+                              />
                       <label className="form-check-label" htmlFor="noContactDelivery">
-                        <strong>Opt in for No-contact Delivery</strong>
-                        <p className="mb-0 small text-muted">
+                                <strong>Opt in for No-contact Delivery</strong>
+                                <p className="mb-0 small text-muted">
                           Unwell, or avoiding contact? Please select no-contact delivery. 
                           Partner will safely place the order outside your door (not for COD)
-                        </p>
+                                </p>
+                              </label>
+                            </div>
+                          </div>
+
+                          <div className="d-flex justify-content-between mt-4">
+                            <button
+                              className="btn btn-outline-secondary"
+                              onClick={() => setCheckoutStep(1)}
+                            >
+                              Back
+                            </button>
+                            <button
+                              className="btn btn-primary px-4"
+                              onClick={() => setCheckoutStep(3)}
+                            >
+                              Continue to Payment
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Step 3: Payment */}
+                      {checkoutStep === 3 && (
+                        <div className="checkout-step animate-fade-in">
+                          <h5 className="mb-4 fw-bold">Payment</h5>
+
+                          {/* Payment Methods */}
+                          <div className="payment-methods mb-4">
+                            <h6 className="mb-3">Select payment method</h6>
+
+                            <div
+                              className={`payment-option-card mb-2 ${
+                                paymentMethod === "upi" ? "active" : ""
+                              }`}
+                            >
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="paymentMethod"
+                                  id="upiPayment"
+                                  checked={paymentMethod === "upi"}
+                                  onChange={() => setPaymentMethod("upi")}
+                                />
+                        <label className="form-check-label w-100" htmlFor="upiPayment">
+                                  <div className="d-flex align-items-center">
+                                    <div className="payment-icon">
+                                      <i className="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <div className="ms-3">
+                                      <strong>UPI</strong>
+                              <p className="mb-0 small text-muted">Pay using UPI apps</p>
+                                    </div>
+                                  </div>
+                                </label>
+                              </div>
+                            </div>
+
+                            <div
+                              className={`payment-option-card mb-2 ${
+                                paymentMethod === "card" ? "active" : ""
+                              }`}
+                            >
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="paymentMethod"
+                                  id="cardPayment"
+                                  checked={paymentMethod === "card"}
+                                  onChange={() => setPaymentMethod("card")}
+                                />
+                        <label className="form-check-label w-100" htmlFor="cardPayment">
+                                  <div className="d-flex align-items-center">
+                                    <div className="payment-icon">
+                                      <i className="far fa-credit-card"></i>
+                                    </div>
+                                    <div className="ms-3">
+                                      <strong>Credit/Debit Card</strong>
+                              <p className="mb-0 small text-muted">Add and secure your card as per RBI guidelines</p>
+                                    </div>
+                                  </div>
+                                </label>
+                              </div>
+                            </div>
+
+                    <div className={`payment-option-card ${paymentMethod === 'cod' ? 'active' : ''}`}>
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="paymentMethod"
+                                  id="codPayment"
+                          checked={paymentMethod === 'cod'}
+                          onChange={() => setPaymentMethod('cod')}
+                                />
+                        <label className="form-check-label w-100" htmlFor="codPayment">
+                                  <div className="d-flex align-items-center">
+                                    <div className="payment-icon">
+                                      <i className="fas fa-money-bill-wave"></i>
+                                    </div>
+                                    <div className="ms-3">
+                                      <strong>Cash on Delivery</strong>
+                              <p className="mb-0 small text-muted">Pay when you receive the order</p>
+                                    </div>
+                                  </div>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Suggestions */}
+                          <div className="suggestions mb-4">
+                    <h6 className="mb-3">Any suggestions? We will pass it on...</h6>
+                            <textarea
+                              className="form-control"
+                              placeholder="Add preparation instructions (if any)"
+                              rows="3"
+                            ></textarea>
+                          </div>
+
+                          <div className="d-flex justify-content-between mt-4">
+                            <button
+                              className="btn btn-outline-secondary"
+                              onClick={() => setCheckoutStep(2)}
+                            >
+                              Back
+                            </button>
+                            <button
+                              className="btn btn-success px-4 py-2 fw-bold"
+                              onClick={handlePlaceOrder}
+                            >
+                              Place Order
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Right Column - Order Summary */}
+            <div className="col-md-5 p-4" style={{ backgroundColor: '#f8f9fa' }}>
+              <div className="sticky-top" style={{ top: '20px' }}>
+                        <h5 className="mb-4 fw-bold">Order Summary</h5>
+
+                        <div className="order-items mb-4">
+                          {cart.map((item) => {
+                            const cartItem = cart.find((i) => i.id === item.id);
+                            return (
+                      <div key={item.id} className="order-item-card mb-3">
+                                <div className="d-flex align-items-center">
+                                  <img
+                                    src={item.img}
+                                    alt={item.name}
+                                    className="rounded me-3"
+                            style={{ width: "60px", height: "60px", objectFit: "cover" }}
+                                  />
+                                  <div className="flex-grow-1">
+                                    <h6 className="mb-0">{item.name}</h6>
+                            <p className="mb-0 text-muted">₹{item.price}</p>
+                                  </div>
+                                  <div className="quantity-controls">
+                                    <button
+                                      className="quantity-btn"
+                                      onClick={() =>
+                                setCart(
+                                  (prevCart) =>
+                                          prevCart
+                                            .map((i) =>
+                                              i.id === item.id
+                                                ? { ...i, qty: i.qty - 1 }
+                                                : i
+                                            )
+                                            .filter((i) => i.qty > 0)
+                                        )
+                                      }
+                                    >
+                                      -
+                                    </button>
+                                    <span className="quantity-value mx-2">
+                                      {cartItem.qty}
+                                    </span>
+                                    <button
+                                      className="quantity-btn"
+                                      onClick={() => addToCart(item)}
+                                    >
+                                      +
+                                    </button>
+                                  </div>
+                                </div>
+                                <div className="d-flex justify-content-between mt-2">
+                                  <span className="text-muted">Item Total</span>
+                          <span className="fw-bold">₹{item.price * item.qty}</span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        {/* Bill Details */}
+                        <div className="bill-details-card">
+                          <h6 className="mb-3 fw-bold">Bill Details</h6>
+
+                          <div className="bill-item d-flex justify-content-between mb-2">
+                            <span>Item Total</span>
+                            <span>₹{total}</span>
+                          </div>
+
+                          <div className="bill-item d-flex justify-content-between mb-2">
+                            <span>Delivery Fee | 6.0 kms</span>
+                            <span className="text-success">₹30</span>
+                          </div>
+
+                          <div className="bill-item d-flex justify-content-between mb-2">
+                            <span>GST & Restaurant Charges</span>
+                            <span>₹{Math.round(total * 0.05)}</span>
+                          </div>
+
+                          <hr />
+
+                          <div className="bill-total d-flex justify-content-between fw-bold fs-5 mb-3">
+                            <span>TO PAY</span>
+                    <span>₹{total + 30 + Math.round(total * 0.05)}</span>
+                          </div>
+
+                          {checkoutStep === 3 && (
+                            <button
+                              className="btn btn-success w-100 py-3 fw-bold"
+                              onClick={handlePlaceOrder}
+                            >
+                              Place Order
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* // Add the address form modal right after the address cards section */}
+        {showAddressForm && (
+          <div className="address-form-modal" onClick={handleOverlayClick}>
+            <div
+              className="address-form-container"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="address-form-header">
+                <h5>{editingAddress ? "Edit Address" : "Add New Address"}</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => {
+                    setShowAddressForm(false);
+                    setEditingAddress(null);
+                    setNewAddress({
+                      type: "home",
+                      name: "",
+                      mobile: "",
+                      address: "",
+                      locality: "",
+                      city: "",
+                      state: "",
+                      pincode: "",
+                      landmark: "",
+                    });
+                  }}
+                ></button>
+              </div>
+
+              <div className="address-form-body">
+                <div className="address-type-selector mb-3">
+                  <label className="form-label">Address Type</label>
+                  <div className="d-flex gap-2 flex-wrap">
+                    <button
+                      type="button"
+                      className={`btn ${
+                        newAddress.type === "home"
+                          ? "btn-primary"
+                          : "btn-outline-primary"
+                      }`}
+                      onClick={() =>
+                        setNewAddress({ ...newAddress, type: "home" })
+                      }
+                    >
+                      <i className="fas fa-home me-2"></i>Home
+                    </button>
+                    <button
+                      type="button"
+                      className={`btn ${
+                        newAddress.type === "work"
+                          ? "btn-primary"
+                          : "btn-outline-primary"
+                      }`}
+                      onClick={() =>
+                        setNewAddress({ ...newAddress, type: "work" })
+                      }
+                    >
+                      <i className="fas fa-building me-2"></i>Work
+                    </button>
+                    <button
+                      type="button"
+                      className={`btn ${
+                        newAddress.type === "other"
+                          ? "btn-primary"
+                          : "btn-outline-primary"
+                      }`}
+                      onClick={() =>
+                        setNewAddress({ ...newAddress, type: "other" })
+                      }
+                    >
+                      <i className="fas fa-map-marker-alt me-2"></i>Other
+                    </button>
+                  </div>
+                </div>
+
+                <div className="row g-3">
+                  <div className="col-md-6">
+                    <div className="form-floating">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="fullName"
+                        placeholder="Full Name"
+                        value={newAddress.name}
+                        onChange={(e) =>
+                          setNewAddress({ ...newAddress, name: e.target.value })
+                        }
+                      />
+                      <label htmlFor="fullName">Full Name *</label>
+                    </div>
+                  </div>
+
+                  <div className="col-md-6">
+                    <div className="form-floating">
+                      <input
+                        type="tel"
+                        className="form-control"
+                        id="mobileNumber"
+                        placeholder="Mobile Number"
+                        value={newAddress.mobile}
+                        onChange={(e) =>
+                          setNewAddress({
+                            ...newAddress,
+                            mobile: e.target.value,
+                          })
+                        }
+                      />
+                      <label htmlFor="mobileNumber">Mobile Number *</label>
+                    </div>
+                  </div>
+
+                  <div className="col-12">
+                    <div className="form-floating">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="flatHouseNo"
+                        placeholder="Flat, House no., Building, Company, Apartment"
+                        value={newAddress.address}
+                        onChange={(e) =>
+                          setNewAddress({
+                            ...newAddress,
+                            address: e.target.value,
+                          })
+                        }
+                      />
+                      <label htmlFor="flatHouseNo">
+                        Flat, House no., Building, Company, Apartment *
                       </label>
                     </div>
                   </div>
-                  
-                  <div className="d-flex justify-content-between mt-4">
-                    <button 
-                      className="btn btn-outline-secondary"
-                      onClick={() => setCheckoutStep(1)}
-                    >
-                      Back
-                    </button>
-                    <button 
-                      className="btn btn-primary px-4"
-                      onClick={() => setCheckoutStep(3)}
-                    >
-                      Continue to Payment
-                    </button>
-                  </div>
-                </div>
-              )}
-              
-              {/* Step 3: Payment */}
-              {checkoutStep === 3 && (
-                <div className="checkout-step animate-fade-in">
-                  <h5 className="mb-4 fw-bold">Payment</h5>
-                  
-                  {/* Payment Methods */}
-                  <div className="payment-methods mb-4">
-                    <h6 className="mb-3">Select payment method</h6>
-                    
-                    <div className={`payment-option-card mb-2 ${paymentMethod === 'upi' ? 'active' : ''}`}>
-                      <div className="form-check">
-                        <input 
-                          className="form-check-input" 
-                          type="radio" 
-                          name="paymentMethod" 
-                          id="upiPayment" 
-                          checked={paymentMethod === 'upi'}
-                          onChange={() => setPaymentMethod('upi')}
-                        />
-                        <label className="form-check-label w-100" htmlFor="upiPayment">
-                          <div className="d-flex align-items-center">
-                            <div className="payment-icon">
-                              <i className="fas fa-mobile-alt"></i>
-                            </div>
-                            <div className="ms-3">
-                              <strong>UPI</strong>
-                              <p className="mb-0 small text-muted">Pay using UPI apps</p>
-                            </div>
-                          </div>
-                        </label>
-                      </div>
-                    </div>
-                    
-                    <div className={`payment-option-card mb-2 ${paymentMethod === 'card' ? 'active' : ''}`}>
-                      <div className="form-check">
-                        <input 
-                          className="form-check-input" 
-                          type="radio" 
-                          name="paymentMethod" 
-                          id="cardPayment" 
-                          checked={paymentMethod === 'card'}
-                          onChange={() => setPaymentMethod('card')}
-                        />
-                        <label className="form-check-label w-100" htmlFor="cardPayment">
-                          <div className="d-flex align-items-center">
-                            <div className="payment-icon">
-                              <i className="far fa-credit-card"></i>
-                            </div>
-                            <div className="ms-3">
-                              <strong>Credit/Debit Card</strong>
-                              <p className="mb-0 small text-muted">Add and secure your card as per RBI guidelines</p>
-                            </div>
-                          </div>
-                        </label>
-                      </div>
-                    </div>
-                    
-                    <div className={`payment-option-card ${paymentMethod === 'cod' ? 'active' : ''}`}>
-                      <div className="form-check">
-                        <input 
-                          className="form-check-input" 
-                          type="radio" 
-                          name="paymentMethod" 
-                          id="codPayment" 
-                          checked={paymentMethod === 'cod'}
-                          onChange={() => setPaymentMethod('cod')}
-                        />
-                        <label className="form-check-label w-100" htmlFor="codPayment">
-                          <div className="d-flex align-items-center">
-                            <div className="payment-icon">
-                              <i className="fas fa-money-bill-wave"></i>
-                            </div>
-                            <div className="ms-3">
-                              <strong>Cash on Delivery</strong>
-                              <p className="mb-0 small text-muted">Pay when you receive the order</p>
-                            </div>
-                          </div>
-                        </label>
-                      </div>
+
+                  <div className="col-12">
+                    <div className="form-floating">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="areaLocality"
+                        placeholder="Area, Locality"
+                        value={newAddress.locality}
+                        onChange={(e) => setNewAddress({...newAddress, locality: e.target.value,
+                          })
+                        }
+                      />
+                      <label htmlFor="areaLocality">Area, Locality *</label>
                     </div>
                   </div>
-                  
-                  {/* Suggestions */}
-                  <div className="suggestions mb-4">
-                    <h6 className="mb-3">Any suggestions? We will pass it on...</h6>
-                    <textarea 
-                      className="form-control" 
-                      placeholder="Add preparation instructions (if any)" 
-                      rows="3"
-                    ></textarea>
+
+                  <div className="col-md-6">
+                    <div className="form-floating">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="city"
+                        placeholder="City"
+                        value={newAddress.city}
+                        onChange={(e) => setNewAddress({...newAddress, city: e.target.value})}
+                      />
+                      <label htmlFor="city">City *</label>
+                    </div>
                   </div>
-                  
-                  <div className="d-flex justify-content-between mt-4">
-                    <button 
-                      className="btn btn-outline-secondary"
-                      onClick={() => setCheckoutStep(2)}
-                    >
-                      Back
-                    </button>
-                    <button 
-                      className="btn btn-success px-4 py-2 fw-bold"
-                      onClick={handlePlaceOrder}
-                    >
-                      Place Order
-                    </button>
+
+                  <div className="col-md-6">
+                    <div className="form-floating">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="state"
+                        placeholder="State"
+                        value={newAddress.state}
+                        onChange={(e) =>
+                          setNewAddress({
+                            ...newAddress,
+                            state: e.target.value,
+                          })
+                        }
+                      />
+                      <label htmlFor="state">State *</label>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-            
-            {/* Right Column - Order Summary */}
-            <div className="col-md-5 p-4" style={{ backgroundColor: '#f8f9fa' }}>
-              <div className="sticky-top" style={{ top: '20px' }}>
-                <h5 className="mb-4 fw-bold">Order Summary</h5>
-                
-                <div className="order-items mb-4">
-                  {cart.map((item) => {
-                    const cartItem = cart.find((i) => i.id === item.id);
-                    return (
-                      <div key={item.id} className="order-item-card mb-3">
-                        <div className="d-flex align-items-center">
-                          <img 
-                            src={item.img} 
-                            alt={item.name} 
-                            className="rounded me-3"
-                            style={{ width: "60px", height: "60px", objectFit: "cover" }}
-                          />
-                          <div className="flex-grow-1">
-                            <h6 className="mb-0">{item.name}</h6>
-                            <p className="mb-0 text-muted">₹{item.price}</p>
-                          </div>
-                          <div className="quantity-controls">
-                            <button
-                              className="quantity-btn"
-                              onClick={() =>
-                                setCart(
-                                  (prevCart) =>
-                                    prevCart
-                                      .map((i) =>
-                                        i.id === item.id
-                                          ? { ...i, qty: i.qty - 1 }
-                                          : i
-                                      )
-                                      .filter((i) => i.qty > 0)
-                                )
-                              }
-                            >
-                              -
-                            </button>
-                            <span className="quantity-value mx-2">
-                              {cartItem.qty}
-                            </span>
-                            <button
-                              className="quantity-btn"
-                              onClick={() => addToCart(item)}
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-                        <div className="d-flex justify-content-between mt-2">
-                          <span className="text-muted">Item Total</span>
-                          <span className="fw-bold">₹{item.price * item.qty}</span>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-                
-                {/* Bill Details */}
-                <div className="bill-details-card">
-                  <h6 className="mb-3 fw-bold">Bill Details</h6>
-                  
-                  <div className="bill-item d-flex justify-content-between mb-2">
-                    <span>Item Total</span>
-                    <span>₹{total}</span>
+
+                  <div className="col-md-6">
+                    <div className="form-floating">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="pincode"
+                        placeholder="Pincode"
+                        value={newAddress.pincode}
+                        onChange={(e) =>
+                          setNewAddress({
+                            ...newAddress,
+                            pincode: e.target.value,
+                          })
+                        }
+                      />
+                      <label htmlFor="pincode">Pincode *</label>
+                    </div>
                   </div>
-                  
-                  <div className="bill-item d-flex justify-content-between mb-2">
-                    <span>Delivery Fee | 6.0 kms</span>
-                    <span className="text-success">₹30</span>
+
+                  <div className="col-md-6">
+                    <div className="form-floating">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="landmark"
+                        placeholder="Landmark (Optional)"
+                        value={newAddress.landmark}
+                        onChange={(e) =>
+                          setNewAddress({
+                            ...newAddress,
+                            landmark: e.target.value,
+                          })
+                        }
+                      />
+                      <label htmlFor="landmark">Landmark (Optional)</label>
+                    </div>
                   </div>
-                  
-                  <div className="bill-item d-flex justify-content-between mb-2">
-                    <span>GST & Restaurant Charges</span>
-                    <span>₹{Math.round(total * 0.05)}</span>
-                  </div>
-                  
-                  <hr />
-                  
-                  <div className="bill-total d-flex justify-content-between fw-bold fs-5 mb-3">
-                    <span>TO PAY</span>
-                    <span>₹{total + 30 + Math.round(total * 0.05)}</span>
-                  </div>
-                  
-                  {checkoutStep === 3 && (
-                    <button 
-                      className="btn btn-success w-100 py-3 fw-bold"
-                      onClick={handlePlaceOrder}
-                    >
-                      Place Order
-                    </button>
-                  )}
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
 
-
-
-
-{/* // Add the address form modal right after the address cards section */}
-{showAddressForm && (
-  <div className="address-form-modal" onClick={handleOverlayClick}>
-    <div className="address-form-container" onClick={(e) => e.stopPropagation()}>
-      <div className="address-form-header">
-        <h5>{editingAddress ? 'Edit Address' : 'Add New Address'}</h5>
-        <button 
-          type="button" 
-          className="btn-close" 
-          onClick={() => {
-            setShowAddressForm(false);
-            setEditingAddress(null);
-            setNewAddress({
-              type: 'home',
-              name: '',
-              mobile: '',
-              address: '',
-              locality: '',
-              city: '',
-              state: '',
-              pincode: '',
-              landmark: ''
-            });
-          }}
-        ></button>
-      </div>
-      
-      <div className="address-form-body">
-        <div className="address-type-selector mb-3">
-          <label className="form-label">Address Type</label>
-          <div className="d-flex gap-2 flex-wrap">
-            <button
-              type="button"
-              className={`btn ${newAddress.type === 'home' ? 'btn-primary' : 'btn-outline-primary'}`}
-              onClick={() => setNewAddress({...newAddress, type: 'home'})}
-            >
-              <i className="fas fa-home me-2"></i>Home
-            </button>
-            <button
-              type="button"
-              className={`btn ${newAddress.type === 'work' ? 'btn-primary' : 'btn-outline-primary'}`}
-              onClick={() => setNewAddress({...newAddress, type: 'work'})}
-            >
-              <i className="fas fa-building me-2"></i>Work
-            </button>
-            <button
-              type="button"
-              className={`btn ${newAddress.type === 'other' ? 'btn-primary' : 'btn-outline-primary'}`}
-              onClick={() => setNewAddress({...newAddress, type: 'other'})}
-            >
-              <i className="fas fa-map-marker-alt me-2"></i>Other
-            </button>
-          </div>
-        </div>
-        
-        <div className="row g-3">
-          <div className="col-md-6">
-            <div className="form-floating">
-              <input
-                type="text"
-                className="form-control"
-                id="fullName"
-                placeholder="Full Name"
-                value={newAddress.name}
-                onChange={(e) => setNewAddress({...newAddress, name: e.target.value})}
-              />
-              <label htmlFor="fullName">Full Name *</label>
-            </div>
-          </div>
-          
-          <div className="col-md-6">
-            <div className="form-floating">
-              <input
-                type="tel"
-                className="form-control"
-                id="mobileNumber"
-                placeholder="Mobile Number"
-                value={newAddress.mobile}
-                onChange={(e) => setNewAddress({...newAddress, mobile: e.target.value})}
-              />
-              <label htmlFor="mobileNumber">Mobile Number *</label>
-            </div>
-          </div>
-          
-          <div className="col-12">
-            <div className="form-floating">
-              <input
-                type="text"
-                className="form-control"
-                id="flatHouseNo"
-                placeholder="Flat, House no., Building, Company, Apartment"
-                value={newAddress.address}
-                onChange={(e) => setNewAddress({...newAddress, address: e.target.value})}
-              />
-              <label htmlFor="flatHouseNo">Flat, House no., Building, Company, Apartment *</label>
-            </div>
-          </div>
-          
-          <div className="col-12">
-            <div className="form-floating">
-              <input
-                type="text"
-                className="form-control"
-                id="areaLocality"
-                placeholder="Area, Locality"
-                value={newAddress.locality}
-                onChange={(e) => setNewAddress({...newAddress, locality: e.target.value})}
-              />
-              <label htmlFor="areaLocality">Area, Locality *</label>
-            </div>
-          </div>
-          
-          <div className="col-md-6">
-            <div className="form-floating">
-              <input
-                type="text"
-                className="form-control"
-                id="city"
-                placeholder="City"
-                value={newAddress.city}
-                onChange={(e) => setNewAddress({...newAddress, city: e.target.value})}
-              />
-              <label htmlFor="city">City *</label>
-            </div>
-          </div>
-          
-          <div className="col-md-6">
-            <div className="form-floating">
-              <input
-                type="text"
-                className="form-control"
-                id="state"
-                placeholder="State"
-                value={newAddress.state}
-                onChange={(e) => setNewAddress({...newAddress, state: e.target.value})}
-              />
-              <label htmlFor="state">State *</label>
-            </div>
-          </div>
-          
-          <div className="col-md-6">
-            <div className="form-floating">
-              <input
-                type="text"
-                className="form-control"
-                id="pincode"
-                placeholder="Pincode"
-                value={newAddress.pincode}
-                onChange={(e) => setNewAddress({...newAddress, pincode: e.target.value})}
-              />
-              <label htmlFor="pincode">Pincode *</label>
-            </div>
-          </div>
-          
-          <div className="col-md-6">
-            <div className="form-floating">
-              <input
-                type="text"
-                className="form-control"
-                id="landmark"
-                placeholder="Landmark (Optional)"
-                value={newAddress.landmark}
-                onChange={(e) => setNewAddress({...newAddress, landmark: e.target.value})}
-              />
-              <label htmlFor="landmark">Landmark (Optional)</label>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div className="address-form-footer">
-        {/* {editingAddress && (
+              <div className="address-form-footer">
+                {/* {editingAddress && (
           <button 
             type="button" 
             className="btn btn-danger me-auto"
@@ -2074,39 +2465,49 @@ const handleEditAddress = (address) => {
             <i className="fas fa-trash me-2"></i>Delete
           </button>
         )} */}
-        <button 
-          type="button" 
-          className="btn btn-outline-secondary"
-          onClick={() => {
-            setShowAddressForm(false);
-            setEditingAddress(null);
-            setNewAddress({
-              type: 'home',
-              name: '',
-              mobile: '',
-              address: '',
-              locality: '',
-              city: '',
-              state: '',
-              pincode: '',
-              landmark: ''
-            });
-          }}
-        >
-          Cancel
-        </button>
-        <button 
-          type="button" 
-          className="btn btn-primary"
-          onClick={editingAddress ? handleUpdateAddress : handleAddNewAddress}
-          disabled={!newAddress.name || !newAddress.mobile || !newAddress.address || !newAddress.locality || !newAddress.city || !newAddress.state || !newAddress.pincode}
-        >
-          {editingAddress ? 'Update Address' : 'Save Address'}
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  onClick={() => {
+                    setShowAddressForm(false);
+                    setEditingAddress(null);
+                    setNewAddress({
+                      type: "home",
+                      name: "",
+                      mobile: "",
+                      address: "",
+                      locality: "",
+                      city: "",
+                      state: "",
+                      pincode: "",
+                      landmark: "",
+                    });
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={
+                    editingAddress ? handleUpdateAddress : handleAddNewAddress
+                  }
+                  disabled={
+                    !newAddress.name ||
+                    !newAddress.mobile ||
+                    !newAddress.address ||
+                    !newAddress.locality ||
+                    !newAddress.city ||
+                    !newAddress.state ||
+                    !newAddress.pincode
+                  }
+                >
+                  {editingAddress ? "Update Address" : "Save Address"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
 
 {/* Success Modal */}
@@ -2171,419 +2572,428 @@ const handleEditAddress = (address) => {
 
 
         {/* <!-- Reservation Start --> */}
-      <div
-        className="container-xxl py-5 px-0 wow fadeInUp"
-        data-wow-delay="0.1s"
-      >
-        <div className="row g-0">
-          <div className="col-md-6">
-            <div className="video">
-              <button
-                type="button"
-                className="btn-play"
-                data-bs-toggle="modal"
-                data-src="https://www.youtube.com/embed/DWRcNpR6Kdc"
-                data-bs-target="#videoModal"
-              >
-                <span></span>
-              </button>
+        <div
+          className="container-xxl py-5 px-0 wow fadeInUp"
+          data-wow-delay="0.1s"
+        >
+          <div className="row g-0">
+            <div className="col-md-6">
+              <div className="video">
+                <button
+                  type="button"
+                  className="btn-play"
+                  data-bs-toggle="modal"
+                  data-src="https://www.youtube.com/embed/DWRcNpR6Kdc"
+                  data-bs-target="#videoModal"
+                >
+                  <span></span>
+                </button>
+              </div>
+            </div>
+            <div className="col-md-6 bg-dark d-flex align-items-center">
+              <div className="p-5 wow fadeInUp" data-wow-delay="0.2s">
+                <h5 className="section-title ff-secondary text-start text-primary fw-normal">
+                  Reservation
+                </h5>
+                <h1 className="text-white mb-4">Book A Table Online</h1>
+                <form>
+                  <div className="row g-3">
+                    <div className="col-md-6">
+                      <div className="form-floating">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="name"
+                          placeholder="Your Name" autoComplete="on"
+                        />
+                        <label htmlFor="name">Your Name</label>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="form-floating">
+                        <input
+                          type="email"
+                          className="form-control"
+                          id="email"
+                          placeholder="Your Email" autoComplete="on"
+                        />
+                        <label htmlFor="email">Your Email</label>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div
+                        className="form-floating date"
+                        id="date3"
+                        data-target-input="nearest"
+                      >
+                        <input
+                          type="text"
+                          className="form-control datetimepicker-input"
+                          id="datetime"
+                          placeholder="Date & Time"
+                          data-target="#date3"
+                          data-toggle="datetimepicker"
+                        />
+                        <label htmlFor="datetime">Date & Time</label>
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="form-floating">
+                        <select className="form-select" id="select1">
+                          <option value="1">People 1</option>
+                          <option value="2">People 2</option>
+                          <option value="3">People 3</option>
+                        </select>
+                        <label htmlFor="select1">No Of People</label>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="form-floating">
+                        <textarea
+                          className="form-control"
+                          placeholder="Special Request"
+                          id="message"
+                          style={{ height: "100px" }}
+                        ></textarea>
+                        <label htmlFor="message">Special Request</label>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <button
+                        className="btn btn-primary w-100 py-3"
+                        type="submit"
+                      >
+                        Book Now
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-          <div className="col-md-6 bg-dark d-flex align-items-center">
-            <div className="p-5 wow fadeInUp" data-wow-delay="0.2s">
-              <h5 className="section-title ff-secondary text-start text-primary fw-normal">
-                Reservation
+        </div>
+
+        <div
+          className="modal fade"
+          id="videoModal"
+          tabIndex={-1}
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content rounded-0">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                  Youtube Video
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body">
+                {/* <!-- 16:9 aspect ratio --> */}
+                <div className="ratio ratio-16x9">
+                  <iframe
+                    className="embed-responsive-item"
+                    src="null"
+                    title="Video Player"
+                    id="video"
+                    allowFullScreen
+                    allowscriptaccess="always"
+                    allow="autoplay"
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <!-- Reservation Start --> */}
+
+        {/* <!-- Team Start --> */}
+        <div className="container-xxl pt-5 pb-3">
+          <div className="container">
+            <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
+              <h5 className="section-title ff-secondary text-center text-primary fw-normal">
+                Team Members
               </h5>
-              <h1 className="text-white mb-4">Book A Table Online</h1>
-              <form>
-                <div className="row g-3">
-                  <div className="col-md-6">
-                    <div className="form-floating">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="name"
-                        placeholder="Your Name" autoComplete="on"
-                      />
-                      <label htmlFor="name">Your Name</label>
-                    </div>
+              <h1 className="mb-5">Our Master Chefs</h1>
+            </div>
+            <div className="row g-4">
+              <div
+                className="col-lg-3 col-md-6 wow fadeInUp"
+                data-wow-delay="0.1s"
+              >
+                <div className="team-item text-center rounded overflow-hidden">
+                  <div className="rounded-circle overflow-hidden m-4">
+                    <img className="img-fluid" src="img/team-1.jpg" alt="" />
                   </div>
-                  <div className="col-md-6">
-                    <div className="form-floating">
-                      <input
-                        type="email"
-                        className="form-control"
-                        id="email"
-                        placeholder="Your Email" autoComplete="on"
-                      />
-                      <label htmlFor="email">Your Email</label>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div
-                      className="form-floating date"
-                      id="date3"
-                      data-target-input="nearest"
-                    >
-                      <input
-                        type="text"
-                        className="form-control datetimepicker-input"
-                        id="datetime"
-                        placeholder="Date & Time"
-                        data-target="#date3"
-                        data-toggle="datetimepicker"
-                      />
-                      <label htmlFor="datetime">Date & Time</label>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-floating">
-                      <select className="form-select" id="select1">
-                        <option value="1">People 1</option>
-                        <option value="2">People 2</option>
-                        <option value="3">People 3</option>
-                      </select>
-                      <label htmlFor="select1">No Of People</label>
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <div className="form-floating">
-                      <textarea
-                        className="form-control"
-                        placeholder="Special Request"
-                        id="message"
-                        style={{ height: "100px" }}
-                      ></textarea>
-                      <label htmlFor="message">Special Request</label>
-                    </div>
-                  </div>
-                  <div className="col-12">
-                    <button
-                      className="btn btn-primary w-100 py-3"
-                      type="submit"
-                    >
-                      Book Now
+                  <h5 className="mb-0">Full Name</h5>
+                  <small>Designation</small>
+                  <div className="d-flex justify-content-center mt-3">
+                    <button type="button" className="btn btn-square btn-primary mx-1">
+                      <i className="fab fa-facebook-f"></i>
+                    </button>
+
+                    <button type="button" className="btn btn-square btn-primary mx-1">
+                      <i className="fab fa-twitter"></i>
+                    </button>
+
+                    <button type="button" className="btn btn-square btn-primary mx-1">
+                      <i className="fab fa-instagram"></i>
                     </button>
                   </div>
                 </div>
-              </form>
+              </div>
+              <div
+                className="col-lg-3 col-md-6 wow fadeInUp"
+                data-wow-delay="0.3s"
+              >
+                <div className="team-item text-center rounded overflow-hidden">
+                  <div className="rounded-circle overflow-hidden m-4">
+                    <img className="img-fluid" src="img/team-2.jpg" alt="" />
+                  </div>
+                  <h5 className="mb-0">Full Name</h5>
+                  <small>Designation</small>
+                  <div className="d-flex justify-content-center mt-3">
+                  <button type="button" className="btn btn-square btn-primary mx-1">
+                      <i className="fab fa-facebook-f"></i>
+                    </button>
+
+                  <button type="button" className="btn btn-square btn-primary mx-1">
+                      <i className="fab fa-twitter"></i>
+                    </button>
+
+                  <button type="button" className="btn btn-square btn-primary mx-1">
+                      <i className="fab fa-instagram"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="col-lg-3 col-md-6 wow fadeInUp"
+                data-wow-delay="0.5s"
+              >
+                <div className="team-item text-center rounded overflow-hidden">
+                  <div className="rounded-circle overflow-hidden m-4">
+                    <img className="img-fluid" src="img/team-3.jpg" alt="" />
+                  </div>
+                  <h5 className="mb-0">Full Name</h5>
+                  <small>Designation</small>
+                  <div className="d-flex justify-content-center mt-3">
+                  <button type="button" className="btn btn-square btn-primary mx-1">
+                      <i className="fab fa-facebook-f"></i>
+                    </button>
+
+                  <button type="button" className="btn btn-square btn-primary mx-1">
+                      <i className="fab fa-twitter"></i>
+                    </button>
+
+                  <button type="button" className="btn btn-square btn-primary mx-1">
+                      <i className="fab fa-instagram"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="col-lg-3 col-md-6 wow fadeInUp"
+                data-wow-delay="0.7s"
+              >
+                <div className="team-item text-center rounded overflow-hidden">
+                  <div className="rounded-circle overflow-hidden m-4">
+                    <img className="img-fluid" src="img/team-4.jpg" alt="" />
+                  </div>
+                  <h5 className="mb-0">Full Name</h5>
+                  <small>Designation</small>
+                  <div className="d-flex justify-content-center mt-3">
+                  <button type="button" className="btn btn-square btn-primary mx-1">
+                      <i className="fab fa-facebook-f"></i>
+                    </button>
+
+                  <button type="button" className="btn btn-square btn-primary mx-1">
+                      <i className="fab fa-twitter"></i>
+                    </button>
+
+                  <button type="button" className="btn btn-square btn-primary mx-1">
+                      <i className="fab fa-instagram"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        {/* <!-- Team End --> */}
 
-      <div
-        className="modal fade"
-        id="videoModal"
-        tabIndex={-1}
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content rounded-0">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                Youtube Video
+        {/* <!-- Testimonial Start --> */}
+
+        <div className="container-xxl py-5" id="testimonials">
+          <div className="container">
+            <div className="text-center mb-5">
+              <h5 className="section-title ff-secondary text-center text-primary fw-normal">
+                Testimonials
               </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <h1 className="mb-4">What Our Clients Say</h1>
+              <p className="w-75 mx-auto mb-5">
+                Hear from our satisfied customers about their dining experience
+                at SangEat
+              </p>
             </div>
-            <div className="modal-body">
-              {/* <!-- 16:9 aspect ratio --> */}
-              <div className="ratio ratio-16x9">
-                <iframe
-                  className="embed-responsive-item"
-                  src="null"
-                  title="Video Player"
-                  id="video"
-                  allowFullScreen
-                  allowscriptaccess="always"
-                  allow="autoplay"
-                ></iframe>
+
+            <div className="testimonial-carousel">
+              <div className="testimonial-track">
+                <div className="testimonial-slide active">
+                  <div className="testimonial-card">
+                    <div className="testimonial-rating">
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                    </div>
+                    <div className="testimonial-content">
+                      <i className="fa fa-quote-left quote-icon"></i>
+                      <p className="testimonial-text">
+                        The food at SangEat is absolutely incredible! The
+                        flavors are authentic and every dish tells a story. The
+                        Chicken Tikka was perfectly spiced and cooked to
+                        perfection.
+                      </p>
+                      <i className="fa fa-quote-right quote-icon"></i>
+                    </div>
+                    <div className="testimonial-author">
+                      <img
+                        className="testimonial-avatar"
+                        src="img/testimonial-1.jpg"
+                        alt="Sarah Johnson"
+                      />
+                      <div className="author-info">
+                        <h5 className="mb-0">Sarah Johnson</h5>
+                        <small>Food Blogger</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="testimonial-slide">
+                  <div className="testimonial-card">
+                    <div className="testimonial-rating">
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                    </div>
+                    <div className="testimonial-content">
+                      <i className="fa fa-quote-left quote-icon"></i>
+                      <p className="testimonial-text">
+                        I've been to many Indian restaurants, but SangEat stands
+                        out with its exceptional service and authentic flavors.
+                        The Brioche Omelette is now my weekend favorite!
+                      </p>
+                      <i className="fa fa-quote-right quote-icon"></i>
+                    </div>
+                    <div className="testimonial-author">
+                      <img
+                        className="testimonial-avatar"
+                        src="img/testimonial-2.jpg"
+                        alt="Michael Chen"
+                      />
+                      <div className="author-info">
+                        <h5 className="mb-0">Michael Chen</h5>
+                        <small>Regular Customer</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="testimonial-slide">
+                  <div className="testimonial-card">
+                    <div className="testimonial-rating">
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                      <span className="star">☆</span>
+                    </div>
+                    <div className="testimonial-content">
+                      <i className="fa fa-quote-left quote-icon"></i>
+                      <p className="testimonial-text">
+                        The ambiance and food quality make SangEat perfect for
+                        family dinners. We celebrated my daughter's birthday
+                        here and the staff went above and beyond to make it
+                        special.
+                      </p>
+                      <i className="fa fa-quote-right quote-icon"></i>
+                    </div>
+                    <div className="testimonial-author">
+                      <img
+                        className="testimonial-avatar"
+                        src="img/testimonial-3.jpg"
+                        alt="Priya Sharma"
+                      />
+                      <div className="author-info">
+                        <h5 className="mb-0">Priya Sharma</h5>
+                        <small>Local Guide</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="testimonial-slide">
+                  <div className="testimonial-card">
+                    <div className="testimonial-rating">
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                      <span className="star">★</span>
+                    </div>
+                    <div className="testimonial-content">
+                      <i className="fa fa-quote-left quote-icon"></i>
+                      <p className="testimonial-text">
+                        As someone from India, I can attest to the authenticity
+                        of the flavors at SangEat. Their Signature Roast Chicken
+                        Superbow reminds me of home. Highly recommended!
+                      </p>
+                      <i className="fa fa-quote-right quote-icon"></i>
+                    </div>
+                    <div className="testimonial-author">
+                      <img
+                        className="testimonial-avatar"
+                        src="img/testimonial-4.jpg"
+                        alt="Raj Patel"
+                      />
+                      <div className="author-info">
+                        <h5 className="mb-0">Raj Patel</h5>
+                        <small>Food Critic</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="testimonial-nav">
+                <button className="nav-btn prev-btn">
+                  <i className="fa fa-chevron-left"></i>
+                </button>
+                <div className="nav-dots">
+                  <span className="dot active"></span>
+                  <span className="dot"></span>
+                  <span className="dot"></span>
+                  <span className="dot"></span>
+                </div>
+                <button className="nav-btn next-btn">
+                  <i className="fa fa-chevron-right"></i>
+                </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* <!-- Reservation Start --> */}
 
-      {/* <!-- Team Start --> */}
-      <div className="container-xxl pt-5 pb-3">
-        <div className="container">
-          <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
-            <h5 className="section-title ff-secondary text-center text-primary fw-normal">
-              Team Members
-            </h5>
-            <h1 className="mb-5">Our Master Chefs</h1>
-          </div>
-          <div className="row g-4">
-            <div
-              className="col-lg-3 col-md-6 wow fadeInUp"
-              data-wow-delay="0.1s"
-            >
-              <div className="team-item text-center rounded overflow-hidden">
-                <div className="rounded-circle overflow-hidden m-4">
-                  <img className="img-fluid" src="img/team-1.jpg" alt="" />
-                </div>
-                <h5 className="mb-0">Full Name</h5>
-                <small>Designation</small>
-                <div className="d-flex justify-content-center mt-3">
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                    <i className="fab fa-facebook-f"></i>
-                  </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                    <i className="fab fa-twitter"></i>
-                  </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                    <i className="fab fa-instagram"></i>
-                  </button>
-
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-lg-3 col-md-6 wow fadeInUp"
-              data-wow-delay="0.3s"
-            >
-              <div className="team-item text-center rounded overflow-hidden">
-                <div className="rounded-circle overflow-hidden m-4">
-                  <img className="img-fluid" src="img/team-2.jpg" alt="" />
-                </div>
-                <h5 className="mb-0">Full Name</h5>
-                <small>Designation</small>
-                <div className="d-flex justify-content-center mt-3">
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                    <i className="fab fa-facebook-f"></i>
-                  </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                    <i className="fab fa-twitter"></i>
-                  </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                    <i className="fab fa-instagram"></i>
-                  </button>
-
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-lg-3 col-md-6 wow fadeInUp"
-              data-wow-delay="0.5s"
-            >
-              <div className="team-item text-center rounded overflow-hidden">
-                <div className="rounded-circle overflow-hidden m-4">
-                  <img className="img-fluid" src="img/team-3.jpg" alt="" />
-                </div>
-                <h5 className="mb-0">Full Name</h5>
-                <small>Designation</small>
-                <div className="d-flex justify-content-center mt-3">
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                    <i className="fab fa-facebook-f"></i>
-                  </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                    <i className="fab fa-twitter"></i>
-                  </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                    <i className="fab fa-instagram"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-lg-3 col-md-6 wow fadeInUp"
-              data-wow-delay="0.7s"
-            >
-              <div className="team-item text-center rounded overflow-hidden">
-                <div className="rounded-circle overflow-hidden m-4">
-                  <img className="img-fluid" src="img/team-4.jpg" alt="" />
-                </div>
-                <h5 className="mb-0">Full Name</h5>
-                <small>Designation</small>
-                <div className="d-flex justify-content-center mt-3">
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                    <i className="fab fa-facebook-f"></i>
-                  </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                    <i className="fab fa-twitter"></i>
-                  </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                    <i className="fab fa-instagram"></i>
-                  </button>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* <!-- Team End --> */}
-
-      {/* <!-- Testimonial Start --> */}
-
-      <div className="container-xxl py-5" id="testimonials">
-        <div className="container">
-          <div className="text-center mb-5">
-            <h5 className="section-title ff-secondary text-center text-primary fw-normal">
-              Testimonials
-            </h5>
-            <h1 className="mb-4">What Our Clients Say</h1>
-            <p className="w-75 mx-auto mb-5">Hear from our satisfied customers about their dining experience at Sang Eats</p>
-          </div>
-          
-          <div className="testimonial-carousel">
-            <div className="testimonial-track">
-              <div className="testimonial-slide active">
-                <div className="testimonial-card">
-                  <div className="testimonial-rating">
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                  </div>
-                  <div className="testimonial-content">
-                    <i className="fa fa-quote-left quote-icon"></i>
-                    <p className="testimonial-text">
-                      The food at Sang Eats is absolutely incredible! The flavors are authentic and every dish tells a story. The Chicken Tikka was perfectly spiced and cooked to perfection.
-                    </p>
-                    <i className="fa fa-quote-right quote-icon"></i>
-                  </div>
-                  <div className="testimonial-author">
-                    <img
-                      className="testimonial-avatar"
-                      src="img/testimonial-1.jpg"
-                      alt="Sarah Johnson"
-                    />
-                    <div className="author-info">
-                      <h5 className="mb-0">Sarah Johnson</h5>
-                      <small>Food Blogger</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="testimonial-slide">
-                <div className="testimonial-card">
-                  <div className="testimonial-rating">
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                  </div>
-                  <div className="testimonial-content">
-                    <i className="fa fa-quote-left quote-icon"></i>
-                    <p className="testimonial-text">
-                      I've been to many Indian restaurants, but Sang Eats stands out with its exceptional service and authentic flavors. The Brioche Omelette is now my weekend favorite!
-                    </p>
-                    <i className="fa fa-quote-right quote-icon"></i>
-                  </div>
-                  <div className="testimonial-author">
-                    <img
-                      className="testimonial-avatar"
-                      src="img/testimonial-2.jpg"
-                      alt="Michael Chen"
-                    />
-                    <div className="author-info">
-                      <h5 className="mb-0">Michael Chen</h5>
-                      <small>Regular Customer</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="testimonial-slide">
-                <div className="testimonial-card">
-                  <div className="testimonial-rating">
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                    <span className="star">☆</span>
-                  </div>
-                  <div className="testimonial-content">
-                    <i className="fa fa-quote-left quote-icon"></i>
-                    <p className="testimonial-text">
-                      The ambiance and food quality make Sang Eats perfect for family dinners. We celebrated my daughter's birthday here and the staff went above and beyond to make it special.
-                    </p>
-                    <i className="fa fa-quote-right quote-icon"></i>
-                  </div>
-                  <div className="testimonial-author">
-                    <img
-                      className="testimonial-avatar"
-                      src="img/testimonial-3.jpg"
-                      alt="Priya Sharma"
-                    />
-                    <div className="author-info">
-                      <h5 className="mb-0">Priya Sharma</h5>
-                      <small>Local Guide</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="testimonial-slide">
-                <div className="testimonial-card">
-                  <div className="testimonial-rating">
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                    <span className="star">★</span>
-                  </div>
-                  <div className="testimonial-content">
-                    <i className="fa fa-quote-left quote-icon"></i>
-                    <p className="testimonial-text">
-                      As someone from India, I can attest to the authenticity of the flavors at Sang Eats. Their Signature Roast Chicken Superbow reminds me of home. Highly recommended!
-                    </p>
-                    <i className="fa fa-quote-right quote-icon"></i>
-                  </div>
-                  <div className="testimonial-author">
-                    <img
-                      className="testimonial-avatar"
-                      src="img/testimonial-4.jpg"
-                      alt="Raj Patel"
-                    />
-                    <div className="author-info">
-                      <h5 className="mb-0">Raj Patel</h5>
-                      <small>Food Critic</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="testimonial-nav">
-              <button className="nav-btn prev-btn">
-                <i className="fa fa-chevron-left"></i>
-              </button>
-              <div className="nav-dots">
-                <span className="dot active"></span>
-                <span className="dot"></span>
-                <span className="dot"></span>
-                <span className="dot"></span>
-              </div>
-              <button className="nav-btn next-btn">
-                <i className="fa fa-chevron-right"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-            
-      {/* <!-- Testimonial End --> */}
-
+        {/* <!-- Testimonial End --> */}
 
         {/* Contact Section */}
         <div className="container-xxl py-5" id="contact">
@@ -2788,7 +3198,7 @@ const handleEditAddress = (address) => {
             <div className="copyright">
               <div className="row">
                 <div className="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                  &copy; <Link to="/">Sang Eats</Link>, All Right Reserved.
+                  &copy; <Link to="/">SangEat</Link>, All Right Reserved.
                 </div>
                 <div className="col-md-6 text-center text-md-end">
                   <div className="footer-menu">
