@@ -5223,7 +5223,7 @@ body.modal-open {
 .spicy-modal-header.enhanced {
   background: linear-gradient(135deg, #ff6b35, #f7931e);
   color: white;
-  padding: 2rem 1.5rem 1.5rem;
+  padding: 1rem;
   /* text-align: center; */
   position: relative;
   flex-shrink: 0;
@@ -5707,7 +5707,7 @@ body.modal-open {
 .spicy-modal-header.enhanced {
   background: linear-gradient(135deg, #ff6b35, #f7931e);
   color: white;
-  padding: 2rem 1.5rem 1.5rem;
+  padding: 1rem 1rem 1rem;
   /* text-align: center; */
   position: relative;
   flex-shrink: 0;

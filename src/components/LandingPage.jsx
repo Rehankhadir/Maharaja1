@@ -288,8 +288,8 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
       '🌱', // Mild
       '🌿', // Mild Plus
       '🌶️', // Medium
-      '🌶️🌶️', // Medium Plus
-      '🌶️🌶️🌶️', // Hot
+      '🌶️', // Medium Plus
+      '🌶️', // Hot
       '🔥'  // Extra Hot
     ];
     return icons[level - 1] || '🌶️';
