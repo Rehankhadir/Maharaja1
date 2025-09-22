@@ -3,63 +3,76 @@ import './LandingPage.css';
 import { Link } from "react-router-dom";
 
 
+// Add spicy levels configuration
+const spicyLevels = [
+  { id: 1, name: "Mild", level: 1, emoji: "🌱" },
+  { id: 2, name: "Mild Plus", level: 2, emoji: "🌿" },
+  { id: 3, name: "Medium", level: 3, emoji: "🌶️" },
+  { id: 4, name: "Medium Plus", level: 4, emoji: "🌶️🌶️" },
+  { id: 5, name: "Hot", level: 5, emoji: "🌶️🌶️🌶️" },
+  { id: 6, name: "Extra Hot", level: 6, emoji: "🔥" }
+];
 
 const menuItems = [
-  { id: 1, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg" },
-  { id: 2, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg" },
-  { id: 3, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg" },
-  { id: 4, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg" },
-  { id: 5, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg" },
-  { id: 6, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg" },
-  { id: 7, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg" },
-  { id: 8, name: "Brioche Omelette", price: 60, img: "img/img1.jpg" },
-  { id: 9, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg" },
-  { id: 10, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg" },
-  { id: 11, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg" },
-  { id: 12, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg" },
-  { id: 13, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg" },
-  { id: 14, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg" },
-  { id: 15, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg" },
-  { id: 16, name: "Brioche Omelette", price: 60, img: "img/img1.jpg" },
-  { id: 17, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg" },
-  { id: 18, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg" },
-  { id: 19, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg" },
-  { id: 20, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg" },
-  { id: 21, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png" },
-  { id: 22, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg" },
-];
+  { id: 1, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg",hasSpicyOption: false },
+  { id: 2, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg",hasSpicyOption: true },
+  { id: 3, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg",hasSpicyOption: true},
+  { id: 4, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg",hasSpicyOption: true},
+  { id: 5, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg",hasSpicyOption: true},
+  { id: 6, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg",hasSpicyOption: true},
+  { id: 7, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg",hasSpicyOption: true},
+  { id: 8, name: "Brioche Omelette", price: 60, img: "img/img1.jpg",hasSpicyOption: true},
+  { id: 9, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg",hasSpicyOption: true},
+  { id: 10, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg",hasSpicyOption: true},
+  { id: 11, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg",hasSpicyOption: true},
+  { id: 12, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg",hasSpicyOption: true},
+  { id: 13, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg",hasSpicyOption: true},
+  { id: 14, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg",hasSpicyOption: true},
+  { id: 15, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg",hasSpicyOption: true},
+  { id: 16, name: "Brioche Omelette", price: 60, img: "img/img1.jpg",hasSpicyOption: true},
+  { id: 17, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg",hasSpicyOption: true},
+  { id: 18, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg",hasSpicyOption: true},
+  { id: 19, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg",hasSpicyOption: true},
+  { id: 20, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg",hasSpicyOption: true},
+  { id: 21, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png",hasSpicyOption: true},
+  { id: 22, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg" ,hasSpicyOption: true },
+].map(item => ({
+  ...item,
+  hasSpicyOption: item.hasSpicyOption !== undefined ? item.hasSpicyOption : false
+}));
 // MenuCard Component
-const MenuCard = ({ item, cart, addToCart, setCart }) => {
-  const cartItem = cart.find((i) => i.id === item.id);
+// MenuCard Component - Show total count irrespective of spicy level
+const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel }) => {
+  // Get total quantity for this item (across all spicy levels)
+  const totalQuantity = cart
+    .filter(cartItem => cartItem.id === item.id)
+    .reduce((total, cartItem) => total + cartItem.qty, 0);
   
   return (
     <div className="menu-card">
       <div className="menu-image-container">
-        <img
-          className="menu-image"
-          src={item.img}
-          alt={item.name}
-        />
-        {/* <div className="menu-overlay">
-          <button 
-            className="quick-view-btn"
-            onClick={() => {
-              // Add quick view functionality here
-              console.log("Quick view:", item.name);
-            }}
-          >
-            Quick View
-          </button>
-        </div> */}
+        <img className="menu-image" src={item.img} alt={item.name} />
+        {item.hasSpicyOption && (
+          <div className="spicy-badge">
+            <i className="fas fa-pepper-hot"></i> Custom Spice
+          </div>
+        )}
       </div>
       <div className="menu-content">
         <h5 className="menu-title">{item.name}</h5>
+        {item.hasSpicyOption && (
+          <div className="spicy-indicator-small">
+            <small className="text-muted">
+              <i className="fas fa-pepper-hot"></i> Adjustable spice level
+            </small>
+          </div>
+        )}
         <div className="menu-details">
           <span className="menu-price">₹{item.price}</span>
-          {!cartItem ? (
+          {totalQuantity === 0 ? (
             <button
               className="add-to-cart-btn"
-              onClick={() => addToCart(item)}
+              onClick={() => onAddWithSpicyLevel(item)}
             >
               ADD
             </button>
@@ -67,27 +80,31 @@ const MenuCard = ({ item, cart, addToCart, setCart }) => {
             <div className="quantity-controls">
               <button
                 className="quantity-btn"
-                onClick={() =>
-                  setCart(
-                    (prevCart) =>
+                onClick={() => {
+                  // Find the most recent cart item for this item to remove from
+                  const cartItemsForThisItem = cart.filter(cartItem => cartItem.id === item.id);
+                  if (cartItemsForThisItem.length > 0) {
+                    // Remove from the first found item (or you can implement more specific logic)
+                    const itemToDecrease = cartItemsForThisItem[0];
+                    setCart((prevCart) =>
                       prevCart
                         .map((i) =>
-                          i.id === item.id
+                          i.id === itemToDecrease.id && 
+                          i.spicyLevel?.id === itemToDecrease.spicyLevel?.id
                             ? { ...i, qty: i.qty - 1 }
                             : i
                         )
                         .filter((i) => i.qty > 0)
-                  )
-                }
+                    );
+                  }
+                }}
               >
                 -
               </button>
-              <span className="quantity-value">
-                {cartItem.qty}
-              </span>
+              <span className="quantity-value">{totalQuantity}</span>
               <button
                 className="quantity-btn"
-                onClick={() => addToCart(item)}
+                onClick={() => onAddWithSpicyLevel(item)}
               >
                 +
               </button>
@@ -217,6 +234,258 @@ const menuCategories = [
 ];
 
 
+// Spicy Level Modal Component
+const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
+  const [selectedSpicyLevel, setSelectedSpicyLevel] = useState(spicyLevels[2]); // Default to Medium
+
+  const [hoveredLevel, setHoveredLevel] = useState(null);
+
+   // Prevent background scroll when modal is open
+  useEffect(() => {
+    if (show) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [show]);
+
+  if (!show) return null;
+
+  const handleConfirm = () => {
+    onConfirm(selectedSpicyLevel);
+    onClose();
+  };
+    const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+   const handleModalScroll = (e) => {
+    // Prevent the overlay from scrolling
+    e.stopPropagation();
+  };
+
+
+  const getSpicyLevelColor = (level) => {
+    const colors = [
+      '#4CAF50', // Mild - Green
+      '#8BC34A', // Mild Plus - Light Green
+      '#FFC107', // Medium - Yellow
+      '#FF9800', // Medium Plus - Orange
+      '#F44336', // Hot - Red
+      '#D32F2F'  // Extra Hot - Dark Red
+    ];
+    return colors[level - 1] || '#FFC107';
+  };
+
+   const getSpicyIcon = (level) => {
+    const icons = [
+      '🌱', // Mild
+      '🌿', // Mild Plus
+      '🌶️', // Medium
+      '🌶️🌶️', // Medium Plus
+      '🌶️🌶️🌶️', // Hot
+      '🔥'  // Extra Hot
+    ];
+    return icons[level - 1] || '🌶️';
+  };
+
+  const getSpicyDescription = (level) => {
+    const descriptions = [
+      'Very mild, perfect for beginners',
+      'Slight warmth, gentle spice',
+      'Balanced heat, noticeable but comfortable',
+      'Warm and flavorful, good kick',
+      'Spicy and bold, for heat lovers',
+      'Extremely hot, proceed with caution!'
+    ];
+    return descriptions[level - 1] || 'Balanced heat';
+  };
+
+  return (
+    <div className="spicy-modal-overlay enhanced" onClick={handleOverlayClick}>
+      <div 
+        className="spicy-modal-content enhanced" 
+        onClick={(e) => e.stopPropagation()}
+        onScroll={handleModalScroll}
+      >
+        {/* Animated Header */}
+        <div className="spicy-modal-header enhanced">
+        
+          <div className="header-content">
+            <h5>Customize Your Spice Level</h5>
+            <p>How spicy would you like it?</p>
+          </div>
+          <button type="button" className="btn-close" onClick={onClose}></button>
+        </div>
+        
+        {/* Scrollable Content */}
+        <div className="spicy-modal-scrollable" onScroll={handleModalScroll}>
+          {/* Item Preview */}
+          <div className="spicy-modal-body enhanced">
+            <div className="item-preview enhanced">
+              <div className="item-image-container">
+                <img src={item.img} alt={item.name} className="item-preview-img" />
+                <div className="item-overlay"></div>
+              </div>
+              <div className="item-preview-info">
+                <h6>{item.name}</h6>
+                <p className="price">₹{item.price}</p>
+                <div className="spicy-preview">
+                  <span className="current-level" style={{ color: getSpicyLevelColor(selectedSpicyLevel.id) }}>
+                    {getSpicyIcon(selectedSpicyLevel.id)} {selectedSpicyLevel.name}
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Enhanced Spicy Level Selector */}
+            <div className="spicy-levels enhanced">
+              <div className="level-indicator">
+                <div className="level-scale">
+                  {spicyLevels.map(level => (
+                    <div 
+                      key={level.id}
+                      className={`scale-mark ${selectedSpicyLevel.id >= level.id ? 'active' : ''}`}
+                      style={{ 
+                        backgroundColor: selectedSpicyLevel.id >= level.id ? getSpicyLevelColor(level.id) : '#e9ecef'
+                      }}
+                    ></div>
+                  ))}
+                </div>
+                
+                <div className="level-labels">
+                  {spicyLevels.map(level => (
+                    <span 
+                      key={level.id}
+                      className={`level-label ${selectedSpicyLevel.id === level.id ? 'active' : ''}`}
+                      style={{ color: getSpicyLevelColor(level.id) }}
+                    >
+                      {level.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Interactive Spicy Options */}
+              <div className="spicy-options enhanced">
+                {spicyLevels.map(level => (
+                  <div 
+                    key={level.id}
+                    className={`spicy-option enhanced ${selectedSpicyLevel.id === level.id ? 'selected' : ''} ${hoveredLevel === level.id ? 'hovered' : ''}`}
+                    onClick={() => setSelectedSpicyLevel(level)}
+                    onMouseEnter={() => setHoveredLevel(level.id)}
+                    onMouseLeave={() => setHoveredLevel(null)}
+                    style={{
+                      borderColor: selectedSpicyLevel.id === level.id ? getSpicyLevelColor(level.id) : '#e9ecef',
+                      background: selectedSpicyLevel.id === level.id ? 
+                        `linear-gradient(135deg, ${getSpicyLevelColor(level.id)}15, ${getSpicyLevelColor(level.id)}08)` : 
+                        'white'
+                    }}
+                  >
+                    <div className="option-header">
+                      <div className="spicy-icon" style={{ color: getSpicyLevelColor(level.id) }}>
+                        {getSpicyIcon(level.id)}
+                      </div>
+                      <div className="option-info">
+                        <span className="option-name" style={{ color: getSpicyLevelColor(level.id) }}>
+                          {level.name}
+                        </span>
+                        <span className="option-description">
+                          {getSpicyDescription(level.id)}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="spicy-visual">
+                      <div className="pepper-container">
+                        {[...Array(6)].map((_, index) => (
+                          <div 
+                            key={index}
+                            className={`pepper ${index < level.level ? 'active' : ''}`}
+                            style={{
+                              backgroundColor: index < level.level ? getSpicyLevelColor(level.id) : '#e9ecef',
+                              transform: `scale(${index < level.level ? 1 : 0.8})`
+                            }}
+                          >
+                            {index < level.level && <div className="pepper-detail"></div>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="selection-indicator">
+                      <div 
+                        className="indicator-dot"
+                        style={{ 
+                          backgroundColor: selectedSpicyLevel.id === level.id ? getSpicyLevelColor(level.id) : 'transparent',
+                          borderColor: getSpicyLevelColor(level.id)
+                        }}
+                      >
+                        {selectedSpicyLevel.id === level.id && <div className="indicator-inner"></div>}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Spicy Meter */}
+              <div className="spicy-meter">
+                <div className="meter-labels">
+                  <span>Mild</span>
+                  <span>Hot</span>
+                </div>
+                <div className="meter-track">
+                  <div 
+                    className="meter-fill"
+                    style={{
+                      width: `${(selectedSpicyLevel.id / spicyLevels.length) * 100}%`,
+                      background: `linear-gradient(90deg, ${getSpicyLevelColor(1)}, ${getSpicyLevelColor(selectedSpicyLevel.id)})`
+                    }}
+                  ></div>
+                  <div 
+                    className="meter-thumb"
+                    style={{
+                      left: `${((selectedSpicyLevel.id - 0.5) / spicyLevels.length) * 100}%`,
+                      backgroundColor: getSpicyLevelColor(selectedSpicyLevel.id)
+                    }}
+                  >
+                    <span className="thumb-label">{selectedSpicyLevel.name}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Fixed Action Buttons */}
+        <div className="spicy-modal-footer enhanced">
+          <button className="btn btn-outline-secondary" onClick={onClose}>
+            <i className="fas fa-times me-2"></i>
+            Cancel
+          </button>
+          <button 
+            className="btn btn-primary spicy-confirm-btn"
+            onClick={handleConfirm}
+            style={{
+              background: `linear-gradient(135deg, ${getSpicyLevelColor(selectedSpicyLevel.id)}, ${getSpicyLevelColor(Math.max(1, selectedSpicyLevel.id - 1))})`,
+              borderColor: getSpicyLevelColor(selectedSpicyLevel.id)
+            }}
+          >
+            <i className="fas fa-pepper-hot me-2"></i>
+            Add {selectedSpicyLevel.name} Spice
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 
 
 const LandingPage = () => {
@@ -229,6 +498,10 @@ const [hoveredCategory, setHoveredCategory] = useState(null);
 const [categoryImage, setCategoryImage] = useState('img/appetizers.jpg');
 const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 const [searchQuery, setSearchQuery] = useState('');
+
+  // New state for spicy level modal
+  const [showSpicyModal, setShowSpicyModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
 // Filter items based on search query
 const filteredItems = menuCategories
@@ -246,18 +519,42 @@ const filteredItems = menuCategories
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const addToCart = (item) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((i) => i.id === item.id);
-      if (existingItem) {
-        return prevCart.map((i) =>
-          i.id === item.id ? { ...i, qty: i.qty + 1 } : i
-        );
-      } else {
-        return [...prevCart, { ...item, qty: 1 }];
-      }
-    });
-  };
+  const addToCart = (item, spicyLevel = null) => {
+  setCart((prevCart) => {
+    const existingItem = prevCart.find((i) => 
+      i.id === item.id && 
+      (!item.hasSpicyOption || i.spicyLevel?.id === (spicyLevel?.id || 3)) // Default to Medium if no spicy level provided
+    );
+    
+    if (existingItem) {
+      return prevCart.map((i) =>
+        i.id === item.id && 
+        (!item.hasSpicyOption || i.spicyLevel?.id === (spicyLevel?.id || 3))
+          ? { ...i, qty: i.qty + 1 }
+          : i
+      );
+    } else {
+      const cartItem = {
+        ...item,
+        qty: 1,
+        spicyLevel: item.hasSpicyOption ? (spicyLevel || spicyLevels[2]) : null // Default to Medium
+      };
+      return [...prevCart, cartItem];
+    }
+  });
+};
+
+// New function to handle spicy level selection
+const handleAddWithSpicyLevel = (item) => {
+  if (item.hasSpicyOption) {
+    setSelectedItem(item);
+    setShowSpicyModal(true);
+  } else {
+    addToCart(item);
+  }
+};
+
+
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   const scrollToSection = (id) => {
@@ -879,6 +1176,19 @@ const handleEditAddress = (address) => {
 
 
 
+// Add this helper function to your component
+const getSpicyLevelColor = (level) => {
+  const colors = [
+    '#4CAF50', // Mild - Green
+    '#8BC34A', // Mild Plus - Light Green
+    '#FFC107', // Medium - Yellow
+    '#FF9800', // Medium Plus - Orange
+    '#F44336', // Hot - Red
+    '#D32F2F'  // Extra Hot - Dark Red
+  ];
+  return colors[level - 1] || '#FFC107';
+};
+
   return (
     <>
       <div className="container-xxl bg-white p-0">
@@ -1400,6 +1710,7 @@ const handleEditAddress = (address) => {
                   cart={cart} 
                   addToCart={addToCart} 
                   setCart={setCart} 
+                  onAddWithSpicyLevel={handleAddWithSpicyLevel}
                 />
               ))}
             </div>
@@ -1445,7 +1756,17 @@ const handleEditAddress = (address) => {
 </div>
 
 
-
+{/* Add the Spicy Level Modal */}
+      <SpicyLevelModal
+        show={showSpicyModal}
+        onClose={() => setShowSpicyModal(false)}
+        item={selectedItem}
+        onConfirm={(spicyLevel) => {
+          if (selectedItem) {
+            addToCart(selectedItem, spicyLevel);
+          }
+        }}
+      />
 
 
 
@@ -1481,7 +1802,7 @@ const handleEditAddress = (address) => {
             ) : (
               <>
                 {cart.map((item) => (
-                  <div className="mb-3">
+                  <div key={`${item.id}-${item.spicyLevel?.id || 'default'}`} className="mb-3">
                     <div className="d-flex align-items-center mb-3">
                       <img
                         src={item.img}
@@ -1491,6 +1812,11 @@ const handleEditAddress = (address) => {
                       />
                       <div className="flex-grow-1">
                         <h6 className="mb-0">{item.name}</h6>
+                        {item.spicyLevel && (
+                          <small className="text-warning">
+                            <i className="fas fa-pepper-hot"></i> {item.spicyLevel.name}
+                          </small>
+                        )}
                         <div className="d-flex align-items-center">
                           <small className="text-muted">₹{item.price} x {item.qty}</small>
                           <div className="ms-auto">
@@ -2125,101 +2451,110 @@ const handleEditAddress = (address) => {
                     </div>
 
                     {/* Right Column - Order Summary */}
-            <div className="col-md-5 p-4" style={{ backgroundColor: '#f8f9fa' }}>
-              <div className="sticky-top" style={{ top: '20px' }}>
-                        <h5 className="mb-4 fw-bold">Order Summary</h5>
+<div className="col-md-5 p-4" style={{ backgroundColor: '#f8f9fa' }}>
+  <div className="sticky-top" style={{ top: '20px' }}>
+    <h5 className="mb-4 fw-bold">Order Summary</h5>
 
-                        <div className="order-items mb-4">
-                          {cart.map((item) => {
-                            const cartItem = cart.find((i) => i.id === item.id);
-                            return (
-                      <div key={item.id} className="order-item-card mb-3">
-                                <div className="d-flex align-items-center">
-                                  <img
-                                    src={item.img}
-                                    alt={item.name}
-                                    className="rounded me-3"
-                            style={{ width: "60px", height: "60px", objectFit: "cover" }}
-                                  />
-                                  <div className="flex-grow-1">
-                                    <h6 className="mb-0">{item.name}</h6>
-                            <p className="mb-0 text-muted">₹{item.price}</p>
-                                  </div>
-                                  <div className="quantity-controls">
-                                    <button
-                                      className="quantity-btn"
-                                      onClick={() =>
-                                setCart(
-                                  (prevCart) =>
-                                          prevCart
-                                            .map((i) =>
-                                              i.id === item.id
-                                                ? { ...i, qty: i.qty - 1 }
-                                                : i
-                                            )
-                                            .filter((i) => i.qty > 0)
-                                        )
-                                      }
-                                    >
-                                      -
-                                    </button>
-                                    <span className="quantity-value mx-2">
-                                      {cartItem.qty}
-                                    </span>
-                                    <button
-                                      className="quantity-btn"
-                                      onClick={() => addToCart(item)}
-                                    >
-                                      +
-                                    </button>
-                                  </div>
-                                </div>
-                                <div className="d-flex justify-content-between mt-2">
-                                  <span className="text-muted">Item Total</span>
-                          <span className="fw-bold">₹{item.price * item.qty}</span>
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
+    <div className="order-items mb-4">
+      {cart.length === 0 ? (
+        <p className="text-muted text-center">Your cart is empty</p>
+      ) : (
+        cart.map((item, index) => (
+          <div key={`${item.id}-${item.spicyLevel?.id || 'default'}-${index}`} className="order-item-card mb-3 p-3">
+            <div className="row align-items-center">
+              <div className="col-3">
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  className="rounded w-100"
+                  style={{ height: "60px", objectFit: "cover" }}
+                />
+              </div>
+              <div className="col-9">
+                <div className="d-flex justify-content-between align-items-start mb-1">
+                  <h6 className="mb-0">{item.name}</h6>
+                  <span className="text-primary fw-bold">₹{item.price}</span>
+                </div>
+                
+                {/* SPICY LEVEL BADGE - This should appear for each item */}
+                {item.spicyLevel && (
+                  <div className="mb-2">
+                    <span 
+                      className="badge"
+                      style={{ 
+                        backgroundColor: getSpicyLevelColor(item.spicyLevel.id),
+                        color: 'white',
+                        fontSize: '0.7rem',
+                        padding: '0.2rem 0.5rem'
+                      }}
+                    >
+                      <i className="fas fa-pepper-hot me-1"></i>
+                      {item.spicyLevel.name} Spice
+                    </span>
+                  </div>
+                )}
+                
+                <div className="d-flex justify-content-between align-items-center">
+                  <div className="quantity-controls">
+                    <button
+                      className="quantity-btn"
+                      onClick={() =>
+                        setCart((prevCart) =>
+                          prevCart
+                            .map((i) =>
+                              i.id === item.id ? { ...i, qty: i.qty - 1 } : i
+                            )
+                            .filter((i) => i.qty > 0)
+                        )
+                      }
+                    >
+                      -
+                    </button>
+                    <span className="mx-2 fw-bold">{item.qty}</span>
+                    <button
+                      className="quantity-btn"
+                      onClick={() => addToCart(item, item.spicyLevel)}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <span className="fw-bold">₹{item.price * item.qty}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+      )}
+    </div>
 
-                        {/* Bill Details */}
-                        <div className="bill-details-card">
-                          <h6 className="mb-3 fw-bold">Bill Details</h6>
-
-                          <div className="bill-item d-flex justify-content-between mb-2">
-                            <span>Item Total</span>
-                            <span>₹{total}</span>
-                          </div>
-
-                          <div className="bill-item d-flex justify-content-between mb-2">
-                            <span>Delivery Fee | 6.0 kms</span>
-                            <span className="text-success">₹30</span>
-                          </div>
-
-                          <div className="bill-item d-flex justify-content-between mb-2">
-                            <span>GST & Restaurant Charges</span>
-                            <span>₹{Math.round(total * 0.05)}</span>
-                          </div>
-
-                          <hr />
-
-                          <div className="bill-total d-flex justify-content-between fw-bold fs-5 mb-3">
-                            <span>TO PAY</span>
-                    <span>₹{total + 30 + Math.round(total * 0.05)}</span>
-                          </div>
-
-                          {checkoutStep === 3 && (
-                            <button
-                              className="btn btn-success w-100 py-3 fw-bold"
-                              onClick={handlePlaceOrder}
-                            >
-                              Place Order
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+    {/* Rest of the bill details remains the same */}
+    <div className="bill-details-card">
+      <h6 className="mb-3 fw-bold">Bill Details</h6>
+      <div className="bill-item d-flex justify-content-between mb-2">
+        <span>Item Total</span>
+        <span>₹{total}</span>
+      </div>
+      <div className="bill-item d-flex justify-content-between mb-2">
+        <span>Delivery Fee | 6.0 kms</span>
+        <span className="text-success">₹30</span>
+      </div>
+      <div className="bill-item d-flex justify-content-between mb-2">
+        <span>GST & Restaurant Charges</span>
+        <span>₹{Math.round(total * 0.05)}</span>
+      </div>
+      <hr />
+      <div className="bill-total d-flex justify-content-between fw-bold fs-5 mb-3">
+        <span>TO PAY</span>
+        <span>₹{total + 30 + Math.round(total * 0.05)}</span>
+      </div>
+      {checkoutStep === 3 && (
+        <button className="btn btn-success w-100 py-3 fw-bold" onClick={handlePlaceOrder}>
+          Place Order
+        </button>
+      )}
+    </div>
+  </div>
+</div>
                   </div>
                 </div>
               </div>
