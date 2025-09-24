@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import './LandingPage.css';
 import { Link } from "react-router-dom";
 
@@ -13,29 +13,29 @@ const spicyLevels = [
   { id: 6, name: "Extra Hot", level: 6, emoji: "🔥" }
 ];
 
-const menuItems = [
-  { id: 1, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg",hasSpicyOption: false },
-  { id: 2, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg",hasSpicyOption: true },
-  { id: 3, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg",hasSpicyOption: true},
-  { id: 4, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg",hasSpicyOption: true},
-  { id: 5, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg",hasSpicyOption: true},
-  { id: 6, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg",hasSpicyOption: true},
-  { id: 7, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg",hasSpicyOption: true},
-  { id: 8, name: "Brioche Omelette", price: 60, img: "img/img1.jpg",hasSpicyOption: true},
-  { id: 9, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg",hasSpicyOption: true},
-  { id: 10, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg",hasSpicyOption: true},
-  { id: 11, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg",hasSpicyOption: true},
-  { id: 12, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg",hasSpicyOption: true},
-  { id: 13, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg",hasSpicyOption: true},
-  { id: 14, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg",hasSpicyOption: true},
-  { id: 15, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg",hasSpicyOption: true},
-  { id: 16, name: "Brioche Omelette", price: 60, img: "img/img1.jpg",hasSpicyOption: true},
-  { id: 17, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg",hasSpicyOption: true},
-  { id: 18, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg",hasSpicyOption: true},
-  { id: 19, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg",hasSpicyOption: true},
-  { id: 20, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg",hasSpicyOption: true},
-  { id: 21, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png",hasSpicyOption: true},
-  { id: 22, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg" ,hasSpicyOption: true },
+const defaultMenuItems = [
+  { id: 1, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: false, category: "appetizers" },
+  { id: 2, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "appetizers" },
+  { id: 3, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers" },
+  { id: 4, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads" },
+  { id: 5, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads" },
+  { id: 6, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "side-dishes" },
+  { id: 7, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "side-dishes" },
+  { id: 8, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: true, category: "breads" },
+  { id: 9, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori" },
+  { id: 10, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori" },
+  { id: 11, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "chicken" },
+  { id: 12, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "chicken" },
+  { id: 13, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian" },
+  { id: 14, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian" },
+  { id: 15, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb" },
+  { id: 16, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: true, category: "seafood" },
+  { id: 17, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: true, category: "desserts" },
+  { id: 18, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: true, category: "desserts" },
+  { id: 19, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: true, category: "beverages" },
+  { id: 20, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: true, category: "beverages" },
+  { id: 21, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood" },
+  { id: 22, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb" },
 ].map(item => ({
   ...item,
   hasSpicyOption: item.hasSpicyOption !== undefined ? item.hasSpicyOption : false
@@ -140,98 +140,448 @@ const MenuCategory = ({ category, isActive, onClick, onHover, image }) => {
 
 
 
+// Admin Panel Component
+const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('appetizers');
+  const [currentItem, setCurrentItem] = useState({
+    id: null,
+    name: '',
+    price: '',
+    img: '',
+    hasSpicyOption: false,
+    category: 'appetizers'
+  });
 
-// Define your menu categories and items
-const menuCategories = [
-  {
-    id: 'appetizers',
-    name: 'Appetizers',
-    description: 'Crispy and flavorful starters',
-    image: 'img/appetizers.jpg',
-    icon: 'fas fa-utensils',
-    items: menuItems.filter(item => [1, 2, 3,4,5,6,7,8].includes(item.id))
-  },
-  {
-    id: 'soups-salads',
-    name: 'Soups & Salads',
-    description: 'Fresh and comforting bowls',
-    image: 'img/soups-salads.jpg',
-    icon: 'fas fa-carrot',
-    items: menuItems.filter(item => [4, 5].includes(item.id))
-  },
-  {
-    id: 'side-dishes',
-    name: 'Side Dishes',
-    description: 'Perfect accompaniments',
-    image: 'img/side-dishes.jpg',
-    icon: 'fas fa-hotdog',
-    items: menuItems.filter(item => [6, 7].includes(item.id))
-  },
-  {
-    id: 'breads',
-    name: 'Breads',
-    description: 'Freshly baked traditional breads',
-    image: 'img/breads.jpg',
-    icon: 'fas fa-bread-slice',
-    items: menuItems.filter(item => [8].includes(item.id))
-  },
-  {
-    id: 'tandoori',
-    name: 'Tandoori Specialties',
-    description: 'Clay oven marvels',
-    image: 'img/tandoori.jpg',
-    icon: 'fas fa-fire',
-    items: menuItems.filter(item => [9, 10].includes(item.id))
-  },
-  {
-    id: 'chicken',
-    name: 'Chicken Dishes',
-    description: 'Tender and flavorful chicken',
-    image: 'img/chicken.jpg',
-    icon: 'fas fa-drumstick-bite',
-    items: menuItems.filter(item => [11, 12].includes(item.id))
-  },
-  {
-    id: 'vegetarian',
-    name: 'Vegetarian Delights',
-    description: 'Plant-based goodness',
-    image: 'img/vegetarian.jpg',
-    icon: 'fas fa-leaf',
-    items: menuItems.filter(item => [13, 14].includes(item.id))
-  },
-  {
-    id: 'lamb',
-    name: 'Lamb Specialties',
-    description: 'Rich and aromatic lamb dishes',
-    image: 'img/lamb.jpg',
-     icon: 'fas fa-paw',
-    items: menuItems.filter(item => [22].includes(item.id))
-  },
-  {
-    id: 'seafood',
-    name: 'Seafood',
-    description: 'Fresh catches from the sea',
-    image: 'img/seafood.jpg',
-    icon: 'fas fa-fish',
-    items: menuItems.filter(item => [21].includes(item.id))
-  },
-  {
-    id: 'beverages',
-    name: 'Beverages',
-    description: 'Refreshing drinks',
-    image: 'img/beverages.jpg',
-    icon: 'fas fa-beer',
-    items: menuItems.filter(item => [19, 20].includes(item.id))
-  },
-  {
-    id: 'desserts',
-    name: 'Desserts',
-    description: 'Sweet endings',
-    image: 'img/desserts.jpg',
-     icon: 'fas fa-ice-cream',
-    items: menuItems.filter(item => [17, 18].includes(item.id))
-  }
-];
+  const [imagePreview, setImagePreview] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+
+   const categories = [
+    { id: 'appetizers', name: 'Appetizers', icon: '🥗' },
+    { id: 'soups-salads', name: 'Soups & Salads', icon: '🍜' },
+    { id: 'side-dishes', name: 'Side Dishes', icon: '🍽️' },
+    { id: 'breads', name: 'Breads', icon: '🍞' },
+    { id: 'tandoori', name: 'Tandoori Specialties', icon: '🔥' },
+    { id: 'chicken', name: 'Chicken Dishes', icon: '🍗' },
+    { id: 'vegetarian', name: 'Vegetarian Delights', icon: '🥦' },
+    { id: 'lamb', name: 'Lamb Specialties', icon: '🥩' },
+    { id: 'seafood', name: 'Seafood', icon: '🐟' },
+    { id: 'beverages', name: 'Beverages', icon: '🥤' },
+    { id: 'desserts', name: 'Desserts', icon: '🍰' }
+  ];
+
+   // Filter items by selected category
+  const filteredItems = menuItems.filter(item => item.category === selectedCategory);
+
+    // Handle image upload simulation
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setIsUploading(true);
+      
+      // Simulate upload process
+      setTimeout(() => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImagePreview(e.target.result);
+          setCurrentItem({...currentItem, img: e.target.result});
+          setIsUploading(false);
+        };
+        reader.readAsDataURL(file);
+      }, 1000);
+    }
+  };
+
+
+  // Handle image URL input
+  const handleImageUrlChange = (url) => {
+    setCurrentItem({...currentItem, img: url});
+    setImagePreview(url);
+  };
+
+  const resetForm = () => {
+    setCurrentItem({
+      id: null,
+      name: '',
+      price: '',
+      img: '',
+      hasSpicyOption: false,
+      category: selectedCategory // Set to current selected category
+    });
+    setImagePreview('');
+    setIsEditing(false);
+    setIsUploading(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isEditing) {
+      onEditItem(currentItem);
+    } else {
+      onAddItem({
+        ...currentItem,
+        id: Math.max(...menuItems.map(item => item.id), 0) + 1
+      });
+    }
+    resetForm();
+  };
+
+  const handleEdit = (item) => {
+    setCurrentItem(item);
+    setImagePreview(item.img);
+    setIsEditing(true);
+    setSelectedCategory(item.category);
+  };
+
+   const handleCategoryChange = (categoryId) => {
+    setSelectedCategory(categoryId);
+    // setCurrentItem(prev => ({ ...prev, category: categoryId }));
+    resetForm();
+  };
+
+   const getCategoryStats = (categoryId) => {
+    const items = menuItems.filter(item => item.category === categoryId);
+    const totalValue = items.reduce((sum, item) => sum + item.price, 0);
+    return { count: items.length, totalValue };
+  };
+
+
+  return (
+     <div className="admin-modal-overlay modern">
+      <div className="admin-modal modern">
+        {/* Enhanced Header */}
+        <div className="admin-header modern">
+          <div className="header-content">
+            
+            <div>
+              <h3>Menu Management Dashboard</h3>
+              <p>Manage your restaurant menu items efficiently</p>
+            </div>
+          </div>
+          <button className="btn-close modern" onClick={onClose}>
+            <i className="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div className="admin-content modern">
+          {/* Category Navigation Sidebar */}
+          <div className="admin-sidebar">
+            <div className="sidebar-header">
+              <h5>Categories</h5>
+              <span className="badge">{menuItems.length} total items</span>
+            </div>
+            
+            <div className="category-nav">
+              {categories.map(cat => {
+                const stats = getCategoryStats(cat.id);
+                return (
+                  <div 
+                    key={cat.id}
+                    className={`category-nav-item ${selectedCategory === cat.id ? 'active' : ''}`}
+                    onClick={() => handleCategoryChange(cat.id)}
+                  >
+                    <div className="category-icon">{cat.icon}</div>
+                    <div className="category-info">
+                      <span className="category-name">{cat.name}</span>
+                      <span className="category-stats">
+                        {stats.count} items • ₹{stats.totalValue}
+                      </span>
+                    </div>
+                    <div className="nav-indicator">
+                      <i className="fas fa-chevron-right"></i>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Main Content Area */}
+          <div className="admin-main">
+            {/* Add/Edit Form - Enhanced */}
+            <div className="form-section modern">
+              <div className="section-header">
+                <h5>
+                  <i className={`fas ${isEditing ? 'fa-edit' : 'fa-plus-circle'} me-2`}></i>
+                  {isEditing ? 'Edit Menu Item' : 'Add New Menu Item'}
+                </h5>
+                {isEditing && (
+                  <button className="btn btn-outline-secondary btn-sm" onClick={resetForm}>
+                    <i className="fas fa-plus me-1"></i>Add New
+                  </button>
+                )}
+              </div>
+
+              <form onSubmit={handleSubmit} className="admin-form modern">
+                <div className="row g-4">
+                  {/* Image Upload Section */}
+                  <div className="col-12">
+                    <div className="image-upload-section">
+                      <label className="form-label">Item Image</label>
+                      <div className="image-upload-container">
+                        {imagePreview ? (
+                          <div className="image-preview">
+                            <img src={imagePreview} alt="Preview" />
+                            <button 
+                              type="button"
+                              className="btn-remove-image"
+                              onClick={() => {
+                                setImagePreview('');
+                                setCurrentItem({...currentItem, img: ''});
+                              }}
+                            >
+                              <i className="fas fa-times"></i>
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="upload-placeholder">
+                            <i className="fas fa-cloud-upload-alt"></i>
+                            <p>Upload item image</p>
+                            <span>JPEG, PNG, SVG (Max 2MB)</span>
+                          </div>
+                        )}
+                        
+                        <div className="upload-options">
+                          <label className="upload-btn primary">
+                            <i className="fas fa-camera me-2"></i>
+                            Upload Image
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleImageUpload}
+                              style={{ display: 'none' }}
+                            />
+                          </label>
+                          
+                          <div className="url-input-container">
+                            <i className="fas fa-link"></i>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Or enter image URL"
+                              value={currentItem.img}
+                              onChange={(e) => handleImageUrlChange(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                        
+                        {isUploading && (
+                          <div className="upload-progress">
+                            <div className="progress-bar">
+                              <div className="progress-fill"></div>
+                            </div>
+                            <span>Uploading...</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Form Fields */}
+                  <div className="col-md-6">
+                    <div className="form-floating modern">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="itemName"
+                        placeholder="Item Name"
+                        value={currentItem.name}
+                        onChange={(e) => setCurrentItem({...currentItem, name: e.target.value})}
+                        required
+                      />
+                      <label htmlFor="itemName">
+                        <i className="fas fa-tag me-2"></i>Item Name
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <div className="col-md-6">
+                    <div className="form-floating modern">
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="itemPrice"
+                        placeholder="Price"
+                        value={currentItem.price}
+                        onChange={(e) => setCurrentItem({...currentItem, price: parseInt(e.target.value) || 0})}
+                        required
+                      />
+                      <label htmlFor="itemPrice">
+                        <i className="fas fa-indian-rupee-sign me-2"></i>Price
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="col-12">
+                    <div className="form-floating modern">
+                      <select
+                        className="form-control"
+                        id="itemCategory"
+                        value={selectedCategory}
+                        onChange={(e) => handleCategoryChange(e.target.value)}
+                      >
+                        {categories.map(cat => (
+                          <option key={cat.id} value={cat.id}>
+                            {cat.icon} {cat.name}
+                          </option>
+                        ))}
+                      </select>
+                      <label htmlFor="itemCategory">
+                        <i className="fas fa-layer-group me-2"></i>Category
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="col-12">
+                    <div className="form-check modern">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id="spicyOption"
+                        checked={currentItem.hasSpicyOption}
+                        onChange={(e) => setCurrentItem({...currentItem, hasSpicyOption: e.target.checked})}
+                      />
+                      <label className="form-check-label" htmlFor="spicyOption">
+                        <i className="fas fa-pepper-hot me-2"></i>
+                        Enable Spicy Level Customization
+                        <span className="check-description">Customers can choose spice intensity</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="col-12">
+                    <div className="form-actions">
+                      <button type="submit" className="btn btn-primary modern">
+                        <i className={`fas ${isEditing ? 'fa-save' : 'fa-plus'} me-2`}></i>
+                        {isEditing ? 'Update Item' : 'Add Item'}
+                      </button>
+                      {isEditing && (
+                        <button type="button" className="btn btn-outline-secondary modern" onClick={resetForm}>
+                          <i className="fas fa-times me-2"></i>Cancel
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            {/* Items List - Enhanced */}
+            <div className="items-section modern">
+              <div className="section-header">
+                <div>
+                  <h5>
+                    <i className="fas fa-list me-2"></i>
+                    {categories.find(cat => cat.id === selectedCategory)?.name} Items
+                  </h5>
+                  <span className="item-count">{filteredItems.length} items</span>
+                </div>
+                <div className="section-actions">
+                  <button className="btn btn-sm btn-outline-secondary">
+                    <i className="fas fa-sort me-1"></i>Sort
+                  </button>
+                  <button className="btn btn-sm btn-outline-secondary">
+                    <i className="fas fa-filter me-1"></i>Filter
+                  </button>
+                </div>
+              </div>
+
+              {filteredItems.length === 0 ? (
+                <div className="empty-state">
+                  <div className="empty-icon">
+                    <i className="fas fa-utensils"></i>
+                  </div>
+                  <h6>No items in this category</h6>
+                  <p>Start by adding your first menu item</p>
+                  <button className="btn btn-primary" onClick={resetForm}>
+                    <i className="fas fa-plus me-2"></i>Add First Item
+                  </button>
+                </div>
+              ) : (
+                <div className="items-grid modern">
+                  {filteredItems.map(item => (
+                    <div key={item.id} className="admin-item-card modern">
+                      <div className="item-image">
+                        <img src={item.img} alt={item.name} />
+                        {item.hasSpicyOption && (
+                          <div className="spicy-indicator" title="Spicy option available">
+                            <i className="fas fa-pepper-hot"></i>
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="item-info">
+                        <h6 className="item-name">{item.name}</h6>
+                        <div className="item-details">
+                          <span className="item-price">₹{item.price}</span>
+                          <span className="item-category">
+                            {categories.find(cat => cat.id === item.category)?.icon}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="item-actions modern">
+                        <button 
+                          className="btn-action edit"
+                          onClick={() => handleEdit(item)}
+                          title="Edit item"
+                        >
+                          <i className="fas fa-edit"></i>
+                        </button>
+                        <button 
+                          className="btn-action delete"
+                          onClick={() => onDeleteItem(item.id)}
+                          title="Delete item"
+                        >
+                          <i className="fas fa-trash"></i>
+                        </button>
+                        <button 
+                          className="btn-action preview"
+                          title="Preview item"
+                        >
+                          <i className="fas fa-eye"></i>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Footer Stats */}
+        <div className="admin-footer modern">
+          <div className="footer-stats">
+            <div className="stat-item">
+              <i className="fas fa-utensils"></i>
+              <div>
+                <span className="stat-value">{menuItems.length}</span>
+                <span className="stat-label">Total Items</span>
+              </div>
+            </div>
+            <div className="stat-item">
+              <i className="fas fa-pepper-hot"></i>
+              <div>
+                <span className="stat-value">{menuItems.filter(item => item.hasSpicyOption).length}</span>
+                <span className="stat-label">Spicy Items</span>
+              </div>
+            </div>
+            <div className="stat-item">
+              <i className="fas fa-indian-rupee-sign"></i>
+              <div>
+                <span className="stat-value">₹{menuItems.reduce((sum, item) => sum + item.price, 0)}</span>
+                <span className="stat-label">Total Value</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 
 
 // Spicy Level Modal Component
@@ -502,6 +852,103 @@ const [searchQuery, setSearchQuery] = useState('');
   // New state for spicy level modal
   const [showSpicyModal, setShowSpicyModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
+  const [menuItems, setMenuItems] = useState(defaultMenuItems);
+
+
+  // Define your menu categories and items
+const menuCategories = useMemo(() => [
+  {
+    id: 'appetizers',
+    name: 'Appetizers',
+    description: 'Crispy and flavorful starters',
+    image: 'img/appetizers.jpg',
+    icon: 'fas fa-utensils',
+    items: menuItems.filter(item => item.category === 'appetizers')
+  },
+  {
+    id: 'soups-salads',
+    name: 'Soups & Salads',
+    description: 'Fresh and comforting bowls',
+    image: 'img/soups-salads.jpg',
+    icon: 'fas fa-carrot',
+    items: menuItems.filter(item => item.category === 'soups-salads')
+  },
+  {
+    id: 'side-dishes',
+    name: 'Side Dishes',
+    description: 'Perfect accompaniments',
+    image: 'img/side-dishes.jpg',
+    icon: 'fas fa-hotdog',
+    items: menuItems.filter(item => item.category === 'side-dishes')
+  },
+  {
+    id: 'breads',
+    name: 'Breads',
+    description: 'Freshly baked traditional breads',
+    image: 'img/breads.jpg',
+    icon: 'fas fa-bread-slice',
+    items: menuItems.filter(item => item.category === 'breads')
+  },
+  {
+    id: 'tandoori',
+    name: 'Tandoori Specialties',
+    description: 'Clay oven marvels',
+    image: 'img/tandoori.jpg',
+    icon: 'fas fa-fire',
+    items: menuItems.filter(item => item.category === 'tandoori')
+  },
+  {
+    id: 'chicken',
+    name: 'Chicken Dishes',
+    description: 'Tender and flavorful chicken',
+    image: 'img/chicken.jpg',
+    icon: 'fas fa-drumstick-bite',
+    items: menuItems.filter(item => item.category === 'chicken')
+  },
+  {
+    id: 'vegetarian',
+    name: 'Vegetarian Delights',
+    description: 'Plant-based goodness',
+    image: 'img/vegetarian.jpg',
+    icon: 'fas fa-leaf',
+    items: menuItems.filter(item => item.category === 'vegetarian')
+  },
+  {
+    id: 'lamb',
+    name: 'Lamb Specialties',
+    description: 'Rich and aromatic lamb dishes',
+    image: 'img/lamb.jpg',
+     icon: 'fas fa-paw',
+    items: menuItems.filter(item => item.category === 'lamb')
+  },
+  {
+    id: 'seafood',
+    name: 'Seafood',
+    description: 'Fresh catches from the sea',
+    image: 'img/seafood.jpg',
+    icon: 'fas fa-fish',
+    items: menuItems.filter(item => item.category === 'seafood')
+  },
+  {
+    id: 'beverages',
+    name: 'Beverages',
+    description: 'Refreshing drinks',
+    image: 'img/beverages.jpg',
+    icon: 'fas fa-beer',
+    items: menuItems.filter(item => item.category === 'beverages')
+  },
+  {
+    id: 'desserts',
+    name: 'Desserts',
+    description: 'Sweet endings',
+    image: 'img/desserts.jpg',
+     icon: 'fas fa-ice-cream',
+    items: menuItems.filter(item => item.category === 'desserts')
+  }
+], [menuItems]);
+
 
 // Filter items based on search query
 const filteredItems = menuCategories
@@ -1189,6 +1636,36 @@ const getSpicyLevelColor = (level) => {
   return colors[level - 1] || '#FFC107';
 };
 
+
+ // Admin functions
+  const addMenuItem = (newItem) => {
+    setMenuItems(prev => [...prev, newItem]);
+  };
+
+  const editMenuItem = (updatedItem) => {
+    setMenuItems(prev => prev.map(item => 
+      item.id === updatedItem.id ? updatedItem : item
+    ));
+  };
+
+  const deleteMenuItem = (itemId) => {
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      setMenuItems(prev => prev.filter(item => item.id !== itemId));
+    }
+  };
+
+
+   // Add this to your navbar for admin access
+  const adminButton = (
+    <button
+      className="btn btn-outline-primary py-2 px-3"
+      onClick={() => setShowAdminPanel(true)}
+      style={{ marginRight: "10px", borderRadius: "20px" }}
+    >
+      <i className="fas fa-cog me-1"></i> Admin
+    </button>
+  );
+
   return (
     <>
       <div className="container-xxl bg-white p-0">
@@ -1264,6 +1741,8 @@ const getSpicyLevelColor = (level) => {
                   >
                     🛒{" "} <span className="badge bg-light text-dark">{cart.length}</span>
                   </button>
+                  {/* Add Admin Button */}
+                  {adminButton}
                 </div>
               </div>
             </div>
@@ -3547,6 +4026,17 @@ const getSpicyLevelColor = (level) => {
             </div>
           </div>
         </div>
+
+         {/* Admin Panel Modal */}
+        {showAdminPanel && (
+          <AdminPanel
+            menuItems={menuItems}
+            onAddItem={addMenuItem}
+            onEditItem={editMenuItem}
+            onDeleteItem={deleteMenuItem}
+            onClose={() => setShowAdminPanel(false)}
+          />
+        )}
       </div>
     </>
   );
