@@ -155,6 +155,9 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
 
   const [imagePreview, setImagePreview] = useState('');
   const [isUploading, setIsUploading] = useState(false);
+  const [mobileView, setMobileView] = useState('categories'); // 'categories', 'form', 'items'
+  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
+
 
    const categories = [
     { id: 'appetizers', name: 'Appetizers', icon: '🥗' },
@@ -211,6 +214,9 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
     setImagePreview('');
     setIsEditing(false);
     setIsUploading(false);
+    if (window.innerWidth < 768) {
+      setMobileView('categories');
+    }
   };
 
   const handleSubmit = (e) => {
@@ -231,12 +237,19 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
     setImagePreview(item.img);
     setIsEditing(true);
     setSelectedCategory(item.category);
+    if (window.innerWidth < 768) {
+      setMobileView('form');
+    }
   };
 
    const handleCategoryChange = (categoryId) => {
     setSelectedCategory(categoryId);
     // setCurrentItem(prev => ({ ...prev, category: categoryId }));
     resetForm();
+    if (window.innerWidth < 768) {
+      setMobileView('items');
+      setShowMobileSidebar(false);
+    }
   };
 
    const getCategoryStats = (categoryId) => {
@@ -246,332 +259,477 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
   };
 
 
+    // Mobile navigation functions
+  const handleMobileBack = () => {
+    if (mobileView === 'items') {
+      setMobileView('categories');
+    } else if (mobileView === 'form') {
+      if (isEditing) {
+        setMobileView('items');
+      } else {
+        setMobileView('categories');
+      }
+    }
+  };
+
+    const handleAddNewItemMobile = () => {
+    resetForm();
+    setMobileView('form');
+  };
+
+  // Responsive layout detection
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setShowMobileSidebar(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-     <div className="admin-modal-overlay modern">
-      <div className="admin-modal modern">
-        {/* Enhanced Header */}
-        <div className="admin-header modern">
+      <div className="admin-modal-overlay modern mobile-enhanced">
+      <div className="admin-modal modern mobile-enhanced">
+        {/* Enhanced Header with Mobile Controls */}
+        <div className="admin-header modern mobile-enhanced">
           <div className="header-content">
-            
-            <div>
-              <h3>Menu Management Dashboard</h3>
-              <p>Manage your restaurant menu items efficiently</p>
+            {window.innerWidth < 768 && mobileView !== 'categories' && (
+              <button className="btn-back-mobile" onClick={handleMobileBack}>
+                <i className="fas fa-arrow-left"></i>
+              </button>
+            )}
+            <div className="header-title">
+              <h3>Menu Management</h3>
+              <p style={{color:"#000"}}>Manage your restaurant menu</p>
             </div>
           </div>
+          
+          {/* Mobile Menu Toggle */}
+          {window.innerWidth < 768 && mobileView === 'items' && (
+            <button 
+              className="btn-mobile-menu"
+              onClick={() => setShowMobileSidebar(!showMobileSidebar)}
+            >
+              <i className="fas fa-bars"></i>
+            </button>
+          )}
+          
           <button className="btn-close modern" onClick={onClose}>
             <i className="fas fa-times"></i>
           </button>
         </div>
 
-        <div className="admin-content modern">
-          {/* Category Navigation Sidebar */}
-          <div className="admin-sidebar">
-            <div className="sidebar-header">
-              <h5>Categories</h5>
-              <span className="badge">{menuItems.length} total items</span>
-            </div>
-            
-            <div className="category-nav">
-              {categories.map(cat => {
-                const stats = getCategoryStats(cat.id);
-                return (
-                  <div 
-                    key={cat.id}
-                    className={`category-nav-item ${selectedCategory === cat.id ? 'active' : ''}`}
-                    onClick={() => handleCategoryChange(cat.id)}
-                  >
-                    <div className="category-icon">{cat.icon}</div>
-                    <div className="category-info">
-                      <span className="category-name">{cat.name}</span>
-                      <span className="category-stats">
-                        {stats.count} items • ₹{stats.totalValue}
-                      </span>
-                    </div>
-                    <div className="nav-indicator">
-                      <i className="fas fa-chevron-right"></i>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Main Content Area */}
-          <div className="admin-main">
-            {/* Add/Edit Form - Enhanced */}
-            <div className="form-section modern">
-              <div className="section-header">
-                <h5>
-                  <i className={`fas ${isEditing ? 'fa-edit' : 'fa-plus-circle'} me-2`}></i>
-                  {isEditing ? 'Edit Menu Item' : 'Add New Menu Item'}
-                </h5>
-                {isEditing && (
-                  <button className="btn btn-outline-secondary btn-sm" onClick={resetForm}>
-                    <i className="fas fa-plus me-1"></i>Add New
+        <div className="admin-content modern mobile-enhanced">
+          {/* Mobile Sidebar Overlay */}
+          {showMobileSidebar && (
+            <div 
+              className="mobile-sidebar-overlay"
+              onClick={() => setShowMobileSidebar(false)}
+            >
+              <div 
+                className="mobile-sidebar-content"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="mobile-sidebar-header">
+                  <h5>Categories</h5>
+                  <button className="btn-close modern" onClick={() => setShowMobileSidebar(false)}>
+                    <i className="fas fa-times"></i>
                   </button>
-                )}
-              </div>
-
-              <form onSubmit={handleSubmit} className="admin-form modern">
-                <div className="row g-4">
-                  {/* Image Upload Section */}
-                  <div className="col-12">
-                    <div className="image-upload-section">
-                      <label className="form-label">Item Image</label>
-                      <div className="image-upload-container">
-                        {imagePreview ? (
-                          <div className="image-preview">
-                            <img src={imagePreview} alt="Preview" />
-                            <button 
-                              type="button"
-                              className="btn-remove-image"
-                              onClick={() => {
-                                setImagePreview('');
-                                setCurrentItem({...currentItem, img: ''});
-                              }}
-                            >
-                              <i className="fas fa-times"></i>
-                            </button>
-                          </div>
-                        ) : (
-                          <div className="upload-placeholder">
-                            <i className="fas fa-cloud-upload-alt"></i>
-                            <p>Upload item image</p>
-                            <span>JPEG, PNG, SVG (Max 2MB)</span>
-                          </div>
-                        )}
-                        
-                        <div className="upload-options">
-                          <label className="upload-btn primary">
-                            <i className="fas fa-camera me-2"></i>
-                            Upload Image
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={handleImageUpload}
-                              style={{ display: 'none' }}
-                            />
-                          </label>
-                          
-                          <div className="url-input-container">
-                            <i className="fas fa-link"></i>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Or enter image URL"
-                              value={currentItem.img}
-                              onChange={(e) => handleImageUrlChange(e.target.value)}
-                            />
-                          </div>
-                        </div>
-                        
-                        {isUploading && (
-                          <div className="upload-progress">
-                            <div className="progress-bar">
-                              <div className="progress-fill"></div>
-                            </div>
-                            <span>Uploading...</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Form Fields */}
-                  <div className="col-md-6">
-                    <div className="form-floating modern">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="itemName"
-                        placeholder="Item Name"
-                        value={currentItem.name}
-                        onChange={(e) => setCurrentItem({...currentItem, name: e.target.value})}
-                        required
-                      />
-                      <label htmlFor="itemName">
-                        <i className="fas fa-tag me-2"></i>Item Name
-                      </label>
-                    </div>
-                  </div>
-                  
-                  <div className="col-md-6">
-                    <div className="form-floating modern">
-                      <input
-                        type="number"
-                        className="form-control"
-                        id="itemPrice"
-                        placeholder="Price"
-                        value={currentItem.price}
-                        onChange={(e) => setCurrentItem({...currentItem, price: parseInt(e.target.value) || 0})}
-                        required
-                      />
-                      <label htmlFor="itemPrice">
-                        <i className="fas fa-indian-rupee-sign me-2"></i>Price
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-12">
-                    <div className="form-floating modern">
-                      <select
-                        className="form-control"
-                        id="itemCategory"
-                        value={selectedCategory}
-                        onChange={(e) => handleCategoryChange(e.target.value)}
+                </div>
+                <div className="mobile-category-nav">
+                  {categories.map(cat => {
+                    const stats = getCategoryStats(cat.id);
+                    return (
+                      <div 
+                        key={cat.id}
+                        className={`mobile-category-nav-item ${selectedCategory === cat.id ? 'active' : ''}`}
+                        onClick={() => {
+                          handleCategoryChange(cat.id);
+                          setShowMobileSidebar(false);
+                        }}
                       >
-                        {categories.map(cat => (
-                          <option key={cat.id} value={cat.id}>
-                            {cat.icon} {cat.name}
-                          </option>
-                        ))}
-                      </select>
-                      <label htmlFor="itemCategory">
-                        <i className="fas fa-layer-group me-2"></i>Category
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-12">
-                    <div className="form-check modern">
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        id="spicyOption"
-                        checked={currentItem.hasSpicyOption}
-                        onChange={(e) => setCurrentItem({...currentItem, hasSpicyOption: e.target.checked})}
-                      />
-                      <label className="form-check-label" htmlFor="spicyOption">
-                        <i className="fas fa-pepper-hot me-2"></i>
-                        Enable Spicy Level Customization
-                        <span className="check-description">Customers can choose spice intensity</span>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="col-12">
-                    <div className="form-actions">
-                      <button type="submit" className="btn btn-primary modern">
-                        <i className={`fas ${isEditing ? 'fa-save' : 'fa-plus'} me-2`}></i>
-                        {isEditing ? 'Update Item' : 'Add Item'}
-                      </button>
-                      {isEditing && (
-                        <button type="button" className="btn btn-outline-secondary modern" onClick={resetForm}>
-                          <i className="fas fa-times me-2"></i>Cancel
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-
-            {/* Items List - Enhanced */}
-            <div className="items-section modern">
-              <div className="section-header">
-                <div>
-                  <h5>
-                    <i className="fas fa-list me-2"></i>
-                    {categories.find(cat => cat.id === selectedCategory)?.name} Items
-                  </h5>
-                  <span className="item-count">{filteredItems.length} items</span>
-                </div>
-                <div className="section-actions">
-                  <button className="btn btn-sm btn-outline-secondary">
-                    <i className="fas fa-sort me-1"></i>Sort
-                  </button>
-                  <button className="btn btn-sm btn-outline-secondary">
-                    <i className="fas fa-filter me-1"></i>Filter
-                  </button>
-                </div>
-              </div>
-
-              {filteredItems.length === 0 ? (
-                <div className="empty-state">
-                  <div className="empty-icon">
-                    <i className="fas fa-utensils"></i>
-                  </div>
-                  <h6>No items in this category</h6>
-                  <p>Start by adding your first menu item</p>
-                  <button className="btn btn-primary" onClick={resetForm}>
-                    <i className="fas fa-plus me-2"></i>Add First Item
-                  </button>
-                </div>
-              ) : (
-                <div className="items-grid modern">
-                  {filteredItems.map(item => (
-                    <div key={item.id} className="admin-item-card modern">
-                      <div className="item-image">
-                        <img src={item.img} alt={item.name} />
-                        {item.hasSpicyOption && (
-                          <div className="spicy-indicator" title="Spicy option available">
-                            <i className="fas fa-pepper-hot"></i>
-                          </div>
-                        )}
-                      </div>
-                      
-                      <div className="item-info">
-                        <h6 className="item-name">{item.name}</h6>
-                        <div className="item-details">
-                          <span className="item-price">₹{item.price}</span>
-                          <span className="item-category">
-                            {categories.find(cat => cat.id === item.category)?.icon}
+                        <div className="category-icon">{cat.icon}</div>
+                        <div className="category-info">
+                          <span className="category-name">{cat.name}</span>
+                          <span className="category-stats">
+                            {stats.count} items
                           </span>
                         </div>
                       </div>
-                      
-                      <div className="item-actions modern">
-                        <button 
-                          className="btn-action edit"
-                          onClick={() => handleEdit(item)}
-                          title="Edit item"
-                        >
-                          <i className="fas fa-edit"></i>
-                        </button>
-                        <button 
-                          className="btn-action delete"
-                          onClick={() => onDeleteItem(item.id)}
-                          title="Delete item"
-                        >
-                          <i className="fas fa-trash"></i>
-                        </button>
-                        <button 
-                          className="btn-action preview"
-                          title="Preview item"
-                        >
-                          <i className="fas fa-eye"></i>
-                        </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Desktop Category Navigation Sidebar */}
+          {window.innerWidth >= 768 && (
+            <div className="admin-sidebar">
+              <div className="sidebar-header">
+                <h5>Categories</h5>
+                <span className="badge">{menuItems.length} total</span>
+              </div>
+              
+              <div className="category-nav">
+                {categories.map(cat => {
+                  const stats = getCategoryStats(cat.id);
+                  return (
+                    <div 
+                      key={cat.id}
+                      className={`category-nav-item ${selectedCategory === cat.id ? 'active' : ''}`}
+                      onClick={() => handleCategoryChange(cat.id)}
+                    >
+                      <div className="category-icon">{cat.icon}</div>
+                      <div className="category-info">
+                        <span className="category-name">{cat.name}</span>
+                        <span className="category-stats">
+                          {stats.count} items • ₹{stats.totalValue}
+                        </span>
+                      </div>
+                      <div className="nav-indicator">
+                        <i className="fas fa-chevron-right"></i>
                       </div>
                     </div>
-                  ))}
-                </div>
-              )}
+                  );
+                })}
+              </div>
             </div>
+          )}
+
+          {/* Main Content Area */}
+          <div className="admin-main">
+            {/* Mobile Category Selection View */}
+            {window.innerWidth < 768 && mobileView === 'categories' && (
+              <div className="mobile-categories-view">
+                <div className="mobile-categories-header">
+                  <h5>Select Category</h5>
+                  <p>Choose a category to manage items</p>
+                </div>
+                <div className="mobile-categories-grid">
+                  {categories.map(cat => {
+                    const stats = getCategoryStats(cat.id);
+                    return (
+                      <div 
+                        key={cat.id}
+                        className="mobile-category-card justify-content-between align-items-center"
+                        onClick={() => handleCategoryChange(cat.id)}
+                      >
+                        <div className="d-flex align-items-center">
+                        <div className="category-card-icon">{cat.icon}</div>
+                        <div className="category-card-content">
+                          <h6>{cat.name}</h6>
+                          <span>{stats.count} items</span>
+                        </div>
+                        </div>
+                        <i className="fas fa-chevron-right"></i>
+                      </div>
+                    );
+                  })}
+                </div>
+                <button 
+                  className="btn btn-primary w-100 mt-3"
+                  onClick={handleAddNewItemMobile}
+                >
+                  <i className="fas fa-plus me-2"></i>
+                  Add New Item
+                </button>
+              </div>
+            )}
+
+            {/* Add/Edit Form - Mobile Enhanced */}
+            {(window.innerWidth >= 768 || mobileView === 'form') && (
+              <div className="form-section modern mobile-enhanced">
+                <div className="section-header">
+                  <h5>
+                    <i className={`fas ${isEditing ? 'fa-edit' : 'fa-plus-circle'} me-2`}></i>
+                    {isEditing ? 'Edit Menu Item' : 'Add New Menu Item'}
+                  </h5>
+                  {isEditing && (
+                    <button className="btn btn-outline-secondary btn-sm" onClick={resetForm}>
+                      <i className="fas fa-plus me-1"></i>Add New
+                    </button>
+                  )}
+                </div>
+
+                <form onSubmit={handleSubmit} className="admin-form modern mobile-enhanced">
+                  <div className="row g-3">
+                    {/* Image Upload Section - Mobile Optimized */}
+                    <div className="col-12">
+                      <div className="image-upload-section mobile-optimized">
+                        <label className="form-label">Item Image</label>
+                        <div className="image-upload-container">
+                          {imagePreview ? (
+                            <div className="image-preview">
+                              <img src={imagePreview} alt="Preview" />
+                              <button 
+                                type="button"
+                                className="btn-remove-image"
+                                onClick={() => {
+                                  setImagePreview('');
+                                  setCurrentItem({...currentItem, img: ''});
+                                }}
+                              >
+                                <i className="fas fa-times"></i>
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="upload-placeholder">
+                              <i className="fas fa-cloud-upload-alt"></i>
+                              <p>Upload item image</p>
+                              <span>JPEG, PNG, SVG</span>
+                            </div>
+                          )}
+                          
+                          <div className="upload-options mobile-friendly">
+                            <label className="upload-btn primary">
+                              <i className="fas fa-camera me-2"></i>
+                              Upload
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                style={{ display: 'none' }}
+                              />
+                            </label>
+                            
+                            <div className="url-input-container">
+                              <i className="fas fa-link"></i>
+                              <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Or enter image URL"
+                                value={currentItem.img}
+                                onChange={(e) => handleImageUrlChange(e.target.value)}
+                              />
+                            </div>
+                          </div>
+                          
+                          {isUploading && (
+                            <div className="upload-progress">
+                              <div className="progress-bar">
+                                <div className="progress-fill"></div>
+                              </div>
+                              <span>Uploading...</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Form Fields - Mobile Optimized */}
+                    <div className="col-12">
+                      <div className="form-floating modern">
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="itemName"
+                          placeholder="Item Name"
+                          value={currentItem.name}
+                          onChange={(e) => setCurrentItem({...currentItem, name: e.target.value})}
+                          required
+                        />
+                        <label htmlFor="itemName">
+                          <i className="fas fa-tag me-2"></i>Item Name
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div className="col-12 col-md-6">
+                      <div className="form-floating modern">
+                        <input
+                          type="number"
+                          className="form-control"
+                          id="itemPrice"
+                          placeholder="Price"
+                          value={currentItem.price}
+                          onChange={(e) => setCurrentItem({...currentItem, price: parseInt(e.target.value) || 0})}
+                          required
+                        />
+                        <label htmlFor="itemPrice">
+                          <i className="fas fa-indian-rupee-sign me-2"></i>Price
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-md-6">
+                      <div className="form-floating modern">
+                        <select
+                          className="form-control"
+                          id="itemCategory"
+                          value={selectedCategory}
+                          onChange={(e) => handleCategoryChange(e.target.value)}
+                        >
+                          {categories.map(cat => (
+                            <option key={cat.id} value={cat.id}>
+                              {cat.icon} {cat.name}
+                            </option>
+                          ))}
+                        </select>
+                        <label htmlFor="itemCategory">
+                          <i className="fas fa-layer-group me-2"></i>Category
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="col-12">
+                      <div className="form-check modern mobile-friendly">
+                        <input
+                          type="checkbox"
+                          className="form-check-input"
+                          id="spicyOption"
+                          checked={currentItem.hasSpicyOption}
+                          onChange={(e) => setCurrentItem({...currentItem, hasSpicyOption: e.target.checked})}
+                        />
+                        <label className="form-check-label" htmlFor="spicyOption">
+                          <i className="fas fa-pepper-hot me-2"></i>
+                          Enable Spicy Level Customization
+                          <span className="check-description">Customers can choose spice intensity</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="col-12">
+                      <div className="form-actions mobile-actions">
+                        <button type="submit" className="btn btn-primary modern">
+                          <i className={`fas ${isEditing ? 'fa-save' : 'fa-plus'} me-2`}></i>
+                          {isEditing ? 'Update Item' : 'Add Item'}
+                        </button>
+                        {isEditing && (
+                          <button type="button" className="btn btn-outline-secondary modern" onClick={resetForm}>
+                            <i className="fas fa-times me-2"></i>Cancel
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            )}
+
+            {/* Items List - Mobile Enhanced */}
+            {(window.innerWidth >= 768 || mobileView === 'items') && (
+              <div className="items-section modern mobile-enhanced">
+                <div className="section-header mobile-header">
+                  <div>
+                    <h5>
+                      <i className="fas fa-list me-2"></i>
+                      {categories.find(cat => cat.id === selectedCategory)?.name} Items
+                    </h5>
+                    <span className="item-count">{filteredItems.length} items</span>
+                  </div>
+                  <div className="section-actions mobile-actions">
+                    {window.innerWidth >= 768 ? (
+                      <>
+                        <button className="btn btn-sm btn-outline-secondary">
+                          <i className="fas fa-sort me-1"></i>Sort
+                        </button>
+                        <button className="btn btn-sm btn-outline-secondary">
+                          <i className="fas fa-filter me-1"></i>Filter
+                        </button>
+                      </>
+                    ) : (
+                      <button 
+                        className="btn btn-primary btn-sm"
+                        onClick={handleAddNewItemMobile}
+                      >
+                        <i className="fas fa-plus me-1"></i>Add Item
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {filteredItems.length === 0 ? (
+                  <div className="empty-state mobile-empty">
+                    <div className="empty-icon">
+                      <i className="fas fa-utensils"></i>
+                    </div>
+                    <h6>No items in this category</h6>
+                    <p>Start by adding your first menu item</p>
+                    <button className="btn btn-primary" onClick={resetForm}>
+                      <i className="fas fa-plus me-2"></i>Add First Item
+                    </button>
+                  </div>
+                ) : (
+                  <div className="items-grid modern mobile-grid">
+                    {filteredItems.map(item => (
+                      <div key={item.id} className="admin-item-card modern mobile-card">
+                        <div className="item-image">
+                          <img src={item.img} alt={item.name} />
+                          {item.hasSpicyOption && (
+                            <div className="spicy-indicator" title="Spicy option available">
+                              <i className="fas fa-pepper-hot"></i>
+                            </div>
+                          )}
+                        </div>
+                        
+                        <div className="item-info">
+                          <h6 className="item-name">{item.name}</h6>
+                          <div className="item-details">
+                            <span className="item-price">₹{item.price}</span>
+                            <span className="item-category">
+                              {categories.find(cat => cat.id === item.category)?.icon}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <div className="item-actions modern mobile-actions">
+                          <button 
+                            className="btn-action edit"
+                            onClick={() => handleEdit(item)}
+                            title="Edit item"
+                          >
+                            <i className="fas fa-edit"></i>
+                          </button>
+                          <button 
+                            className="btn-action delete"
+                            onClick={() => onDeleteItem(item.id)}
+                            title="Delete item"
+                          >
+                            <i className="fas fa-trash"></i>
+                          </button>
+                          {window.innerWidth >= 768 && (
+                            <button 
+                              className="btn-action preview"
+                              title="Preview item"
+                            >
+                              <i className="fas fa-eye"></i>
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Footer Stats */}
-        <div className="admin-footer modern">
-          <div className="footer-stats">
+        {/* Footer Stats - Mobile Optimized */}
+        <div className="admin-footer modern mobile-footer">
+          <div className="footer-stats mobile-stats">
             <div className="stat-item">
               <i className="fas fa-utensils"></i>
               <div>
                 <span className="stat-value">{menuItems.length}</span>
-                <span className="stat-label">Total Items</span>
+                <span className="stat-label">Items</span>
               </div>
             </div>
             <div className="stat-item">
               <i className="fas fa-pepper-hot"></i>
               <div>
                 <span className="stat-value">{menuItems.filter(item => item.hasSpicyOption).length}</span>
-                <span className="stat-label">Spicy Items</span>
+                <span className="stat-label">Spicy</span>
               </div>
             </div>
             <div className="stat-item">
               <i className="fas fa-indian-rupee-sign"></i>
               <div>
                 <span className="stat-value">₹{menuItems.reduce((sum, item) => sum + item.price, 0)}</span>
-                <span className="stat-label">Total Value</span>
+                <span className="stat-label">Value</span>
               </div>
             </div>
           </div>
