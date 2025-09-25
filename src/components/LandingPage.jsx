@@ -2811,146 +2811,215 @@ const getSpicyLevelColor = (level) => {
                       {/* Step 2: Delivery Address */}
                       {checkoutStep === 2 && (
                         <div className="checkout-step animate-fade-in">
-                          <h5 className="mb-4 fw-bold">Delivery address</h5>
+                          <h5 className="mb-4 fw-bold">Delivery Options</h5>
 
-                          {/* Saved Addresses */}
-                          {/* Saved Addresses */}
-                          {/* Saved Addresses */}
-                          <div className="saved-addresses mb-4">
-                            {savedAddresses.map((address) => (
-                              <div
-                                key={address.id}
-                                className={`address-card ${
-                                  selectedAddressId === address.id
-                                    ? "active"
-                                    : ""
-                                }`}
-                              >
-                                <div className="form-check">
-                                  <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="address"
-                                    id={`address-${address.id}`}
-                                    checked={selectedAddressId === address.id}
-                                    onChange={() =>
-                                      setSelectedAddressId(address.id)
-                                    }
-                                  />
-                                  <label
-                                    className="form-check-label w-100"
-                                    htmlFor={`address-${address.id}`}
-                                  >
-                                    <div className="d-flex justify-content-between align-items-start">
-                                      <div>
-                                        <strong className="text-capitalize">
-                                          {address.type}
-                                        </strong>
-                                        {address.isDefault && (
-                                          <span className="badge bg-primary ms-2">
-                                            Default
-                                          </span>
-                                        )}
-                                      </div>
-                                      <div className="address-actions">
-                                        <button
-                                          className="btn btn-sm btn-outline-secondary me-1"
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleEditAddress(address);
-                                          }}
-                                          title="Edit address"
-                                        >
-                                          <i className="fas fa-edit"></i>
-                                        </button>
-                                        {!address.isDefault && (
-                                          <button
-                                            className="btn btn-sm btn-outline-danger"
-                                            onClick={(e) => {
-                                              e.stopPropagation();
-                                              if (
-                                                window.confirm(
-                                                  "Are you sure you want to delete this address?"
-                                                )
-                                              ) {
-                                                handleDeleteAddress(address.id);
-                                              }
-                                            }}
-                                            title="Delete address"
-                                          >
-                                            <i className="fas fa-trash"></i>
-                                          </button>
-                                        )}
+                          {/* Self Pickup Option */}
+                          <div className="delivery-options mb-4">
+                            <div className={`delivery-option-card  ${selectedAddressId === 'self-pickup' ? 'active' : ''}`}>
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="deliveryOption"
+                                  id="selfPickup"
+                                  checked={selectedAddressId === 'self-pickup'}
+                                  onChange={() => setSelectedAddressId('self-pickup')}
+                                />
+                                <label className="form-check-label w-100" htmlFor="selfPickup">
+                                  <div className="d-flex align-items-center">
+                                    <div className="delivery-icon">
+                                      <i className="fas fa-store"></i>
+                                    </div>
+                                    <div className="ms-3">
+                                      <strong>Self Pickup</strong>
+                                      <p className="mb-0 small text-muted">
+                                        Pick up your order from our restaurant
+                                      </p>
+                                      <div className="pickup-info mt-2">
+                                        <p className="mb-1 small">
+                                          <i className="fas fa-map-marker-alt text-primary me-2"></i>
+                                          123 Restaurant Street, Food City, FC 12345
+                                        </p>
+                                        <p className="mb-0 small text-muted">
+                                          <i className="fas fa-clock text-primary me-2"></i>
+                                          Ready in 20-30 minutes
+                                        </p>
                                       </div>
                                     </div>
-          <p className="mb-1 mt-2">{address.name} • {address.mobile}</p>
-                                    <p className="mb-0 text-muted small">
-                                      {address.address}, {address.locality},{" "}
-                                      {address.city}, {address.state} -{" "}
-                                      {address.pincode}
-                                      {address.landmark &&
-                                        `, Landmark: ${address.landmark}`}
-                                    </p>
-
-                                    {!address.isDefault && (
-                                      <div className="mt-2">
-                                        <button
-                                          className="btn btn-sm btn-link p-0 text-primary"
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            handleSetDefaultAddress(address.id);
-                                          }}
-                                        >
-                                          Set as default
-                                        </button>
-                                      </div>
-                                    )}
-                                  </label>
-                                </div>
+                                  </div>
+                                </label>
                               </div>
-                            ))}
+                            </div>
 
-                            <button
-                              className="btn btn-outline-primary w-100 mt-3"
-                              onClick={() => {
-                                setEditingAddress(null);
-                                setNewAddress({
-                                  type: "home",
-                                  name: "",
-                                  mobile: "",
-                                  address: "",
-                                  locality: "",
-                                  city: "",
-                                  state: "",
-                                  pincode: "",
-                                  landmark: "",
-                                });
-                                setShowAddressForm(true);
-                              }}
-                            >
-    <i className="fas fa-plus me-2"></i>Add New Address
-                            </button>
-                          </div>
-
-                          {/* No-contact delivery option */}
-                          <div className="no-contact-delivery mb-4">
-                            <div className="form-check form-switch">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="noContactDelivery"
-                                checked={noContactDelivery}
-                        onChange={(e) => setNoContactDelivery(e.target.checked)}
-                              />
-                      <label className="form-check-label" htmlFor="noContactDelivery">
-                                <strong>Opt in for No-contact Delivery</strong>
-                                <p className="mb-0 small text-muted">
-                          Unwell, or avoiding contact? Please select no-contact delivery. 
-                          Partner will safely place the order outside your door (not for COD)
-                                </p>
-                              </label>
+                            <div className={`delivery-option-card ${selectedAddressId !== 'self-pickup' ? 'active' : ''}`}>
+                              <div className="form-check">
+                                <input
+                                  className="form-check-input"
+                                  type="radio"
+                                  name="deliveryOption"
+                                  id="homeDelivery"
+                                  checked={selectedAddressId !== 'self-pickup'}
+                                  onChange={() => setSelectedAddressId(savedAddresses[0]?.id || 1)}
+                                />
+                                <label className="form-check-label w-100" htmlFor="homeDelivery">
+                                  <div className="d-flex align-items-center">
+                                    <div className="delivery-icon">
+                                      <i className="fas fa-truck"></i>
+                                    </div>
+                                    <div className="ms-3">
+                                      <strong>Home Delivery</strong>
+                                      <p className="mb-0 small text-muted">
+                                        Get your order delivered to your address
+                                      </p>
+                                    </div>
+                                  </div>
+                                </label>
+                              </div>
                             </div>
                           </div>
+
+                          {/* Address Selection (Only show for home delivery) */}
+                          {selectedAddressId !== 'self-pickup' && (
+                            <div className="saved-addresses mb-4">
+                              <h6 className="mb-3">Select Delivery Address</h6>
+                              {savedAddresses.map((address) => (
+                                <div
+                                  key={address.id}
+                                  className={`address-card ${selectedAddressId === address.id ? 'active' : ''}`}
+                                >
+                                  <div className="form-check">
+                                    <input
+                                      className="form-check-input"
+                                      type="radio"
+                                      name="address"
+                                      id={`address-${address.id}`}
+                                      checked={selectedAddressId === address.id}
+                                      onChange={() => setSelectedAddressId(address.id)}
+                                    />
+                                    <label
+                                      className="form-check-label w-100"
+                                      htmlFor={`address-${address.id}`}
+                                    >
+                                      <div className="d-flex justify-content-between align-items-start">
+                                        <div>
+                                          <strong className="text-capitalize">
+                                            {address.type}
+                                          </strong>
+                                          {address.isDefault && (
+                                            <span className="badge bg-primary ms-2">Default</span>
+                                          )}
+                                        </div>
+                                        <div className="address-actions">
+                                          <button
+                                            className="btn btn-sm btn-outline-secondary me-1"
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              handleEditAddress(address);
+                                            }}
+                                            title="Edit address"
+                                          >
+                                            <i className="fas fa-edit"></i>
+                                          </button>
+                                          {!address.isDefault && (
+                                            <button
+                                              className="btn btn-sm btn-outline-danger"
+                                              onClick={(e) => {
+                                                e.stopPropagation();
+                                                if (window.confirm("Are you sure you want to delete this address?")) {
+                                                  handleDeleteAddress(address.id);
+                                                }
+                                              }}
+                                              title="Delete address"
+                                            >
+                                              <i className="fas fa-trash"></i>
+                                            </button>
+                                          )}
+                                        </div>
+                                      </div>
+                                      <p className="mb-1 mt-2">{address.name} • {address.mobile}</p>
+                                      <p className="mb-0 text-muted small">
+                                        {address.address}, {address.locality}, {address.city}, {address.state} - {address.pincode}
+                                        {address.landmark && `, Landmark: ${address.landmark}`}
+                                      </p>
+
+                                      {!address.isDefault && (
+                                        <div className="mt-2">
+                                          <button
+                                            className="btn btn-sm btn-link p-0 text-primary"
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              handleSetDefaultAddress(address.id);
+                                            }}
+                                          >
+                                            Set as default
+                                          </button>
+                                        </div>
+                                      )}
+                                    </label>
+                                  </div>
+                                </div>
+                              ))}
+
+                              <button
+                                className="btn btn-outline-primary w-100 mt-3"
+                                onClick={() => {
+                                  setEditingAddress(null);
+                                  setNewAddress({
+                                    type: "home",
+                                    name: "",
+                                    mobile: "",
+                                    address: "",
+                                    locality: "",
+                                    city: "",
+                                    state: "",
+                                    pincode: "",
+                                    landmark: "",
+                                  });
+                                  setShowAddressForm(true);
+                                }}
+                              >
+                                <i className="fas fa-plus me-2"></i>Add New Address
+                              </button>
+                            </div>
+                          )}
+
+                          {/* Self Pickup Instructions */}
+                          {selectedAddressId === 'self-pickup' && (
+                            <div className="self-pickup-info mb-4 p-3 bg-light rounded">
+                              <h6 className="mb-2">
+                                <i className="fas fa-info-circle text-primary me-2"></i>
+                                Self Pickup Instructions
+                              </h6>
+                              <ul className="small mb-0">
+                                <li>Your order will be ready in 20-30 minutes</li>
+                                <li>Please bring your order confirmation</li>
+                                <li>Parking available in the rear lot</li>
+                                <li>Look for the "Pickup Counter" inside</li>
+                              </ul>
+                            </div>
+                          )}
+
+                          {/* No-contact delivery option (Only show for home delivery) */}
+                          {selectedAddressId !== 'self-pickup' && (
+                            <div className="no-contact-delivery mb-4">
+                              <div className="form-check form-switch">
+                                <input
+                                  className="form-check-input"
+                                  type="checkbox"
+                                  id="noContactDelivery"
+                                  checked={noContactDelivery}
+                                  onChange={(e) => setNoContactDelivery(e.target.checked)}
+                                />
+                                <label className="form-check-label" htmlFor="noContactDelivery">
+                                  <strong>Opt in for No-contact Delivery</strong>
+                                  <p className="mb-0 small text-muted">
+                                    Unwell, or avoiding contact? Please select no-contact delivery. 
+                                    Partner will safely place the order outside your door (not for COD)
+                                  </p>
+                                </label>
+                              </div>
+                            </div>
+                          )}
 
                           <div className="d-flex justify-content-between mt-4">
                             <button

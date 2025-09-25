@@ -7190,3 +7190,55 @@ body.modal-open {
 .admin-item-card:active {
   transform: scale(0.98);
 }
+
+
+
+/* Self Pickup Styles */
+.delivery-options {
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.delivery-option-card {
+  padding: 1rem;
+  border-bottom: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.delivery-option-card:last-child {
+  border-bottom: none;
+}
+
+.delivery-option-card.active {
+  background-color: #f8f9fa;
+  border-left: 4px solid #fea116;
+}
+
+.delivery-option-card:hover {
+  background-color: #f8f9fa;
+}
+
+.delivery-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fea116;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pickup-info {
+  background: white;
+  padding: 0.75rem;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+  border-left: 3px solid #28a745;
+}
+
+.self-pickup-info {
+  border-left: 4px solid #28a745;
+}
