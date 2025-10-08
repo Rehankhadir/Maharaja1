@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import './LandingPage.css';
 import { Link } from "react-router-dom";
 
@@ -14,105 +14,352 @@ const spicyLevels = [
 ];
 
 const defaultMenuItems = [
-  { id: 1, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: false, category: "appetizers" },
-  { id: 2, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "appetizers" },
-  { id: 3, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers" },
-  { id: 4, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads" },
-  { id: 5, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads" },
-  { id: 6, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "side-dishes" },
-  { id: 7, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "side-dishes" },
-  { id: 8, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: true, category: "breads" },
-  { id: 9, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori" },
-  { id: 10, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori" },
-  { id: 11, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "chicken" },
-  { id: 12, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "chicken" },
-  { id: 13, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian" },
-  { id: 14, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian" },
-  { id: 15, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb" },
-  { id: 16, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: true, category: "seafood" },
-  { id: 17, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: true, category: "desserts" },
-  { id: 18, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: true, category: "desserts" },
-  { id: 19, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: true, category: "beverages" },
-  { id: 20, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: true, category: "beverages" },
-  { id: 21, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood" },
-  { id: 22, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb" },
+  { id: 1, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: false, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 2, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 3, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 4, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 5, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 6, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 7, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 8, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 9, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 10, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+
+  { id: 11, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads",ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 12, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 13, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 14, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 15, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 16, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 17, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 18, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 19, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 20, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+
+  { id: 21, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 22, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 23, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 24, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 25, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 26, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 27, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 28, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 29, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 30, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+
+  { id: 31, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 32, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 33, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 34, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 35, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 36, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 37, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 38, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 39, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 40, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+
+  { id: 41, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 42, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 43, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 44, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 45, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 46, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 47, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 48, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 49, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 50, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 51, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+
+  { id: 52, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 53, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 54, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 55, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 56, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 57, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 58, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 59, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 60, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 61, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+
+  { id: 62, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 63, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 64, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 65, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 66, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 67, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 68, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 69, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 70, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 71, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 72, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 73, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+
+  { id: 74, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 75, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 76, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 77, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 78, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 79, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 80, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 81, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 82, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 83, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 84, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 85, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+
+  { id: 86, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 87, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 88, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 89, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 90, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 91, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 92, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 93, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 94, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 95, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 96, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 97, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+
+  { id: 98, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 99, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 100, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 101, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 102, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 103, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 104, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 105, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 106, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 107, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 108, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 109, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+
+  { id: 110, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 111, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 112, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 113, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 114, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 115, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 116, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 117, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 118, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 119, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 120, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 121, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
 ].map(item => ({
   ...item,
-  hasSpicyOption: item.hasSpicyOption !== undefined ? item.hasSpicyOption : false
+  hasSpicyOption: item.hasSpicyOption !== undefined ? item.hasSpicyOption : false,
+  ingredients: item.ingredients || [] // Ensure ingredients array exists
 }));
-// MenuCard Component
 // MenuCard Component - Show total count irrespective of spicy level
 const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel }) => {
-  // Get total quantity for this item (across all spicy levels)
+  const [showIngredients, setShowIngredients] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  
   const totalQuantity = cart
     .filter(cartItem => cartItem.id === item.id)
     .reduce((total, cartItem) => total + cartItem.qty, 0);
-  
+
+  // Detect mobile and handle body scroll
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    if (showIngredients) {
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      document.body.style.overflow = 'unset';
+    };
+  }, [showIngredients]);
+
+  // Close on ESC key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') setShowIngredients(false);
+    };
+
+    if (showIngredients) {
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [showIngredients]);
+
   return (
-    <div className="menu-card">
-      <div className="menu-image-container">
-        <img className="menu-image" src={item.img} alt={item.name} />
-        {item.hasSpicyOption && (
-          <div className="spicy-badge">
-            <i className="fas fa-pepper-hot"></i> Custom Spice
-          </div>
-        )}
-      </div>
-      <div className="menu-content">
-        <h5 className="menu-title">{item.name}</h5>
-        {item.hasSpicyOption && (
-          <div className="spicy-indicator-small">
-            <small className="text-muted">
-              <i className="fas fa-pepper-hot"></i> Adjustable spice level
-            </small>
-          </div>
-        )}
-        <div className="menu-details">
-          <span className="menu-price">₹{item.price}</span>
-          {totalQuantity === 0 ? (
-            <button
-              className="add-to-cart-btn"
-              onClick={() => onAddWithSpicyLevel(item)}
-            >
-              ADD
-            </button>
-          ) : (
-            <div className="quantity-controls">
-              <button
-                className="quantity-btn"
-                onClick={() => {
-                  // Find the most recent cart item for this item to remove from
-                  const cartItemsForThisItem = cart.filter(cartItem => cartItem.id === item.id);
-                  if (cartItemsForThisItem.length > 0) {
-                    // Remove from the first found item (or you can implement more specific logic)
-                    const itemToDecrease = cartItemsForThisItem[0];
-                    setCart((prevCart) =>
-                      prevCart
-                        .map((i) =>
-                          i.id === itemToDecrease.id && 
-                          i.spicyLevel?.id === itemToDecrease.spicyLevel?.id
-                            ? { ...i, qty: i.qty - 1 }
-                            : i
-                        )
-                        .filter((i) => i.qty > 0)
-                    );
-                  }
-                }}
-              >
-                -
-              </button>
-              <span className="quantity-value">{totalQuantity}</span>
-              <button
-                className="quantity-btn"
-                onClick={() => onAddWithSpicyLevel(item)}
-              >
-                +
-              </button>
+    <>
+      <div className="menu-card">
+        <div className="menu-image-container">
+          <img className="menu-image" src={item.img} alt={item.name} />
+          {item.hasSpicyOption && (
+            <div className="spicy-badge">
+              <i className="fas fa-pepper-hot"></i> 
             </div>
           )}
+          {/* Ingredients Toggle Button */}
+          {item.ingredients && item.ingredients.length > 0 && (
+            <button 
+              className="ingredients-toggle-btn btn-primary"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowIngredients(true);
+              }}
+              title="View Ingredients"
+            >
+              <i className="fas fa-list-alt"></i>
+            </button>
+          )}
+        </div>
+        <div className="menu-content">
+          <h5 className="menu-title">{item.name}</h5>
+          
+          {item.hasSpicyOption && (
+            <div className="spicy-indicator-small">
+              <small className="text-muted">
+                <i className="fas fa-pepper-hot"></i> Adjustable spice level
+              </small>
+            </div>
+          )}    
+          <div className="menu-details">
+            <span className="menu-price">₹{item.price}</span>
+            {totalQuantity === 0 ? (
+              <button
+                className="add-to-cart-btn"
+                onClick={() => onAddWithSpicyLevel(item)}
+              >
+                ADD
+              </button>
+            ) : (
+              <div className="quantity-controls">
+                <button
+                  className="quantity-btn"
+                  onClick={() => {
+                    const cartItemsForThisItem = cart.filter(cartItem => 
+                      cartItem.id === item.id && 
+                      (!item.hasSpicyOption || cartItem.spicyLevel?.id === cartItem.spicyLevel?.id)
+                    );
+                    if (cartItemsForThisItem.length > 0) {
+                      const itemToDecrease = cartItemsForThisItem[0];
+                      setCart((prevCart) =>
+                        prevCart
+                          .map((i) =>
+                            i.id === itemToDecrease.id && 
+                            i.spicyLevel?.id === itemToDecrease.spicyLevel?.id
+                              ? { ...i, qty: i.qty - 1 }
+                              : i
+                          )
+                          .filter((i) => i.qty > 0)
+                      );
+                    }
+                  }}
+                >
+                  -
+                </button>
+                <span className="quantity-value">{totalQuantity}</span>
+                <button
+                  className="quantity-btn"
+                  onClick={() => onAddWithSpicyLevel(item)}
+                >
+                  +
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Responsive Ingredients Popup */}
+      {showIngredients && (
+        <div className="ingredients-responsive-overlay" onClick={() => setShowIngredients(false)}>
+          <div 
+            className={`ingredients-responsive-modal ${isMobile ? 'mobile' : 'desktop'}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="modal-headerr p-0">
+              <div className="header-content">
+                <div className="dish-info">
+                  <img src={item.img} alt={item.name} className="dish-thumbnail" />
+                 
+                </div>
+                 
+                <button 
+                  className="close-modal-btn" style={{top: '5px', right: '5px', position: 'absolute'}}
+                  onClick={() => setShowIngredients(false)}
+                >
+                  <i className="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="modal-contentt">
+              <div className="ingredients-section">
+                <div className="dish-details mb-3">
+                    <h3 style={{color:'#000'}}>{item.name}</h3>
+                    <div className="dish-meta">
+                      <span className="price">₹{item.price}</span>
+                      {/* {item.hasSpicyOption && (
+                        <span className="spicy-indicator">
+                          <i className="fas fa-pepper-hot"></i> Customizable Spice
+                        </span>
+                      )} */}
+                    </div>
+                  </div>
+                <div className="section-title2">
+                  <i className="fas fa-seedling"></i>
+                  <h4>Fresh Ingredients</h4>
+                  <span className="ingredients-count">{item.ingredients.length} items</span>
+                </div>
+                
+                <div className="ingredients-list">
+                  {item.ingredients.map((ingredient, index) => (
+                    <div key={index} className="ingredient-item">
+                      <div className="ingredient-check">
+                        <i className="fas fa-check"></i>
+                      </div>
+                      <span className="ingredient-text">{ingredient}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="quality-badge">
+                <i className="fas fa-award"></i>
+                <span>Made with premium, fresh ingredients</span>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="modal-footer">
+              <button 
+                className="btn-secondary"
+                onClick={() => setShowIngredients(false)}
+              >
+                Cancel
+              </button>
+              <button 
+                className="btn-primary"
+                onClick={() => {
+                  onAddWithSpicyLevel(item);
+                  setShowIngredients(false);
+                }}
+              >
+                <i className="fas fa-shopping-cart"></i>
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
@@ -162,17 +409,17 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
 
 
   const categories = [
-    { id: 'appetizers', name: 'Appetizers', icon: '🥗', color: '#10b981' },
-    { id: 'soups-salads', name: 'Soups & Salads', icon: '🍜', color: '#f59e0b' },
-    { id: 'side-dishes', name: 'Side Dishes', icon: '🍽️', color: '#ef4444' },
-    { id: 'breads', name: 'Breads', icon: '🍞', color: '#f97316' },
-    { id: 'tandoori', name: 'Tandoori Specialties', icon: '🔥', color: '#dc2626' },
-    { id: 'chicken', name: 'Chicken Dishes', icon: '🍗', color: '#65a30d' },
-    { id: 'vegetarian', name: 'Vegetarian Delights', icon: '🥦', color: '#16a34a' },
-    { id: 'lamb', name: 'Lamb Specialties', icon: '🥩', color: '#b91c1c' },
-    { id: 'seafood', name: 'Seafood', icon: '🐟', color: '#0ea5e9' },
-    { id: 'beverages', name: 'Beverages', icon: '🥤', color: '#8b5cf6' },
-    { id: 'desserts', name: 'Desserts', icon: '🍰', color: '#ec4899' }
+    { id: 'appetizers', name: 'Appetizers', icon: '🥗', color: '#10b981', gradient: 'from-emerald-500 to-green-400' },
+    { id: 'soups-salads', name: 'Soups & Salads', icon: '🍜', color: '#f59e0b', gradient: 'from-amber-500 to-yellow-400' },
+    { id: 'side-dishes', name: 'Side Dishes', icon: '🍽️', color: '#ef4444', gradient: 'from-red-500 to-pink-500' },
+    { id: 'breads', name: 'Breads', icon: '🍞', color: '#f97316', gradient: 'from-orange-500 to-red-400' },
+    { id: 'tandoori', name: 'Tandoori Specialties', icon: '🔥', color: '#dc2626', gradient: 'from-red-600 to-orange-500' },
+    { id: 'chicken', name: 'Chicken Dishes', icon: '🍗', color: '#65a30d', gradient: 'from-lime-600 to-green-500' },
+    { id: 'vegetarian', name: 'Vegetarian Delights', icon: '🥦', color: '#16a34a', gradient: 'from-green-500 to-emerald-400' },
+    { id: 'lamb', name: 'Lamb Specialties', icon: '🥩', color: '#b91c1c', gradient: 'from-rose-700 to-pink-600' },
+    { id: 'seafood', name: 'Seafood', icon: '🐟', color: '#0ea5e9', gradient: 'from-sky-500 to-blue-400' },
+    { id: 'beverages', name: 'Beverages', icon: '🥤', color: '#8b5cf6', gradient: 'from-purple-500 to-violet-400' },
+    { id: 'desserts', name: 'Desserts', icon: '🍰', color: '#ec4899', gradient: 'from-pink-500 to-rose-400' }
   ];
 
    // Filter items by selected category
@@ -356,42 +603,56 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  return (
-       <div className="admin-modal-overlay modern-v2">
-      <div className="admin-modal modern-v2">
+  // Check if we're on mobile
+  const isMobile = window.innerWidth < 768;
+
+   return (
+    <div className="admin-modal-overlay modern-enhanced">
+      <div className="admin-modal modern-enhanced">
         {/* Enhanced Header */}
-        <div className="admin-header modern-v2">
+        <div className="admin-header modern-enhanced">
           <div className="header-content">
             <div className="header-main">
-              {window.innerWidth < 768 && mobileView !== 'categories' && (
-                <button className="btn-back-mobile" onClick={mobileNavigation.back}>
+              {/* {isMobile && mobileView !== 'categories' && (
+                <button className="btn-back-mobile" onClick={handleMobileBack}>
                   <i className="fas fa-arrow-left"></i>
                 </button>
-              )}
+              )} */}
               <div className="header-title">
-                <h3 className="modal-header-heading">
-                  <i className="fas fa-utensils me-2"></i>
-                  Menu Dashboard
-                </h3>
+                <div className="header-icon btn-primary">
+                  <i className="fas fa-utensils"></i>
+                </div>
+                <div>
+                  <h3>Menu Dashboard</h3>
+                  <p>Manage your restaurant menu items</p>
+                </div>
               </div>
             </div>
             
-            
+            <div className="header-stats">
+              <div className="stat-badge">
+                <i className="fas fa-utensils"></i>
+                <span>{overallStats.totalItems} Items</span>
+              </div>
+              <div className="stat-badge">
+                <i className="fas fa-pepper-hot"></i>
+                <span>{overallStats.spicyItems} Spicy</span>
+              </div>
+            </div>
           </div>
           
-          {window.innerWidth < 768 && mobileView === 'items' && (
+          {isMobile && mobileView === 'items' && (
             <button className="btn-mobile-menu" onClick={() => setShowMobileSidebar(!showMobileSidebar)}>
               <i className="fas fa-bars"></i>
             </button>
           )}
           
-          <button className="btn-close modern-v2" onClick={onClose}>
+          <button className="btn-close modern-enhanced" onClick={onClose}>
             <i className="fas fa-times"></i>
           </button>
         </div>
-       
 
-        <div className="admin-content modern-v2">
+        <div className="admin-content modern-enhanced">
           {/* Mobile Sidebar */}
           {showMobileSidebar && (
             <div className="mobile-sidebar-overlay" onClick={() => setShowMobileSidebar(false)}>
@@ -428,10 +689,9 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
               </div>
             </div>
           )}
-
           {/* Desktop Sidebar */}
-          {window.innerWidth >= 768 && (
-            <div className="admin-sidebar modern-v2">
+          {!isMobile && (
+            <div className="admin-sidebar modern-enhanced">
               <div className="sidebar-header">
                 <div className="search-container">
                   <i className="fas fa-search"></i>
@@ -457,91 +717,182 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
                       key={cat.id}
                       className={`category-nav-item ${selectedCategory === cat.id ? 'active' : ''}`}
                       onClick={() => handleCategoryChange(cat.id)}
-                      style={{ borderLeftColor: cat.color }}
                     >
                       <div className="category-main">
-                        <div className="category-icon" style={{ color: cat.color }}>{cat.icon}</div>
+                        <div className="category-icon" style={{ background: `linear-gradient(135deg, ${cat.color}20, ${cat.color}40)` }}>
+                          <span style={{ color: cat.color }}>{cat.icon}</span>
+                        </div>
                         <div className="category-info">
                           <span className="category-name">{cat.name}</span>
                           <span className="category-stats">
-                            {stats.count} items 
+                            {stats.count} items • ₹{stats.avgPrice} avg
                           </span>
                         </div>
                       </div>
                       <div className="category-value">
-                        {/* <span>₹{stats.totalValue}</span> */}
                         <i className="fas fa-chevron-right"></i>
                       </div>
                     </div>
                   );
                 })}
               </div>
-
-              <div className="sidebar-footer">
-                <button className="btn-add-category" onClick={resetForm}>
-                  <i className="fas fa-plus-circle"></i>
-                  Add New Category
-                </button>
-              </div>
             </div>
           )}
 
-          {/* Main Content */}
-          <div className="admin-main modern-v2">
-            {/* Mobile Categories View */}
-            {window.innerWidth < 768 && mobileView === 'categories' && (
-              <div className="mobile-categories-view">
-                <div className="mobile-categories-header">
-                  <h5>Select Category</h5>
-                  <p>Choose a category to manage items</p>
+          {/* Mobile Categories View */}
+          {isMobile && mobileView === 'categories' && (
+            <div className="mobile-categories-view">
+              <div className="mobile-categories-header">
+                <h5>Select Category</h5>
+                <p>Choose a category to manage items</p>
+              </div>
+              <div className="mobile-categories-grid">
+                {categories.map(cat => {
+                  const stats = getCategoryStats(cat.id);
+                  return (
+                    <div 
+                      key={cat.id}
+                      className="mobile-category-card"
+                      onClick={() => handleCategoryChange(cat.id)}
+                      style={{ borderLeftColor: cat.color }}
+                    >
+                      <div className="category-card-content">
+                        <div className="category-card-icon" style={{ color: cat.color }}>
+                          {cat.icon}
+                        </div>
+                        <div>
+                          <h6>{cat.name}</h6>
+                          <span>{stats.count} items</span>
+                        </div>
+                      </div>
+                      <i className="fas fa-chevron-right"></i>
+                    </div>
+                  );
+                })}
+              </div>
+              <button className="btn btn-primary w-100 mt-3" onClick={handleAddNewItemMobile}>
+                <i className="fas fa-plus me-2"></i>
+                Add New Item
+              </button>
+            </div>
+          )}
+
+          {/* Main Content - Show for desktop OR when mobile is in form/items view */}
+          <div className="admin-main modern-enhanced">
+
+             {/* Items List Section - Show on desktop OR when mobile is in items view */}
+            {(!isMobile || mobileView === 'items') && (
+              <div className="items-section modern-enhanced">
+                <div className="section-header">
+                  <div className="section-info d-flex align-items-start">
+                     {isMobile && mobileView !== 'categories' && (
+                        <button className="btn-back-mobile" onClick={handleMobileBack}>
+                          <i className="fas fa-arrow-left"></i>
+                        </button>
+                      )}
+                    <div className="category-header mb-0">
+                      <div className="category-icon-large" style={{ 
+                        background: `linear-gradient(135deg, ${categories.find(cat => cat.id === selectedCategory)?.color}20, ${categories.find(cat => cat.id === selectedCategory)?.color}40)` 
+                      }}>
+                        <span style={{ color: categories.find(cat => cat.id === selectedCategory)?.color }}>
+                          {categories.find(cat => cat.id === selectedCategory)?.icon}
+                        </span>
+                      </div>
+                      <div>
+                        <h5>{categories.find(cat => cat.id === selectedCategory)?.name}</h5>
+                        <span className="item-count">{filteredItems.length} items</span>
+                      </div>
+                    </div>
+                    
+                  </div>
+                  <div className="section-controls">
+                    <select 
+                      className="form-control form-control-sm" 
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                    >
+                      <option value="name">Sort by Name</option>
+                      <option value="price-low">Price: Low to High</option>
+                      <option value="price-high">Price: High to Low</option>
+                      <option value="spicy">Spicy First</option>
+                    </select>
+                    {isMobile && (
+                      <button className="btn btn-primary btn-sm" onClick={handleAddNewItemMobile}>
+                        <i className="fas fa-plus me-1"></i>Add
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <div className="mobile-categories-grid">
-                  {categories.map(cat => {
-                    const stats = getCategoryStats(cat.id);
-                    return (
-                      <div 
-                        key={cat.id}
-                        className="mobile-category-card"
-                        onClick={() => handleCategoryChange(cat.id)}
-                        style={{ borderLeftColor: cat.color }}
-                      >
-                        <div className="category-card-content">
-                          <div className="category-card-icon" style={{ color: cat.color }}>
-                            {cat.icon}
+
+                {filteredItems.length === 0 ? (
+                  <div className="empty-state modern-enhanced">
+                    <div className="empty-icon">
+                      <i className="fas fa-utensils"></i>
+                    </div>
+                    <h6>No items found</h6>
+                    <p>{searchTerm ? 'Try adjusting your search' : 'Start by adding your first menu item'}</p>
+                    <button className="btn btn-primary" onClick={resetForm}>
+                      <i className="fas fa-plus me-2"></i>Add First Item
+                    </button>
+                  </div>
+                ) : (
+                  <div className="items-grid modern-enhanced">
+                    {filteredItems.map(item => {
+                      const category = categories.find(cat => cat.id === item.category);
+                      return (
+                        <div key={item.id} className="admin-item-card modern-enhanced">
+                          <div className="item-image">
+                            <img src={item.img} alt={item.name} />
+                            {item.hasSpicyOption && (
+                              <div className="spicy-badge" title="Spicy option available">
+                                <i className="fas fa-pepper-hot"></i>
+                              </div>
+                            )}
+                            <div className="item-category-badge" style={{ backgroundColor: category?.color }}>
+                              {category?.icon}
+                            </div>
                           </div>
-                          <div>
-                            <h6>{cat.name}</h6>
-                            <span>{stats.count} items</span>
+                          
+                          <div className="item-info">
+                            <h6 className="item-name">{item.name}</h6>
+                            <div className="item-meta">
+                              <span className="item-price">₹{item.price}</span>
+                              <span className="item-category">{category?.name}</span>
+                            </div>
+                          </div>
+                          
+                          <div className="item-actions">
+                            <button className="btn-action edit" onClick={() => handleEdit(item)} title="Edit">
+                              <i className="fas fa-edit"></i>
+                            </button>
+                            <button className="btn-action delete" onClick={() => onDeleteItem(item.id)} title="Delete">
+                              <i className="fas fa-trash"></i>
+                            </button>
                           </div>
                         </div>
-                        <i className="fas fa-chevron-right"></i>
-                      </div>
-                    );
-                  })}
-                </div>
-                <button className="btn btn-primary w-100 mt-3" onClick={mobileNavigation.addItem}>
-                  <i className="fas fa-plus me-2"></i>
-                  Add New Item
-                </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             )}
 
-            {/* Form Section */}
-            {(window.innerWidth >= 768 || mobileView === 'form') && (
-              <div className="form-section modern-v2">
+            {/* Form Section - Show on desktop OR when mobile is in form view */}
+            {(!isMobile || mobileView === 'form') && (
+              <div className="form-section modern-enhanced">
                 <div className="section-header">
-                  <div className="section-title hr-none">
+                  <div className="section-title1">
                     <i className={`fas ${isEditing ? 'fa-edit' : 'fa-plus-circle'} me-2`}></i>
                     {isEditing ? 'Edit Menu Item' : 'Create New Item'}
                   </div>
                   {isEditing && (
-                    <button className="btn btn-outline-secondary btn-sm" onClick={resetForm}>
+                    <button className="btn btn-outline btn-sm" onClick={resetForm}>
                       <i className="fas fa-plus me-1"></i>New Item
                     </button>
                   )}
                 </div>
 
-                <form onSubmit={handleSubmit} className="admin-form modern-v2">
+                <form onSubmit={handleSubmit} className="admin-form modern-enhanced">
                   {/* Image Upload Section */}
                   <div className="form-card">
                     <label className="form-label">Item Image</label>
@@ -565,7 +916,7 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
                       )}
                       
                       <div className="upload-actions">
-                        <label className="upload-btn primary">
+                        <label className="upload-btn btn-primary">
                           <i className="fas fa-upload me-2"></i>
                           Upload Image
                           <input type="file" accept="image/*" onChange={handleImageUpload} hidden />
@@ -584,9 +935,9 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
                   </div>
 
                   {/* Form Fields */}
-                  <div className="row g-3">
-                    <div className="col-12">
-                      <div className="form-floating modern-v2">
+                  <div className="form-grid">
+                    <div className="form-group full-width">
+                      <div className="form-floating modern-enhanced">
                         <i className="fas fa-tag input-icon"></i>
                         <input
                           type="text"
@@ -600,8 +951,8 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
                       </div>
                     </div>
                     
-                    <div className="col-12 col-md-6">
-                      <div className="form-floating modern-v2">
+                    <div className="form-group">
+                      <div className="form-floating modern-enhanced">
                         <i className="fas fa-rupee-sign input-icon"></i>
                         <input
                           type="number"
@@ -615,8 +966,8 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
                       </div>
                     </div>
 
-                    <div className="col-12 col-md-6">
-                      <div className="form-floating modern-v2">
+                    <div className="form-group">
+                      <div className="form-floating modern-enhanced">
                         <i className="fas fa-layer-group input-icon"></i>
                         <select
                           className="form-control"
@@ -625,7 +976,7 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
                         >
                           {categories.map(cat => (
                             <option key={cat.id} value={cat.id}>
-                               {cat.name}
+                              {cat.name}
                             </option>
                           ))}
                         </select>
@@ -633,8 +984,8 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
                       </div>
                     </div>
 
-                    <div className="col-12">
-                      <div className="form-check modern-v2">
+                    <div className="form-group full-width">
+                      <div className="form-check modern-enhanced">
                         <input
                           type="checkbox"
                           className="form-check-input"
@@ -650,14 +1001,14 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
                       </div>
                     </div>
 
-                    <div className="col-12">
+                    <div className="form-group full-width">
                       <div className="form-actions">
-                        <button type="submit" className="btn btn-primary modern-v2">
+                        <button type="submit" className="btn btn-primary modern-enhanced">
                           <i className={`fas ${isEditing ? 'fa-save' : 'fa-plus'} me-2`}></i>
                           {isEditing ? 'Update Item' : 'Create Item'}
                         </button>
                         {isEditing && (
-                          <button type="button" className="btn btn-outline-secondary modern-v2" onClick={resetForm}>
+                          <button type="button" className="btn btn-outline modern-enhanced" onClick={resetForm}>
                             Cancel
                           </button>
                         )}
@@ -668,135 +1019,9 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
               </div>
             )}
 
-            {/* Items List Section */}
-            {(window.innerWidth >= 768 || mobileView === 'items') && (
-              <div className="items-section modern-v2">
-                <div className="section-header">
-                  <div className="section-info">
-                    <h5>
-                      {/* <i className="fas fa-list me-2"></i> */}
-                      {categories.find(cat => cat.id === selectedCategory)?.name}
-                    </h5>
-                    <span className="item-count">{filteredItems.length} items</span>
-                  </div>
-                  <div className="section-controls">
-                    <select 
-                      className="form-control form-control-sm" 
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value)}
-                    >
-                      <option value="name">Sort by Name</option>
-                      <option value="price-low">Price: Low to High</option>
-                      <option value="price-high">Price: High to Low</option>
-                      <option value="spicy">Spicy First</option>
-                    </select>
-                    {window.innerWidth < 768 && (
-                      <button className="btn btn-primary btn-sm" onClick={mobileNavigation.addItem}>
-                        <i className="fas fa-plus me-1"></i>Add
-                      </button>
-                    )}
-                  </div>
-                </div>
-
-                {filteredItems.length === 0 ? (
-                  <div className="empty-state modern-v2">
-                    <div className="empty-icon">
-                      <i className="fas fa-utensils"></i>
-                    </div>
-                    <h6>No items found</h6>
-                    <p>{searchTerm ? 'Try adjusting your search' : 'Start by adding your first menu item'}</p>
-                    <button className="btn btn-primary" onClick={resetForm}>
-                      <i className="fas fa-plus me-2"></i>Add First Item
-                    </button>
-                  </div>
-                ) : (
-                  <div className="items-grid modern-v2">
-                    {filteredItems.map(item => {
-                      const category = categories.find(cat => cat.id === item.category);
-                      return (
-                        <div key={item.id} className="admin-item-card modern-v2">
-                          <div className="item-image">
-                            <img src={item.img} alt={item.name} />
-                            {item.hasSpicyOption && (
-                              <div className="spicy-badge" title="Spicy option available">
-                                <i className="fas fa-pepper-hot"></i>
-                              </div>
-                            )}
-                            <div className="item-category-badge" style={{ backgroundColor: category?.color }}>
-                              {category?.icon}
-                            </div>
-                          </div>
-                          
-                          <div className="item-info">
-                            <h6 className="item-name">{item.name}</h6>
-                            <div className="item-meta">
-                              <span className="item-price">₹{item.price}</span>
-                              <span className="item-category">{category?.name}</span>
-                            </div>
-                          </div>
-                          
-                          <div className="item-actions">
-                            <button className="btn-action edit" onClick={() => handleEdit(item)}>
-                              <i className="fas fa-edit"></i>
-                            </button>
-                            <button className="btn-action delete" onClick={() => onDeleteItem(item.id)}>
-                              <i className="fas fa-trash"></i>
-                            </button>
-                            <button className="btn-action preview">
-                              <i className="fas fa-eye"></i>
-                            </button>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            )}
+           
           </div>
         </div>
-
-        {/* Enhanced Footer */}
-        {/* <div className="admin-footer modern-v2">
-          <div className="footer-stats">
-            <div className="stat-item">
-              <div className="stat-icon">
-                <i className="fas fa-chart-line"></i>
-              </div>
-              <div className="stat-info">
-                <span className="stat-value">{overallStats.totalItems}</span>
-                <span className="stat-label">Total Items</span>
-              </div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-icon">
-                <i className="fas fa-pepper-hot"></i>
-              </div>
-              <div className="stat-info">
-                <span className="stat-value">{overallStats.spicyItems}</span>
-                <span className="stat-label">Spicy Items</span>
-              </div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-icon">
-                <i className="fas fa-rupee-sign"></i>
-              </div>
-              <div className="stat-info">
-                <span className="stat-value">₹{overallStats.totalValue}</span>
-                <span className="stat-label">Total Value</span>
-              </div>
-            </div>
-            <div className="stat-item">
-              <div className="stat-icon">
-                <i className="fas fa-calculator"></i>
-              </div>
-              <div className="stat-info">
-                <span className="stat-value">₹{overallStats.avgPrice}</span>
-                <span className="stat-label">Avg Price</span>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     </div>
   );
@@ -890,7 +1115,7 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
         
           <div className="header-content">
             <h5>Customize Your Spice Level</h5>
-            <p>How spicy would you like it?</p>
+            {/* <p>How spicy would you like it?</p> */}
           </div>
           <button type="button" className="btn-close" onClick={onClose}></button>
         </div>
@@ -917,7 +1142,7 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
             
             {/* Enhanced Spicy Level Selector */}
             <div className="spicy-levels enhanced">
-              <div className="level-indicator">
+              {/* <div className="level-indicator">
                 <div className="level-scale">
                   {spicyLevels.map(level => (
                     <div 
@@ -941,7 +1166,7 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
                     </span>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
               {/* Interactive Spicy Options */}
               <div className="spicy-options enhanced">
@@ -1178,14 +1403,61 @@ const filteredItems = menuCategories
     item.name.toLowerCase().includes(searchQuery.toLowerCase())
   ) || [];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollPosition(window.scrollY);
-    };
+  // Enhanced parallax effect
+ useEffect(() => {
+  const handleScroll = () => {
+    const position = window.scrollY;
+    setScrollPosition(position);
     
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    // Hero section parallax
+    const heroLayers = document.querySelectorAll('.parallax-hero-modern .parallax-layer');
+    heroLayers.forEach(element => {
+      const speed = element.getAttribute('data-speed') || 0.5;
+      const yPos = -(position * speed);
+      element.style.transform = `translateY(${yPos}px)`;
+    });
+
+    // About section parallax
+    const aboutLayers = document.querySelectorAll('.parallax-about-modern .parallax-layer');
+    aboutLayers.forEach(element => {
+      const speed = element.getAttribute('data-speed') || 0.5;
+      const yPos = -(position * speed);
+      // element.style.transform = `translateY(${yPos}px)`;
+    });
+
+    // Floating animation for hero image
+    const heroImage = document.querySelector('.hero-image-modern');
+    if (heroImage) {
+      const floatY = Math.sin(position * 0.005) * 20;
+      // heroImage.style.transform = `translateY(${floatY}px)`;
+    }
+  };
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  return () => window.removeEventListener('scroll', handleScroll);
+}, []);
+
+
+
+    // Add mouse move parallax effect
+useEffect(() => {
+  const handleMouseMove = (e) => {
+    const mouseX = e.clientX / window.innerWidth - 0.5;
+    const mouseY = e.clientY / window.innerHeight - 0.5;
+    
+    const parallaxElements = document.querySelectorAll('.parallax-mouse');
+    parallaxElements.forEach(element => {
+      const depth = element.getAttribute('data-depth') || 20;
+      const xMove = mouseX * depth;
+      const yMove = mouseY * depth;
+      element.style.transform = `translate(${xMove}px, ${yMove}px)`;
+    });
+  };
+
+  window.addEventListener('mousemove', handleMouseMove);
+  return () => window.removeEventListener('mousemove', handleMouseMove);
+}, []);
+
 
   const addToCart = (item, spicyLevel = null) => {
   setCart((prevCart) => {
@@ -1887,6 +2159,43 @@ const getSpicyLevelColor = (level) => {
     </button>
   );
 
+
+
+
+
+  const [showReservationForm, setShowReservationForm] = useState(false);
+const [showReservationSuccess, setShowReservationSuccess] = useState(false);
+const [reservationData, setReservationData] = useState({
+  name: '',
+  email: '',
+  date: '',
+  time: '',
+  guests: '2',
+  specialRequest: ''
+});
+
+// Add this function to handle reservation form submission
+const handleReservationSubmit = (e) => {
+  e.preventDefault();
+  // Handle form submission logic here
+  console.log('Reservation data:', reservationData);
+  
+  // Show success modal
+  setShowReservationSuccess(true);
+  setShowReservationForm(false);
+  
+  // Reset form
+  setReservationData({
+    name: '',
+    email: '',
+    date: '',
+    time: '',
+    guests: '2',
+    specialRequest: ''
+  });
+};
+
+
   return (
     <>
       <div className="container-xxl bg-white p-0">
@@ -1916,7 +2225,6 @@ const getSpicyLevelColor = (level) => {
                   >
                     Home
                   </button>
-
                   <button
                     type="button"
                     className="nav-item nav-link btn btn-link p-0 text-primary mobile-margin"
@@ -1924,7 +2232,6 @@ const getSpicyLevelColor = (level) => {
                   >
                     About
                   </button>
-
                   <button
                     type="button"
                     className="nav-item nav-link btn btn-link p-0 text-primarymobile-margin"
@@ -1932,7 +2239,6 @@ const getSpicyLevelColor = (level) => {
                   >
                     Menu
                   </button>
-
                   <button
                     type="button"
                     className="nav-item nav-link btn btn-link p-0 text-primary mobile-margin"
@@ -1940,21 +2246,19 @@ const getSpicyLevelColor = (level) => {
                   >
                     Contact
                   </button>
-
                   <button
                     type="button"
                     className="btn btn-primary py-2 px-4 mr-2 mobile-margin" style={{ marginRight: "10px", borderRadius: "20px" }}
+                     onClick={() => scrollToSection("bookTable")}
                   >
                     Book A Table
                   </button>
-
                   <button
                     type="button"
                     className="btn btn-primary py-2 px-4 mr-2" style={{ marginRight: "10px", borderRadius: "20px"  }} onClick={() => scrollToSection("order")}
                   >
                     Order Now
                   </button>
-
                   <button
                     className="btn py-2 px-2"
                     data-bs-toggle="offcanvas"
@@ -1962,131 +2266,105 @@ const getSpicyLevelColor = (level) => {
                   >
                     🛒{" "} <span className="badge bg-light text-dark">{cart.length}</span>
                   </button>
-                  {/* Add Admin Button */}
                   {adminButton}
                 </div>
               </div>
             </div>
           </nav>
 
-          <div className="parallax-hero" id="home">
-            <div
-              className="parallax-layer parallax-back"
-              data-depth="0.1"
+          {/* Enhanced Parallax Hero */}
+          <div className="parallax-hero-modern" id="home">
+            {/* Background layers with different parallax speeds */}
+            <div 
+              className="parallax-layer parallax-back-modern" 
+              data-speed="0.1"
             ></div>
-            <div
-              className="parallax-layer parallax-base"
-              data-depth="0.5"
+            <div 
+              className="parallax-layer parallax-base-modern" 
+              data-speed="0.3"
             ></div>
-            <div
-              className="parallax-layer parallax-front"
-              data-depth="0.8"
+            <div 
+              className="parallax-layer parallax-front-modern" 
+              data-speed="0.5"
             ></div>
+            
+            {/* Floating particles */}
+            <div className="floating-particles">
+              {[...Array(15)].map((_, i) => (
+                <div 
+                  key={i}
+                  className="particle"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    animationDelay: `${Math.random() * 5}s`,
+                    animationDuration: `${3 + Math.random() * 4}s`
+                  }}
+                ></div>
+              ))}
+            </div>
 
-            <div className="hero-content">
+            <div className="hero-content-modern">
               <div className="container my-5 py-5">
-                <div className="row align-items-center g-5">
+                <div className="row align-items-center g-5" style={{ paddingTop: "200px" }}>
                   <div className="col-lg-6 text-center text-lg-start">
-                    <h1 className="display-3 text-white animated slideInLeft">
-                      Enjoy Our
-                      <br />
-                      Delicious Meal
-                    </h1>
-                    <p className="text-white animated slideInLeft mb-4 pb-2">
-                      Don't wait on hunger! Choose from our wide range of fast
-                      food, desi specials, and healthy bites – delivered piping
-                      hot in minutes.
-                    </p>
-                    <Link
-                      to=""
-                      className="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft"
-                    >
-                      Book A Table
-                    </Link>
+                    <div className="hero-text-modern">
+                      <h1 className="display-3 text-white animated slideInLeft hero-title-modern">
+                        Enjoy Our
+                        <br />
+                        <span className="text-primary">Delicious Meal</span>
+                      </h1>
+                      <p className="text-white animated slideInLeft mb-4 pb-2 hero-subtitle">
+                        Don't wait on hunger! Choose from our wide range of fast
+                        food, desi specials, and healthy bites – delivered piping
+                        hot in minutes.
+                      </p>
+                      <div className="hero-buttons">
+                        <button
+                          className="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft hero-btn-modern" onClick={() => scrollToSection("bookTable")}
+                        >
+                          Book A Table
+                        </button>
+                        <button
+                          className="btn btn-outline-light py-sm-3 px-sm-5 animated slideInLeft hero-btn-modern" onClick={() => scrollToSection("order")}
+                        >
+                          View Menu
+                        </button>
+                      </div>
+                    </div>
                   </div>
                   <div className="col-lg-6 text-center text-lg-end overflow-hidden">
-                    <img
-                      className="img-fluid floating"
-                      src="img/hero.png"
-                      alt=""
-                    />
+                    <div className="hero-image-container parallax-mouse" data-depth="15">
+                      <img
+                        className="img-fluid floating hero-image-modern"
+                        src="img/hero.png"
+                        alt="Delicious Food"
+                      />
+                      <div className="floating-elements">
+                        <div className="floating-element element-1" data-speed="0.8">
+                          <i className="fas fa-utensils"></i>
+                        </div>
+                        <div className="floating-element element-2" data-speed="1.2">
+                          <i className="fas fa-pepper-hot"></i>
+                        </div>
+                        <div className="floating-element element-3" data-speed="0.6">
+                          <i className="fas fa-leaf"></i>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            
+            {/* Scroll indicator */}
+            {/* <div className="scroll-indicator-modern">
+              <div className="scroll-arrow"></div>
+            </div> */}
           </div>
         </div>
 
-        {/* Service Section */}
 
-        {/* <section className="">
-          <div className="container-xxl py-5">
-            <div className="container">
-              <div className="row g-4">
-                <div
-                  className="col-lg-3 col-sm-6 wow fadeInUp"
-                  data-wow-delay="0.1s"
-                >
-                  <div className="service-item rounded pt-3">
-                    <div className="p-4">
-                      <i className="fa fa-3x fa-user-tie text-primary mb-4"></i>
-                      <h5>Master Chefs</h5>
-                      <p>
-                        Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita
-                        amet diam
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="col-lg-3 col-sm-6 wow fadeInUp"
-                  data-wow-delay="0.3s"
-                >
-                  <div className="service-item rounded pt-3">
-                    <div className="p-4">
-                      <i className="fa fa-3x fa-utensils text-primary mb-4"></i>
-                      <h5>Quality Food</h5>
-                      <p>
-                        Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita
-                        amet diam
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="col-lg-3 col-sm-6 wow fadeInUp"
-                  data-wow-delay="0.5s"
-                >
-                  <div className="service-item rounded pt-3">
-                    <div className="p-4">
-                      <i className="fa fa-3x fa-cart-plus text-primary mb-4"></i>
-                      <h5>Online Order</h5>
-                      <p>
-                        Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita
-                        amet diam
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="col-lg-3 col-sm-6 wow fadeInUp"
-                  data-wow-delay="0.7s"
-                >
-                  <div className="service-item rounded pt-3">
-                    <div className="p-4">
-                      <i className="fa fa-3x fa-headset text-primary mb-4"></i>
-                      <h5>24/7 Service</h5>
-                      <p>
-                        Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita
-                        amet diam
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> */}
+        
 
         {/* About Section with Parallax */}
         <div
@@ -2104,8 +2382,8 @@ const getSpicyLevelColor = (level) => {
                       data-wow-delay="0.1s"
                       src="img/about-1.jpg"
                       alt=""
-                    />
-                  </div>
+                      />
+                    </div>
                   <div className="col-6 text-start">
                     <img
                       className="img-fluid rounded w-75 wow zoomIn "
@@ -2116,87 +2394,87 @@ const getSpicyLevelColor = (level) => {
                     />
                   </div>
                   <div className="col-6 text-end">
-                    <img
+                      <img
                       className="img-fluid rounded w-75 wow zoomIn "
-                      data-wow-delay="0.5s"
-                      src="img/about-3.jpg"
+                        data-wow-delay="0.5s"
+                        src="img/about-3.jpg"
                       alt=""
-                    />
-                  </div>
+                      />
+                    </div>
                   <div className="col-6 text-end">
-                    <img
+                      <img
                       className="img-fluid rounded w-100 wow zoomIn "
-                      data-wow-delay="0.7s"
-                      src="img/about-4.jpg"
+                        data-wow-delay="0.7s"
+                        src="img/about-4.jpg"
                       alt=""
-                    />
+                      />
                   </div>
                 </div>
               </div>
               <div className="col-lg-6">
-                <h5 className="section-title ff-secondary text-start text-primary fw-normal col-white">
-                  About Us
-                </h5>
-                <h1 className="mb-4 col-white">
-                  Welcome to{" "}
-                  <i className="fa fa-utensils text-primary me-2"></i>
+                  <h5 className="section-title ff-secondary text-start text-primary fw-normal">
+                    About Us
+                  </h5>
+                <h1 className="mb-4">
+                    Welcome to{" "}
+                    <i className="fa fa-utensils text-primary me-2"></i>
                   SangEat
-                </h1>
-                <h1 className="mb-4 col-white">
-                  An Experience of Royal Indian Dining
+                  </h1>
+                <h1 className="mb-4">
+                    An Experience of Royal Indian Dining
                 </h1>
                 <div className="divider"></div>
-                <p className="mb-4 col-white">
-                  At SangEat, we bring the flavors of royal Indian cuisine to
-                  your table. From fragrant biryanis to elaborate thalis, each
-                  dish is a celebration of tradition, taste, and hospitality.
-                </p>
-                <p className="mb-4 col-white">
+                <p className="mb-4" style={{color: '#000'}}>
+                    At SangEat, we bring the flavors of royal Indian cuisine to
+                    your table. From fragrant biryanis to elaborate thalis, each
+                    dish is a celebration of tradition, taste, and hospitality.
+                  </p>
+                <p className="mb-4" style={{color: '#000'}}>
                   {" "}
-                  Immerse yourself in an ambiance of elegance and cultural
-                  richness — perfect for family gatherings, celebrations, or
-                  simply treating yourself to authentic flavors.
-                </p>
+                    Immerse yourself in an ambiance of elegance and cultural
+                    richness — perfect for family gatherings, celebrations, or
+                    simply treating yourself to authentic flavors.
+                  </p>
                 <div className="divider"></div>
-                <p className="mb-4 col-white">
+                <p className="mb-4" style={{color: '#000'}}>
                   {" "}
-                  Every plate is carefully crafted using time-honored recipes
-                  and the freshest ingredients to deliver a memorable dining
-                  experience.
-                </p>
+                    Every plate is carefully crafted using time-honored recipes
+                    and the freshest ingredients to deliver a memorable dining
+                    experience.
+                  </p>
                 <div className="row g-4 mb-4">
-                  <div className="col-sm-6">
+                    <div className="col-sm-6">
                     <div className="d-flex align-items-center border-start border-5 border-primary px-3">
-                      <h1
+                        <h1
                         className="flex-shrink-0 display-5 text-primary mb-0"
-                        data-toggle="counter-up"
-                      >
-                        15
-                      </h1>
-                      <div className="ps-4">
-                        <p className="mb-0 col-white">Years of</p>
+                          data-toggle="counter-up"
+                        >
+                          15
+                        </h1>
+                        <div className="ps-4">
+                        <p className="mb-0"  style={{color: '#000'}}>Years of</p>
                         <h6 className="text-uppercase mb-0">Experience</h6>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="col-sm-6">
+                    <div className="col-sm-6">
                     <div className="d-flex align-items-center border-start border-5 border-primary px-3">
-                      <h1
+                        <h1
                         className="flex-shrink-0 display-5 text-primary mb-0"
-                        data-toggle="counter-up"
-                      >
-                        50
-                      </h1>
-                      <div className="ps-4">
-                        <p className="mb-0 col-white">Popular</p>
+                          data-toggle="counter-up"
+                        >
+                          50
+                        </h1>
+                        <div className="ps-4">
+                        <p className="mb-0"  style={{color: '#000'}}>Popular</p>
                         <h6 className="text-uppercase mb-0">Master Chefs</h6>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
                 <Link to="/about" className="btn btn-primary py-3 px-5 mt-2">
-                  Read More
-                </Link>
+                    Read More
+                  </Link>
               </div>
             </div>
           </div>
@@ -2501,58 +2779,63 @@ const getSpicyLevelColor = (level) => {
               </div>
             ) : (
               <>
-                {cart.map((item) => (
-                  <div key={`${item.id}-${item.spicyLevel?.id || 'default'}`} className="mb-3">
-                    <div className="d-flex align-items-center mb-3">
-                      <img
-                        src={item.img}
-                        alt={item.name}
-                        className="rounded me-3"
-                        style={{ width: "60px", height: "60px", objectFit: "cover" }}
-                      />
-                      <div className="flex-grow-1">
-                        <h6 className="mb-0">{item.name}</h6>
-                        {item.spicyLevel && (
-                          <small className="text-warning">
-                            <i className="fas fa-pepper-hot"></i> {item.spicyLevel.name}
-                          </small>
-                        )}
-                        <div className="d-flex align-items-center">
-                          <small className="text-muted">₹{item.price} x {item.qty}</small>
-                          <div className="ms-auto">
-                            <div className="counter-container">
-                              <button
-                                className="counter-btn"
-                                onClick={() =>
-                                  setCart(
-                                    (prevCart) =>
-                                    prevCart
-                                      .map((i) =>
-                                        i.id === item.id
-                                          ? { ...i, qty: i.qty - 1 }
-                                          : i
-                                      )
-                                      .filter((i) => i.qty > 0)
-                                  )
-                                }
-                              >
-                                -
-                              </button>
-                              <span className="counter-value">{item.qty}</span>
-                              <button
-                                className="counter-btn"
-                                onClick={() => addToCart(item)}
-                              >
-                                +
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                <div className="border-top pt-3 mt-3">
+                {cart.map((item, index) => (
+  <div key={`${item.id}-${item.spicyLevel?.id || 'default'}-${index}`} className="mb-3">
+    <div className="d-flex align-items-center mb-3">
+      <img
+        src={item.img}
+        alt={item.name}
+        className="rounded me-3"
+        style={{ width: "60px", height: "60px", objectFit: "cover" }}
+      />
+      <div className="flex-grow-1">
+        <h6 className="mb-0">{item.name}</h6>
+        {item.spicyLevel && (
+          <small className="text-warning">
+            <i className="fas fa-pepper-hot"></i> {item.spicyLevel.name}
+          </small>
+        )}
+        <div className="d-flex align-items-center">
+          <small className="text-muted">₹{item.price} x {item.qty}</small>
+          <div className="ms-auto">
+            <div className="counter-container">
+              <button
+                className="counter-btn"
+                onClick={() =>
+                  setCart((prevCart) =>
+                    prevCart
+                      .map((i) =>
+                        // Match by both ID and spicy level
+                        i.id === item.id && 
+                        i.spicyLevel?.id === item.spicyLevel?.id
+                          ? { ...i, qty: i.qty - 1 }
+                          : i
+                      )
+                      .filter((i) => i.qty > 0)
+                  )
+                }
+              >
+                -
+              </button>
+              <span className="counter-value">{item.qty}</span>
+              <button
+                className="counter-btn"
+                onClick={() => addToCart(item, item.spicyLevel)} // Pass the existing spicy level
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+))}
+                
+              </>
+            )}
+          </div>
+          <div className="border-top p-3 mt-3">
                   <div className="d-flex justify-content-between">
                     <h5>Total:</h5>
                     <h5>₹{total}</h5>
@@ -2564,9 +2847,6 @@ const getSpicyLevelColor = (level) => {
                     Checkout
                   </button>
                 </div>
-              </>
-            )}
-          </div>
         </div>
 
         {/* // Update your checkout modal JSX */}
@@ -2671,7 +2951,7 @@ const getSpicyLevelColor = (level) => {
                   <div className="row g-0">
                     {/* Left Column - Checkout Process */}
                     <div
-                      className="col-md-7 p-4"
+                      className="col-md-7 p-3"
                       style={{ borderRight: "1px solid #eee" }}
                     >
                       {/* Step 1: Login/Signup */}
@@ -2787,7 +3067,7 @@ const getSpicyLevelColor = (level) => {
                                         id="signupEmail"
                                         placeholder="name@example.com"
                                       />
-                <label htmlFor="signupEmail">Email address</label>
+                                      <label htmlFor="signupEmail">Email address</label>
                                     </div>
                                   </div>
 
@@ -3220,110 +3500,112 @@ const getSpicyLevelColor = (level) => {
                     </div>
 
                     {/* Right Column - Order Summary */}
-<div className="col-md-5 p-4" style={{ backgroundColor: '#f8f9fa' }}>
-  <div className="sticky-top" style={{ top: '20px' }}>
-    <h5 className="mb-4 fw-bold">Order Summary</h5>
+                    <div className="col-md-5 p-4" style={{ backgroundColor: '#f8f9fa' }}>
+                      <div className="sticky-top" style={{ top: '20px' }}>
+                        <h5 className="mb-4 fw-bold">Order Summary</h5>
 
-    <div className="order-items mb-4">
-      {cart.length === 0 ? (
-        <p className="text-muted text-center">Your cart is empty</p>
-      ) : (
-        cart.map((item, index) => (
-          <div key={`${item.id}-${item.spicyLevel?.id || 'default'}-${index}`} className="order-item-card mb-3 p-3">
-            <div className="row align-items-center">
-              <div className="col-3">
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="rounded w-100"
-                  style={{ height: "60px", objectFit: "cover" }}
-                />
-              </div>
-              <div className="col-9">
-                <div className="d-flex justify-content-between align-items-start mb-1">
-                  <h6 className="mb-0">{item.name}</h6>
-                  <span className="text-primary fw-bold">₹{item.price}</span>
-                </div>
-                
-                {/* SPICY LEVEL BADGE - This should appear for each item */}
-                {item.spicyLevel && (
-                  <div className="mb-2">
-                    <span 
-                      className="badge"
-                      style={{ 
-                        backgroundColor: getSpicyLevelColor(item.spicyLevel.id),
-                        color: 'white',
-                        fontSize: '0.7rem',
-                        padding: '0.2rem 0.5rem'
-                      }}
-                    >
-                      <i className="fas fa-pepper-hot me-1"></i>
-                      {item.spicyLevel.name} Spice
-                    </span>
-                  </div>
-                )}
-                
-                <div className="d-flex justify-content-between align-items-center">
-                  <div className="quantity-controls">
-                    <button
-                      className="quantity-btn"
-                      onClick={() =>
-                        setCart((prevCart) =>
-                          prevCart
-                            .map((i) =>
-                              i.id === item.id ? { ...i, qty: i.qty - 1 } : i
-                            )
-                            .filter((i) => i.qty > 0)
-                        )
-                      }
-                    >
-                      -
-                    </button>
-                    <span className="mx-2 fw-bold">{item.qty}</span>
-                    <button
-                      className="quantity-btn"
-                      onClick={() => addToCart(item, item.spicyLevel)}
-                    >
-                      +
-                    </button>
-                  </div>
-                  <span className="fw-bold">₹{item.price * item.qty}</span>
-                </div>
-              </div>
-            </div>
+                        <div className="order-items mb-4">
+                          {cart.length === 0 ? (
+                            <p className="text-muted text-center">Your cart is empty</p>
+                          ) : (
+                            cart.map((item, index) => (
+  <div key={`${item.id}-${item.spicyLevel?.id || 'default'}-${index}`} className="order-item-card mb-3 p-3">
+    <div className="row align-items-center">
+      <div className="col-3">
+        <img
+          src={item.img}
+          alt={item.name}
+          className="rounded w-100"
+          style={{ height: "60px", objectFit: "cover" }}
+        />
+      </div>
+      <div className="col-9">
+        <div className="d-flex justify-content-between align-items-start mb-1">
+          <h6 className="mb-0">{item.name}</h6>
+          <span className="text-primary fw-bold">₹{item.price}</span>
+        </div>
+        
+        {item.spicyLevel && (
+          <div className="mb-2">
+            <span 
+              className="badge"
+              style={{ 
+                backgroundColor: getSpicyLevelColor(item.spicyLevel.id),
+                color: 'white',
+                fontSize: '0.7rem',
+                padding: '0.2rem 0.5rem'
+              }}
+            >
+              <i className="fas fa-pepper-hot me-1"></i>
+              {item.spicyLevel.name} Spice
+            </span>
           </div>
-        ))
-      )}
-    </div>
-
-    {/* Rest of the bill details remains the same */}
-    <div className="bill-details-card">
-      <h6 className="mb-3 fw-bold">Bill Details</h6>
-      <div className="bill-item d-flex justify-content-between mb-2">
-        <span>Item Total</span>
-        <span>₹{total}</span>
+        )}
+        
+        <div className="d-flex justify-content-between align-items-center">
+          <div className="quantity-controls">
+            <button
+              className="quantity-btn"
+              onClick={() =>
+                setCart((prevCart) =>
+                  prevCart
+                    .map((i) =>
+                      i.id === item.id && 
+                      i.spicyLevel?.id === item.spicyLevel?.id
+                        ? { ...i, qty: i.qty - 1 }
+                        : i
+                    )
+                    .filter((i) => i.qty > 0)
+                )
+              }
+            >
+              -
+            </button>
+            <span className="mx-2 fw-bold">{item.qty}</span>
+            <button
+              className="quantity-btn"
+              onClick={() => addToCart(item, item.spicyLevel)} // Pass existing spicy level
+            >
+              +
+            </button>
+          </div>
+          <span className="fw-bold">₹{item.price * item.qty}</span>
+        </div>
       </div>
-      <div className="bill-item d-flex justify-content-between mb-2">
-        <span>Delivery Fee | 6.0 kms</span>
-        <span className="text-success">₹30</span>
-      </div>
-      <div className="bill-item d-flex justify-content-between mb-2">
-        <span>GST & Restaurant Charges</span>
-        <span>₹{Math.round(total * 0.05)}</span>
-      </div>
-      <hr />
-      <div className="bill-total d-flex justify-content-between fw-bold fs-5 mb-3">
-        <span>TO PAY</span>
-        <span>₹{total + 30 + Math.round(total * 0.05)}</span>
-      </div>
-      {checkoutStep === 3 && (
-        <button className="btn btn-success w-100 py-3 fw-bold" onClick={handlePlaceOrder}>
-          Place Order
-        </button>
-      )}
     </div>
   </div>
-</div>
+))
+                          )}
+                        </div>
+
+                        {/* Rest of the bill details remains the same */}
+                        <div className="bill-details-card">
+                          <h6 className="mb-3 fw-bold">Bill Details</h6>
+                          <div className="bill-item d-flex justify-content-between mb-2">
+                            <span>Item Total</span>
+                            <span>₹{total}</span>
+                          </div>
+                          <div className="bill-item d-flex justify-content-between mb-2">
+                            <span>Delivery Fee | 6.0 kms</span>
+                            <span className="text-success">₹30</span>
+                          </div>
+                          <div className="bill-item d-flex justify-content-between mb-2">
+                            <span>GST & Restaurant Charges</span>
+                            <span>₹{Math.round(total * 0.05)}</span>
+                          </div>
+                          <hr />
+                          <div className="bill-total d-flex justify-content-between fw-bold fs-5 mb-3">
+                            <span>TO PAY</span>
+                            <span>₹{total + 30 + Math.round(total * 0.05)}</span>
+                          </div>
+                          {checkoutStep === 3 && (
+                            <button className="btn btn-success w-100 py-3 fw-bold" onClick={handlePlaceOrder}>
+                              Place Order
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -3676,145 +3958,299 @@ const getSpicyLevelColor = (level) => {
 
 
         {/* <!-- Reservation Start --> */}
-        <div
-          className="container-xxl py-5 px-0 wow fadeInUp"
-          data-wow-delay="0.1s"
+       <div id="bookTable"
+       className=" py-5 px-0 wow fadeInUp"
+       data-wow-delay="0.1s"
+       >
+  <div className="row g-0">
+    <div className="col-md-6">
+      <div className="video">
+        <button
+          type="button"
+          className="btn-play"
+          data-bs-toggle="modal"
+          data-src=""
+          data-bs-target="#videoModal"
         >
-          <div className="row g-0">
-            <div className="col-md-6">
-              <div className="video">
-                <button
-                  type="button"
-                  className="btn-play"
-                  data-bs-toggle="modal"
-                  data-src="https://www.youtube.com/embed/DWRcNpR6Kdc"
-                  data-bs-target="#videoModal"
-                >
-                  <span></span>
-                </button>
+          <span></span>
+        </button>
+      </div>
+    </div>
+    <div className="col-md-6 bg-dark d-flex align-items-center">
+      <div className="p-5 wow fadeInUp" data-wow-delay="0.2s">
+        <h5 className="section-title ff-secondary text-start text-primary fw-normal">
+          Reservation
+        </h5>
+        <h1 className="text-white mb-4">Book A Table Online</h1>
+        <p className="text-white mb-4">Experience fine dining with our easy online booking system</p>
+        
+        <div className="reservation-features mb-4">
+          <div className="row text-white">
+            <div className="col-6 mb-3">
+              <div className="d-flex align-items-center">
+                <i className="fas fa-check-circle text-primary me-2"></i>
+                <small>Instant Confirmation</small>
               </div>
             </div>
-            <div className="col-md-6 bg-dark d-flex align-items-center">
-              <div className="p-5 wow fadeInUp" data-wow-delay="0.2s">
-                <h5 className="section-title ff-secondary text-start text-primary fw-normal">
-                  Reservation
-                </h5>
-                <h1 className="text-white mb-4">Book A Table Online</h1>
-                <form>
-                  <div className="row g-3">
-                    <div className="col-md-6">
-                      <div className="form-floating">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="name"
-                          placeholder="Your Name" autoComplete="on"
-                        />
-                        <label htmlFor="name">Your Name</label>
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="form-floating">
-                        <input
-                          type="email"
-                          className="form-control"
-                          id="email"
-                          placeholder="Your Email" autoComplete="on"
-                        />
-                        <label htmlFor="email">Your Email</label>
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div
-                        className="form-floating date"
-                        id="date3"
-                        data-target-input="nearest"
-                      >
-                        <input
-                          type="text"
-                          className="form-control datetimepicker-input"
-                          id="datetime"
-                          placeholder="Date & Time"
-                          data-target="#date3"
-                          data-toggle="datetimepicker"
-                        />
-                        <label htmlFor="datetime">Date & Time</label>
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="form-floating">
-                        <select className="form-select" id="select1">
-                          <option value="1">People 1</option>
-                          <option value="2">People 2</option>
-                          <option value="3">People 3</option>
-                        </select>
-                        <label htmlFor="select1">No Of People</label>
-                      </div>
-                    </div>
-                    <div className="col-12">
-                      <div className="form-floating">
-                        <textarea
-                          className="form-control"
-                          placeholder="Special Request"
-                          id="message"
-                          style={{ height: "100px" }}
-                        ></textarea>
-                        <label htmlFor="message">Special Request</label>
-                      </div>
-                    </div>
-                    <div className="col-12">
-                      <button
-                        className="btn btn-primary w-100 py-3"
-                        type="submit"
-                      >
-                        Book Now
-                      </button>
-                    </div>
-                  </div>
-                </form>
+            <div className="col-6 mb-3">
+              <div className="d-flex align-items-center">
+                <i className="fas fa-check-circle text-primary me-2"></i>
+                <small>Best Tables Reserved</small>
+              </div>
+            </div>
+            <div className="col-6 mb-3">
+              <div className="d-flex align-items-center">
+                <i className="fas fa-check-circle text-primary me-2"></i>
+                <small>Special Occasions</small>
+              </div>
+            </div>
+            <div className="col-6 mb-3">
+              <div className="d-flex align-items-center">
+                <i className="fas fa-check-circle text-primary me-2"></i>
+                <small>24/7 Support</small>
               </div>
             </div>
           </div>
         </div>
 
-        <div
-          className="modal fade"
-          id="videoModal"
-          tabIndex={-1}
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
+        <button 
+          className="btn btn-primary w-100 py-3 fw-bold modern-reservation-btn"
+          onClick={() => setShowReservationForm(true)}
         >
-          <div className="modal-dialog">
-            <div className="modal-content rounded-0">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">
-                  Youtube Video
-                </h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body">
-                {/* <!-- 16:9 aspect ratio --> */}
-                <div className="ratio ratio-16x9">
-                  <iframe
-                    className="embed-responsive-item"
-                    src="null"
-                    title="Video Player"
-                    id="video"
-                    allowFullScreen
-                    allowscriptaccess="always"
-                    allow="autoplay"
-                  ></iframe>
-                </div>
-              </div>
-            </div>
+          <i className="fas fa-calendar-check me-2"></i>
+          Book Table Now
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* Modern Reservation Form Modal */}
+{showReservationForm && (
+  <div className="modern-modal-overlay" onClick={() => setShowReservationForm(false)}>
+    <div className="modern-modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="modern-modal-header">
+        <div className="modal-header-content">
+          <div className="modal-icon">
+            <i className="fas fa-utensils"></i>
+          </div>
+          <div>
+            <h3 className="modal-title">Table Reservation</h3>
+            <p className="modal-subtitle">Secure your dining experience</p>
           </div>
         </div>
-        {/* <!-- Reservation Start --> */}
+        <button 
+          className="modern-close-btn"
+          onClick={() => setShowReservationForm(false)}
+        >
+          <i className="fas fa-times"></i>
+        </button>
+      </div>
+
+      <form onSubmit={handleReservationSubmit} className="modern-reservation-form">
+        <div className="form-grid">
+          <div className="form-group">
+            <label className="form-label">
+              <i className="fas fa-user icon"></i>
+              Full Name
+            </label>
+            <input
+              type="text"
+              className="form-control-modern"
+              placeholder="Enter your full name"
+              value={reservationData.name}
+              onChange={(e) => setReservationData({...reservationData, name: e.target.value})}
+              required
+            />
+          </div>
+
+          {/* <div className="form-group">
+            <label className="form-label">
+              <i className="fas fa-envelope icon"></i>
+              Email Address
+            </label>
+            <input
+              type="email"
+              className="form-control-modern"
+              placeholder="your@email.com"
+              value={reservationData.email}
+              onChange={(e) => setReservationData({...reservationData, email: e.target.value})}
+              required
+            />
+          </div> */}
+
+          <div className="form-group">
+            <label className="form-label">
+              <i className="fas fa-calendar icon"></i>
+              Date
+            </label>
+            <input
+              type="date"
+              className="form-control-modern"
+              value={reservationData.date}
+              onChange={(e) => setReservationData({...reservationData, date: e.target.value})}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">
+              <i className="fas fa-clock icon"></i>
+              Time
+            </label>
+            <select
+              className="form-control-modern"
+              value={reservationData.time}
+              onChange={(e) => setReservationData({...reservationData, time: e.target.value})}
+              required
+            >
+              <option value="">Select time</option>
+              <option value="11:00">11:00 AM</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="13:00">1:00 PM</option>
+              <option value="14:00">2:00 PM</option>
+              <option value="18:00">6:00 PM</option>
+              <option value="19:00">7:00 PM</option>
+              <option value="20:00">8:00 PM</option>
+              <option value="21:00">9:00 PM</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">
+              <i className="fas fa-users icon"></i>
+              Number of Guests
+            </label>
+            <select
+              className="form-control-modern"
+              value={reservationData.guests}
+              onChange={(e) => setReservationData({...reservationData, guests: e.target.value})}
+              required
+            >
+              <option value="1">1 Person</option>
+              <option value="2">2 People</option>
+              <option value="3">3 People</option>
+              <option value="4">4 People</option>
+              <option value="5">5 People</option>
+              <option value="6">6 People</option>
+              <option value="7">7 People</option>
+              <option value="8">8 People</option>
+              <option value="9">9+ People</option>
+            </select>
+          </div>
+
+          <div className="form-group full-width">
+            <label className="form-label">
+              <i className="fas fa-edit icon"></i>
+              Special Requests
+            </label>
+            <textarea
+              className="form-control-modern"
+              placeholder="Any special requirements or occasions..."
+              rows="3"
+              value={reservationData.specialRequest}
+              onChange={(e) => setReservationData({...reservationData, specialRequest: e.target.value})}
+            ></textarea>
+          </div>
+        </div>
+
+        <div className="form-actions">
+          <button
+            type="button"
+            className="btn btn-outline-modern"
+            onClick={() => setShowReservationForm(false)}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="btn btn-primary"
+          >
+            <i className="fas fa-check me-2"></i>
+            Confirm Reservation
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+)}
+
+{/* Modern Success Popup Modal */}
+{showReservationSuccess && (
+  <div className="modern-modal-overlay success" onClick={() => setShowReservationSuccess(false)}>
+    <div className="modern-modal-content success" onClick={(e) => e.stopPropagation()}>
+      <div className="success-animation-container">
+        <div className="success-checkmark">
+          <div className="check-icon">
+            <span className="icon-line line-tip"></span>
+            <span className="icon-line line-long"></span>
+            <div className="icon-circle"></div>
+            <div className="icon-fix"></div>
+          </div>
+        </div>
+        
+        <div className="success-confetti">
+          {[...Array(12)].map((_, i) => (
+            <div key={i} className="confetti-piece"></div>
+          ))}
+        </div>
+      </div>
+
+      <div className="success-content">
+        {/* <div className="success-icon">
+          <i className="fas fa-calendar-check"></i>
+        </div> */}
+        <h3 className="success-title">Reservation Confirmed!</h3>
+        <p className="success-message">
+          Your table has been successfully booked. We look forward to serving you!
+        </p>
+        
+        {/* <div className="reservation-details">
+          <div className="detail-item">
+            <i className="fas fa-user"></i>
+            <span>{reservationData.name}</span>
+          </div>
+          <div className="detail-item">
+            <i className="fas fa-calendar"></i>
+            <span>{reservationData.date} at {reservationData.time}</span>
+          </div>
+          <div className="detail-item">
+            <i className="fas fa-users"></i>
+            <span>{reservationData.guests} {reservationData.guests === '1' ? 'Person' : 'People'}</span>
+          </div>
+        </div> */}
+
+        <div className="success-notes">
+          <div className="note-item">
+            <i className="fas fa-info-circle"></i>
+            <small>Please arrive 10 minutes before your reservation time</small>
+          </div>
+          <div className="note-item">
+            <i className="fas fa-envelope"></i>
+            <small>Confirmation sent to {reservationData.email}</small>
+          </div>
+        </div>
+      </div>
+
+      <div className="success-actions success-actions1">
+        {/* <button
+          className="btn btn-primary"
+          onClick={() => setShowReservationSuccess(false)}
+        >
+          <i className="fas fa-print me-2"></i>
+          Print Confirmation
+        </button> */}
+        <button
+          className="btn btn-outline-primary"
+          onClick={() => setShowReservationSuccess(false)}
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+        {/* <!-- Reservation Ends --> */}
 
         {/* <!-- Team Start --> */}
         <div className="container-xxl pt-5 pb-3">
