@@ -14,142 +14,271 @@ const spicyLevels = [
 ];
 
 const defaultMenuItems = [
-  { id: 1, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: false, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 2, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 3, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 4, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 5, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 6, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 7, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 8, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 9, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 10, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 1, name: "Root & leaf samosa", price: 5.99, img: "img/samosa.jpg", hasSpicyOption: false, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 2, name: "Chef’s blend pakora", price: 5.99, img: "img/pakora.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 3, name: "Crispy golden aloo tikki", price: 5.99, img: "img/alootikki.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 4, name: "Gilded paneer Pakora", price: 7.99, img: "img/paneerpakora.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 5, name: "Cauliflower Cloud Fritters", price: 6.99, img: "img/cauliflower-fritter.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 6, name: "Herb & Spice Marinated Chicken Pakora", price: 7.99, img: "img/chicken-pakora.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 7, name: "Chef's crafted chat samosa ", price: 6.99, img: "img/samosa-chaat.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 8, name: "Chef’s crafted chat tikki", price: 6.99, img: "img/chaat-tikki.webp", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 9, name: "Mixed platter", price: 8.99, img: "img/platter.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 10, name: "Gourmet Chili Gobi", price: 9.99, img: "img/gobi-chilli.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 11, name: "Spiced chicken 65*", price: 9.99, img: "img/chicken65.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 12, name: "Wedge potato ", price: 5.99, img: "img/potato-wedges.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 13, name: "Masala papad", price: 4.99, img: "img/masala-papad.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 14, name: "Papdi chat", price: 6.99, img: "img/Papdi-Chat.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
 
-  { id: 11, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads",ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 12, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 13, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 14, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 15, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 16, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 17, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 18, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 19, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 20, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "soups-salads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
 
-  { id: 21, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 22, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 23, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 24, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 25, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 26, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 27, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 28, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 29, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 30, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "side-dishes", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 15, name: "Heirloom Tomato soup", price: 5.99, img: "img/Heirloom-Tomato-Soup.jpg", hasSpicyOption: true, category: "soups",ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 16, name: "Lemon & Herb Infused Chicken Soup", price: 5.99, img: "img/Lemon-Herb-Infused-Chicken-Soup.webp", hasSpicyOption: true, category: "soups", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 17, name: "Artisanal Lentil Soup", price: 5.99, img: "img/lentil-soup.webp", hasSpicyOption: true, category: "soups", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 18, name: "Hot & sour soup ", price: 5.99, img: "img/Hot-and-sour-soup.webp", hasSpicyOption: true, category: "soups", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 19, name: "South touch sambar soup", price: 5.99, img: "img/South-Indian-Sambar.jpg", hasSpicyOption: true, category: "soups", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
 
-  { id: 31, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 32, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 33, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 34, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 35, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 36, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 37, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 38, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 39, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 40, name: "Brioche Omelette", price: 60, img: "img/img1.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
 
-  { id: 41, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 42, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 43, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 44, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 45, name: "Chunky Chicken Pesto Bowl", price: 115, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 46, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 47, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 48, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 49, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 50, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 51, name: "Signature Roast Chicken Superbow", price: 90, img: "img/img2.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 20, name: "Tandoor-Kissed Naan", price: 2.99, img: "img/tandoor-naan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 21, name: "Garlic butter naan", price: 3.99, img: "img/garlic-butternaan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 22, name: "Butter Roti", price: 2.99, img: "img/butter-roti.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 23, name: "Tandoor-Baked Onion Naan ", price: 3.99, img: "img/onion-naan.webp", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 24, name: "The Royal Paneer Naan", price: 3.99, img: "img/paneer-naan.webp", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 25, name: "Amritsari Aloo Kulcha", price: 3.99, img: "img/aloo-kulcha.webp", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 26, name: "Chef special naan ", price: 4.99, img: "img/special-naan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 27, name: "Peshwari Naan", price: 4.99, img: "img/peshwari-naan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 28, name: "Keema Naan", price: 4.99, img: "img/keema-naan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 29, name: "Spiced chilli Naan", price: 3.99, img: "img/chilli-naan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
 
-  { id: 52, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 53, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 54, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 55, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 56, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 57, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 58, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 59, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 60, name: "Chicken Tikka Egg Scramble Protein Plate", price: 150, img: "img/img4.jpeg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 61, name: "Taiwanese Chicken Ramen", price: 200, img: "img/img5.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
 
-  { id: 62, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 63, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 64, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 65, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 66, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 67, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 68, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 69, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 70, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 71, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 72, name: "Californian Double Chicken Burger", price: 80, img: "img/img5.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 73, name: "Tex Mex Meaty Omelette", price: 180, img: "img/img7.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 30, name: "Veggie pulao", price: 15.99, img: "img/veg-pulao.webp", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 31, name: "Chicken biryani", price: 15.99, img: "img/Chicken-Biryani.jpg", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 32, name: "Lamb biryani", price: 16.99, img: "img/Lamb-Biryani.jpg", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 33, name: "Chef special Goat biryani", price: 16.99, img: "img/goat-biryani.webp", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 34, name: "Shrimp Briyani", price: 16.99, img: "img/shrimp-Biryani.webp", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 35, name: "Royal biryani", price: 16.99, img: "img/royal-biryani.jpg", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 36, name: "Jira Rice", price: 6.99, img: "img/jeera-rice.jpg", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
 
-  { id: 74, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 75, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 76, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 77, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 78, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 79, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 80, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 81, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 82, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 83, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 84, name: "Lamb Masala", price: 399, img: "img/lamb1.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 85, name: "Cheesey Double XL Buritto", price: 70, img: "img/img8.jpeg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 37, name: "Veggie jalfrezi", price: 14.99, img: "img/vegetable-jalfrezi.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 38, name: "Spiced Blossom (Aloo Gobi)", price: 14.99, img: "img/Aloo-Gobi.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 39, name: "Classic punjabi dal Tadka", price: 14.99, img: "img/dal-tadka.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 40, name: "House-Spiced Dal Makhani", price: 14.99, img: "img/Dal-Makhani.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 41, name: "Punjab's Finest Chana Masala", price: 14.99, img: "img/chana-masala.webp", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 42, name: "Bindi masala Punjabi style", price: 14.99, img: "img/bhindi-masala.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 43, name: "From the Fire ( baigan ka bartha )", price: 14.99, img: "img/baigan-bharta.webp", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 44, name: "Chef special malai kofta ", price: 14.99, img: "img/Malai-Kofta.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 45, name: "Navratan korma ", price: 14.99, img: "img/navratan-korma.webp", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 46, name: "Palak Chole, Punjabi Style", price: 14.99, img: "img/PalakChole.webp", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 47, name: "Creamy aloo saag ", price: 14.99, img: "img/Saag-Aloo.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 48, name: "Aromatic Mushroom & Saag", price: 14.99, img: "img/mashroom-saag.jpeg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 49, name: "Restaurant Style Aloo mutter", price: 14.99, img: "img/aloo-matar.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 50, name: "Punjabi Kadhi, Aromatic & Creamy", price: 14.99, img: "img/punjabi-kadhi.webp", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 51, name: "Veggie makhni", price: 14.99, img: "img/veg-makhni.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
 
-  { id: 86, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 87, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 88, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 89, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 90, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 91, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 92, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 93, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 94, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 95, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 96, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 97, name: "Fried Fish with Greens", price: 399, img: "img/fish1.png", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 52, name: "Royal Paneer butter masala", price: 15.99, img: "img/paneer-butter-masala.webp", hasSpicyOption: true, category: "paneer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 53, name: "Signature Palak Paneer", price: 15.99, img: "img/palak-paneer.webp", hasSpicyOption: true, category: "paneer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 54, name: "Paneer Bhurji Nawabi", price: 15.99, img: "img/Paneer-Bhurji.webp", hasSpicyOption: true, category: "paneer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 55, name: "The Paneer Kadai", price: 15.99, img: "img/Kadai-Paneer.jpg", hasSpicyOption: true, category: "paneer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 56, name: "Chef's Special Paneer Tikka Masala", price: 15.99, img: "img/paneer-tikkamasala.webp", hasSpicyOption: true, category: "paneer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 57, name: "Shahi mutter Paneer", price: 15.99, img: "img/shahi-matar-paneer.jpg", hasSpicyOption: true, category: "paneer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 58, name: "Kajju Butter Masala", price: 15.99, img: "img/kaju-butter-masala.webp", hasSpicyOption: true, category: "paneer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 59, name: "Paneer Angara", price: 15.99, img: "img/paneer-angara.jpg", hasSpicyOption: true, category: "paneer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
 
-  { id: 98, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 99, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 100, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 101, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 102, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 103, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 104, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 105, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 106, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 107, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 108, name: "Dutch Truffle Cake", price: 60, img: "img/desert1.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 109, name: "Banana Oatmeal Cake Slice", price: 149, img: "img/desert2.jpeg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+  { id: 60, name: "Gourmet Chicken Tikka Masala", price: 15.99, img: "img/chickken-tikkka-masala.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 61, name: "Royal butter chicken", price: 15.99, img: "img/butter-chicken.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 62, name: "Authentic chicken curry ", price: 15.99, img: "img/Chicken-Curry.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 63, name: "Shahi chicken korma", price: 15.99, img: "img/shahi-chicken-korma.webp", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 64, name: "Spiced & tangy Chicken vindaloo", price: 15.99, img: "img/chicken-vindaloo.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 65, name: "The chicken kadai ", price: 15.99, img: "img/kadai-chicken.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 66, name: "Punjab’s finest chicken saag ", price: 15.99, img: "img/Chicken-Saag.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 67, name: "Chicken jalfrezi", price: 15.99, img: "img/Chicken-Jalfrezi.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 68, name: "Chicken leg lovers (curry style)", price: 15.99, img: "img/Chicken-leg-curry.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 69, name: "Aromatic Chicken Rogani", price: 15.99, img: "img/chicken-rogan.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 70, name: "Fine Egg curry", price: 14.99, img: "img/egg-curry.webp", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 71, name: "Coconut-Kissed Chicken Madras", price: 15.99, img: "img/chicken-madras.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 72, name: "Fiery Angara Chicken with Aromatic Herbs", price: 15.99, img: "img/angara-chicken.webp", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 73, name: "Chicken pasanda", price: 15.99, img: "img/chicken-pasanda.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 74, name: "Chef's Special Kashmiri Chicken", price: 15.99, img: "img/kashmiri-chicken.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 75, name: "Mango chicken masala", price: 15.99, img: "img/Mango-Chicken-Curry.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
 
-  { id: 110, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 111, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 112, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 113, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 114, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 115, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 116, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 117, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 118, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 119, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 120, name: "Mint Lemonade", price: 39, img: "img/beverage1.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
-  { id: 121, name: "Masala Lemonade", price: 39, img: "img/beverage2.jpg", hasSpicyOption: false, category: "beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] },
+
+
+  { id: 76, name: "Authentic lamb curry ", price: 16.99, img: "img/lamb-curry.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 77, name: "Gourmet lamb tikka masala ", price: 16.99, img: "img/LambTikkaMasala.webp", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 78, name: "Butter lamb ", price: 16.99, img: "img/butter-lamb.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 79, name: "Buna gost", price: 16.99, img: "img/Bhuna-Mutton.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 80, name: "Lamb psanda ", price: 16.99, img: "img/Lamb_Pasanda.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 81, name: "Lamb kadai ", price: 16.99, img: "img/lamb-karahi.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 82, name: "Lamb rogan josh ", price: 16.99, img: "img/lamb-rogan-josh.webp", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 83, name: "Lamb korma ", price: 16.99, img: "img/lamb-kkorma.webp", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 84, name: "Lamb saag", price: 16.99, img: "img/lamb-saag.webp", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 85, name: "Lamb angara", price: 16.99, img: "img/lamb-angara.webp", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 86, name: "Goat curry", price: 16.99, img: "img/goat-mutton-curry.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+
+
+  { id: 87, name: "Tandoori chicken(6)", price: 16.99, img: "img/Chicken-Tandoori.webp", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 88, name: "Chicken tikka", price: 16.99, img: "img/chickentikka.webp", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 89, name: "Seekh kabab", price: 16.99, img: "img/seekh-kabab.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 90, name: "tandoori fish ", price: 16.99, img: "img/tandoori-fish.jpeg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 91, name: "Tandoori shrimp", price: 16.99, img: "img/tandoori-shrimp.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 92, name: "Mix Grill ", price: 17.99, img: "img/tandoori-mix-grill.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 93, name: "Malai kabab", price: 15.99, img: "img/malai-kabab.webp", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 94, name: "Lamb chop", price: 21.99, img: "img/lamb-chops.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+
+
+  { id: 95, name: "Fish or shrimp curry ", price: 16.99, img: "img/fish-curry.jpg", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 96, name: "Fish or shrimp tikka masala ", price: 16.99, img: "img/Fish-Tikka-Masala.jpg", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 97, name: "Butter shrimp or fish ", price: 16.99, img: "img/butter-fish.webp", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 98, name: "Fish or shrimp vindaloo", price: 16.99, img: "img/fish-vindaloo.webp", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 99, name: "Fish or shrimp saag", price: 16.99, img: "img/Fish-Sagwala.jpg", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 100, name: "Fish or shrimp korma ", price: 16.99, img: "img/fish-korma.webp", hasSpicyOption: true, category: "seafood", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+
+
+
+  { id: 101, name: "Chilli paneer", price: 16.99, img: "img/chilli-paneer.jpg", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 102, name: "Vegi manchurian", price: 16.99, img: "img/veg-manchurian.jpg", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 103, name: "Chilli chicken", price: 16.99, img: "img/chilli-chicken.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 104, name: "Lamb chilli", price: 16.99, img: "img/lamb-chilli.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 105, name: "Wok-Tossed chicken fried rice", price: 16.99, img: "img/chicken-fried-rice.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 106, name: "Wok-Tossed Egg Fried Rice", price: 16.99, img: "img/EggFriedRice.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+
+
+  { id: 107, name: "Mango lassi ", price: 4.99, img: "img/Mango-Lassi.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 108, name: "Sweet lassi ", price: 4.99, img: "img/sweet-lassi.webp", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 109, name: "Salty lassi with jeera ", price: 4.99, img: "img/salted-lassi.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 110, name: "Badam milk ", price: 4.99, img: "img/badam-milk.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 111, name: "Mango milk shake", price: 4.99, img: "img/MangoMilkshake.webp", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 112, name: "Orange juice ", price: 2.99, img: "img/orange-juice.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 113, name: "Pineapple juice ", price: 2.99, img: "img/pineapple-juice.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 114, name: "Indian Lime soda ", price: 4.99, img: "img/lime-soda.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 115, name: "Pepsi", price: 2.99, img: "img/pepsi.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 116, name: "Diet Pepsi", price: 2.99, img: "img/diet-pepsi.webp", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 117, name: "Lemonade", price: 2.99, img: "img/lemonade.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 118, name: "Starry", price: 2.99, img: "img/starry.webp", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 119, name: "Mt. Dew", price: 2.99, img: "img/Mountain-Dew.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 120, name: "Root Beer", price: 2.99, img: "img/root-beer.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 121, name: "Water Bottle", price: 1.99, img: "img/water.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+
+
+  { id: 122, name: "Chai", price: 2.99, img: "img/chai.jpg", hasSpicyOption: false, category: "hot-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 123, name: "Indian style coffee ", price: 3.99, img: "img/coffee1.jpg", hasSpicyOption: false, category: "hot-beverages", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+
+
+  { id: 124, name: "Rasmalai", price: 4.99, img: "img/rasmalai.webp", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 125, name: "Gulab jamun ", price: 3.99, img: "img/gulabjamun.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 126, name: "Badam kheer", price: 3.99, img: "img/Badam-Kheer.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 127, name: "Gajar halwa", price: 4.99, img: "img/gajarhalwa.webp", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 128, name: "Kulfi ", price: 3.99, img: "img/kulfi.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 129, name: "Pishtasho kulfi", price: 3.99, img: "img/pistakulfi.webp", hasSpicyOption: false, category: "desserts", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+
+
+  { id: 130, name: "Raita", price: 2.99, img: "img/raita.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 131, name: "Plain yogurt", price: 2.99, img: "img/plain-yogurt.webp", hasSpicyOption: false, category: "salad", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 132, name: "Mint chutney", price: 1.99, img: "img/Mint-Chutney.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 133, name: "Tamred chutney", price: 1.99, img: "img/tamarind-chutney.webp", hasSpicyOption: false, category: "salad", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 134, name: "Indian pickle ( achar )", price: 1.99, img: "img/pickle.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 135, name: "Mango chutney", price: 2.99, img: "img/mango-chutney.webp", hasSpicyOption: false, category: "salad", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 136, name: "Coconut chutney", price: 2.99, img: "img/coconut-chutner.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 137, name: "House Green salad", price: 2.99, img: "img/salad.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  
+  
+
+  // bar menus
+  { id: 138, name: "Cabernet-Sauvignon", price: 2.99, img: "img/Cabernet-Sauvignon.jpg", hasSpicyOption: false, category: "wines", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "bar" },
+  { id: 139, name: "Malbec", price: 2.99, img: "img/malbec.jpg", hasSpicyOption: false, category: "wines", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar" },
+  { id: 140, name: "Pinot Noir", price: 2.99, img: "img/Pinot-Noir.webp", hasSpicyOption: false, category: "wines", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar" },
+  { id: 141, name: "Chardonnay", price: 2.99, img: "img/Chardonnay.png", hasSpicyOption: false, category: "wines", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar" },
+  { id: 142, name: "Moscato", price: 2.99, img: "img/Moscato.jpg", hasSpicyOption: false, category: "wines", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar" },
+  
+  
+  { id: 143, name: "Heineken", price: 6.00, img: "img/heineken.jpg", hasSpicyOption: false, category: "beers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 144, name: "Corona Extra", price: 6.00, img: "img/corona-extra-beer.jpeg", hasSpicyOption: false, category: "beers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 145, name: "Stella", price: 6.00, img: "img/stella.jpg", hasSpicyOption: false, category: "beers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 146, name: "Modelo", price: 6.00, img: "img/modelo.webp", hasSpicyOption: false, category: "beers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 147, name: "Riggs", price: 6.00, img: "img/riggs.jpg", hasSpicyOption: false, category: "beers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 148, name: "Anti Hero", price: 6.00, img: "img/anti-hero.jpeg", hasSpicyOption: false, category: "beers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 149, name: "Golden Monkey", price: 6.00, img: "img/golden-monkey.jpg", hasSpicyOption: false, category: "beers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 150, name: "Samuel Adam", price: 6.00, img: "img/samuel-adams.webp", hasSpicyOption: false, category: "beers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 151, name: "Blue Moon", price: 6.00, img: "img/bluemoon.webp", hasSpicyOption: false, category: "beers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] , type: "bar" },
+  { id: 152, name: "N.A. Beer", price: 6.00, img: "img/bluemoon.webp", hasSpicyOption: false, category: "beers", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  
+  
+  
+  { id: 153, name: "Haywords 5000", price: 8.00, img: "img/HAYWARDS.jpg", hasSpicyOption: false, category: "indian-beer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 154, name: "Taj Mahal", price: 8.00, img: "img/tajmahal.webp", hasSpicyOption: false, category: "indian-beer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 155, name: "Flying Horse", price: 8.00, img: "img/flying-horse.jpg", hasSpicyOption: false, category: "indian-beer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 156, name: "Kingfisher", price: 6.00, img: "img/kingfisher.webp", hasSpicyOption: false, category: "indian-beer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 157, name: "Maharaja", price: 6.00, img: "img/maharaja-beer.jpg", hasSpicyOption: false, category: "indian-beer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 158, name: "Beera", price: 6.00, img: "img/bira.webp", hasSpicyOption: false, category: "indian-beer", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  
+  
+  { id: 159, name: "Blue Label", price: 24.00, img: "img/blue-label.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 160, name: "The Macallan 15", price: 20.00, img: "img/macallan.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 161, name: "Glenlivet 18", price: 17.00, img: "img/glenlivet-18.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 162, name: "The Macallan 12", price: 17.00, img: "img/macallan12.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 163, name: "Glenlivet 12", price: 13.00, img: "img/Glenlivet.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 164, name: "Glenfiddich 12", price: 13.00, img: "img/Glenfiddich-12.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 165, name: "Black Label", price: 13.00, img: "img/blacklabel.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 166, name: "Indri", price: 13.00, img: "img/indri.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 167, name: "Woodford Reserve", price: 10.00, img: "img/woodford.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 168, name: "Hennessy", price: 10.00, img: "img/hennessy.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 169, name: "Red Label", price: 10.00, img: "img/redlabel.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 170, name: "Jack Deniel", price: 7.00, img: "img/jackdaniels.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 171, name: "Dewar's", price: 7.00, img: "img/dewars.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] , type: "bar" },
+  { id: 172, name: "Crown Royal", price: 7.00, img: "img/crown-royal.png", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 173, name: "Jameson", price: 7.00, img: "img/jameson.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 174, name: "Patiala Peg", price: 7.00, img: "img/patialapeg.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] , type: "bar" },
+  { id: 175, name: "Our Choice", price: 11.00, img: "img/ourchoise.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 176, name: "Guest Choice", price: 24.00, img: "img/guestchoise.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  
+  
+  { id: 177, name: "Grey Goose", price: 13.00, img: "img/Grey-Goose.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 178, name: "Absolute", price: 7.00, img: "img/absolutevodka.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 179, name: "Tito's", price: 7.00, img: "img/titosvodka.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 180, name: "Smirnoff", price: 7.00, img: "img/smirnoff.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 181, name: "Don Julio Anejo", price: 10.00, img: "img/donjulio.webp", hasSpicyOption: false, category: "vodka", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 182, name: "Don Julio Repesado", price: 10.00, img: "img/Don-Julio-Reposado.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 183, name: "Patron Anejo", price: 10.00, img: "img/patron.webp", hasSpicyOption: false, category: "vodka", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 184, name: "Patron Blanco", price: 7.00, img: "img/patronblanco.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 185, name: "1800", price: 7.00, img: "img/1800.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 186, name: "Jose Cuervo", price: 5.00, img: "img/jose.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  
+  
+  { id: 187, name: "Dirty Martini", price: 10.00, img: "img/martini.jpg", hasSpicyOption: false, category: "cocktails", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 188, name: "Sex on the Beach", price: 10.00, img: "img/sotb.jpg", hasSpicyOption: false, category: "cocktails", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 189, name: "Mojito's", price: 10.00, img: "img/mojito.webp", hasSpicyOption: false, category: "cocktails", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 190, name: "Bloody Marry", price: 10.00, img: "img/bloodmarry.jpg", hasSpicyOption: false, category: "cocktails", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 191, name: "Blue Hawaii", price: 10.00, img: "img/BlueHawaii.jpg", hasSpicyOption: false, category: "cocktails", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  { id: 192, name: "Long Island Ice Tea", price: 10.00, img: "img/longisland.webp", hasSpicyOption: false, category: "cocktails", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"], type: "bar"  },
+  
 ].map(item => ({
   ...item,
   hasSpicyOption: item.hasSpicyOption !== undefined ? item.hasSpicyOption : false,
-  ingredients: item.ingredients || [] // Ensure ingredients array exists
+  ingredients: item.ingredients || [],    // Ensure ingredients array exists
+  type: item.type || (['wines', 'beers', 'indian-beer', 'whiskey', 'vodka', 'cocktails'].includes(item.category) ? 'bar' : 'food') // Default to 'food' for existing items 
 }));
+
+
+
+// Menu Type Filter Component - Place this outside LandingPage
+const MenuTypeFilter = ({ menuTypes, activeType, onTypeChange }) => {
+  return (
+    <div className="menu-type-filter">
+      <div className="filter-buttons">
+        {menuTypes.map(type => (
+          <button
+            key={type.id}
+            className={`filter-btn ${activeType === type.id ? 'active' : ''}`}
+            onClick={() => onTypeChange(type.id)}
+          >
+            <i className={type.icon}></i>
+            <span>{type.name}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+
 // MenuCard Component - Show total count irrespective of spicy level
 const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel }) => {
   const [showIngredients, setShowIngredients] = useState(false);
@@ -228,7 +357,7 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel }) => {
             </div>
           )}    
           <div className="menu-details">
-            <span className="menu-price">₹{item.price}</span>
+            <span className="menu-price">${item.price}</span>
             {totalQuantity === 0 ? (
               <button
                 className="add-to-cart-btn"
@@ -305,7 +434,7 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel }) => {
                 <div className="dish-details mb-3">
                     <h3 style={{color:'#000'}}>{item.name}</h3>
                     <div className="dish-meta">
-                      <span className="price">₹{item.price}</span>
+                      <span className="price">${item.price}</span>
                       {/* {item.hasSpicyOption && (
                         <span className="spicy-indicator">
                           <i className="fas fa-pepper-hot"></i> Customizable Spice
@@ -388,7 +517,13 @@ const MenuCategory = ({ category, isActive, onClick, onHover, image }) => {
 
 
 // Admin Panel Component
-const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose }) => {
+const AdminPanel = ({ 
+  menuItems, 
+  onAddItem, 
+  onEditItem, 
+  onDeleteItem, 
+  onClose
+ }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('appetizers');
   const [currentItem, setCurrentItem] = useState({
@@ -409,47 +544,61 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
 
 
   const categories = [
-    { id: 'appetizers', name: 'Appetizers', icon: '🥗', color: '#10b981', gradient: 'from-emerald-500 to-green-400' },
-    { id: 'soups-salads', name: 'Soups & Salads', icon: '🍜', color: '#f59e0b', gradient: 'from-amber-500 to-yellow-400' },
-    { id: 'side-dishes', name: 'Side Dishes', icon: '🍽️', color: '#ef4444', gradient: 'from-red-500 to-pink-500' },
-    { id: 'breads', name: 'Breads', icon: '🍞', color: '#f97316', gradient: 'from-orange-500 to-red-400' },
-    { id: 'tandoori', name: 'Tandoori Specialties', icon: '🔥', color: '#dc2626', gradient: 'from-red-600 to-orange-500' },
-    { id: 'chicken', name: 'Chicken Dishes', icon: '🍗', color: '#65a30d', gradient: 'from-lime-600 to-green-500' },
-    { id: 'vegetarian', name: 'Vegetarian Delights', icon: '🥦', color: '#16a34a', gradient: 'from-green-500 to-emerald-400' },
-    { id: 'lamb', name: 'Lamb Specialties', icon: '🥩', color: '#b91c1c', gradient: 'from-rose-700 to-pink-600' },
-    { id: 'seafood', name: 'Seafood', icon: '🐟', color: '#0ea5e9', gradient: 'from-sky-500 to-blue-400' },
-    { id: 'beverages', name: 'Beverages', icon: '🥤', color: '#8b5cf6', gradient: 'from-purple-500 to-violet-400' },
-    { id: 'desserts', name: 'Desserts', icon: '🍰', color: '#ec4899', gradient: 'from-pink-500 to-rose-400' }
+    { id: 'appetizers', name: 'Appetizer & Chat', icon: '🥗', color: '#10b981', gradient: 'from-emerald-500 to-green-400' },
+    { id: 'soups', name: 'Soup', icon: '🍜', color: '#f59e0b', gradient: 'from-amber-500 to-yellow-400' },
+    { id: 'breads', name: 'Breads Naan', icon: '🍞', color: '#f97316', gradient: 'from-orange-500 to-red-400' },
+    { id: 'pulao', name: 'Pulao & Biryani', icon: '🍽️', color: '#ef4444', gradient: 'from-red-500 to-pink-500' },
+    { id: 'vegetarian', name: 'Vegetable Entrees', icon: '🥦', color: '#16a34a', gradient: 'from-green-500 to-emerald-400' },
+    { id: 'paneer', name: 'Paneer Entrees', icon: '🥦', color: '#16a34a', gradient: 'from-green-500 to-emerald-400' },
+    { id: 'chicken', name: 'Chicken Entrees', icon: '🍗', color: '#65a30d', gradient: 'from-lime-600 to-green-500' },
+    { id: 'lamb', name: 'Lamb & Goat Entrees', icon: '🥩', color: '#b91c1c', gradient: 'from-rose-700 to-pink-600' },
+    { id: 'tandoori', name: 'Tandoori & Kabab', icon: '🔥', color: '#dc2626', gradient: 'from-red-600 to-orange-500' },
+    { id: 'seafood', name: 'Seafood Items', icon: '🐟', color: '#0ea5e9', gradient: 'from-sky-500 to-blue-400' },
+    { id: 'indo-chinese', name: 'Indo Chinese Entrees', icon: '🍽️', color: '#ef4444', gradient: 'from-red-500 to-pink-500' },
+    { id: 'cold-beverages', name: 'Cold Beverage', icon: '🥤', color: '#8b5cf6', gradient: 'from-purple-500 to-violet-400' },
+    { id: 'hot-beverages', name: 'Hot Beverage', icon: '🥤', color: '#8b5cf6', gradient: 'from-purple-500 to-violet-400' },
+    { id: 'desserts', name: 'Dessert', icon: '🍰', color: '#ec4899', gradient: 'from-pink-500 to-rose-400' },
+    { id: 'salad', name: 'Salad', icon: '🍽️', color: '#ef4444', gradient: 'from-red-500 to-pink-500' },
+    { id: 'wines', name: 'Wine', icon: '🍷', color: '#8b0000', gradient: 'from-red-800 to-pink-600' },
+    { id: 'beers', name: 'Imported & Domestic Beer', icon: '🍺', color: '#ffd700', gradient: 'from-yellow-500 to-amber-400' },
+    { id: 'indian-beer', name: 'Indian Beer', icon: '🍺', color: '#ffd700', gradient: 'from-yellow-500 to-amber-400' },
+    { id: 'whiskey', name: 'Whiskey', icon: '🥃', color: '#8b4513', gradient: 'from-amber-800 to-orange-600' },
+    { id: 'vodka', name: 'Vodka & Tequila', icon: '🍹', color: '#4ecdc4', gradient: 'from-teal-400 to-cyan-400' },
+    { id: 'cocktails', name: 'Cocktails', icon: '🍸', color: '#ff6b6b', gradient: 'from-pink-500 to-rose-400' },
   ];
 
    // Filter items by selected category
   // Enhanced filtered items with search and sort
-  const filteredItems = useMemo(() => {
-    let items = menuItems.filter(item => 
-      item.category === selectedCategory && 
-      item.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+const filteredItems = useMemo(() => {
+  let items = menuItems.filter(item => {
+    // Only filter by category and search - ignore menuType
+    const matchesCategory = item.category === selectedCategory;
+    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    return matchesCategory && matchesSearch;
+  });
 
-    // Sorting logic
-    switch(sortBy) {
-      case 'name':
-        items.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case 'price-low':
-        items.sort((a, b) => a.price - b.price);
-        break;
-      case 'price-high':
-        items.sort((a, b) => b.price - a.price);
-        break;
-      case 'spicy':
-        items.sort((a, b) => b.hasSpicyOption - a.hasSpicyOption);
-        break;
-      default:
-        break;
-    }
+  // Sorting logic remains the same
+  switch(sortBy) {
+    case 'name':
+      items.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+    case 'price-low':
+      items.sort((a, b) => a.price - b.price);
+      break;
+    case 'price-high':
+      items.sort((a, b) => b.price - a.price);
+      break;
+    case 'spicy':
+      items.sort((a, b) => b.hasSpicyOption - a.hasSpicyOption);
+      break;
+    default:
+      break;
+  }
 
-    return items;
-  }, [menuItems, selectedCategory, searchTerm, sortBy]);
+  return items;
+}, [menuItems, selectedCategory, searchTerm, sortBy]);
+
 
 
     // Handle image upload simulation
@@ -725,7 +874,7 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
                         <div className="category-info">
                           <span className="category-name">{cat.name}</span>
                           <span className="category-stats">
-                            {stats.count} items • ₹{stats.avgPrice} avg
+                            {stats.count} items • ${stats.avgPrice} avg
                           </span>
                         </div>
                       </div>
@@ -856,7 +1005,7 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
                           <div className="item-info">
                             <h6 className="item-name">{item.name}</h6>
                             <div className="item-meta">
-                              <span className="item-price">₹{item.price}</span>
+                              <span className="item-price">${item.price}</span>
                               <span className="item-category">{category?.name}</span>
                             </div>
                           </div>
@@ -962,7 +1111,7 @@ const AdminPanel = ({ menuItems, onAddItem, onEditItem, onDeleteItem, onClose })
                           onChange={(e) => setCurrentItem({...currentItem, price: e.target.value})}
                           required
                         />
-                        <label>Price (₹)</label>
+                        <label>Price ($)</label>
                       </div>
                     </div>
 
@@ -1131,7 +1280,7 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
               </div>
               <div className="item-preview-info">
                 <h6>{item.name}</h6>
-                <p className="price">₹{item.price}</p>
+                <p className="price">${item.price}</p>
                 <div className="spicy-preview">
                   <span className="current-level" style={{ color: getSpicyLevelColor(selectedSpicyLevel.id) }}>
                     {getSpicyIcon(selectedSpicyLevel.id)} {selectedSpicyLevel.name}
@@ -1295,6 +1444,15 @@ const [categoryImage, setCategoryImage] = useState('img/appetizers.jpg');
 const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 const [searchQuery, setSearchQuery] = useState('');
 
+  // Add menu type filter state
+  const [menuType, setMenuType] = useState('food');
+
+  // Define menu types
+  const menuTypes = [
+    { id: 'food', name: 'Food Menu', icon: 'fas fa-utensils' },
+    { id: 'bar', name: 'Bar Menu', icon: 'fas fa-glass-cheers' }
+  ];
+
   // New state for spicy level modal
   const [showSpicyModal, setShowSpicyModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -1307,101 +1465,253 @@ const [searchQuery, setSearchQuery] = useState('');
 const menuCategories = useMemo(() => [
   {
     id: 'appetizers',
-    name: 'Appetizers',
+    name: 'Appetizer & Chat',
     description: 'Crispy and flavorful starters',
     image: 'img/appetizers.jpg',
     icon: 'fas fa-utensils',
+    type: 'food',
     items: menuItems.filter(item => item.category === 'appetizers')
   },
   {
-    id: 'soups-salads',
-    name: 'Soups & Salads',
+    id: 'soups',
+    name: 'Soup',
     description: 'Fresh and comforting bowls',
     image: 'img/soups-salads.jpg',
     icon: 'fas fa-carrot',
-    items: menuItems.filter(item => item.category === 'soups-salads')
-  },
-  {
-    id: 'side-dishes',
-    name: 'Side Dishes',
-    description: 'Perfect accompaniments',
-    image: 'img/side-dishes.jpg',
-    icon: 'fas fa-hotdog',
-    items: menuItems.filter(item => item.category === 'side-dishes')
+    type: 'food',
+    items: menuItems.filter(item => item.category === 'soups')
   },
   {
     id: 'breads',
-    name: 'Breads',
+    name: 'Breads Naan',
     description: 'Freshly baked traditional breads',
     image: 'img/breads.jpg',
     icon: 'fas fa-bread-slice',
+    type: 'food',
     items: menuItems.filter(item => item.category === 'breads')
   },
   {
-    id: 'tandoori',
-    name: 'Tandoori Specialties',
-    description: 'Clay oven marvels',
-    image: 'img/tandoori.jpg',
-    icon: 'fas fa-fire',
-    items: menuItems.filter(item => item.category === 'tandoori')
-  },
-  {
-    id: 'chicken',
-    name: 'Chicken Dishes',
-    description: 'Tender and flavorful chicken',
-    image: 'img/chicken.jpg',
-    icon: 'fas fa-drumstick-bite',
-    items: menuItems.filter(item => item.category === 'chicken')
+    id: 'pulao',
+    name: 'Pulao & Biryani',
+    description: 'Perfect accompaniments',
+    image: 'img/side-dishes.jpg',
+    icon: 'fas fa-hotdog',
+    type: 'food',
+    items: menuItems.filter(item => item.category === 'pulao')
   },
   {
     id: 'vegetarian',
-    name: 'Vegetarian Delights',
+    name: 'Vegetable Entrees',
     description: 'Plant-based goodness',
     image: 'img/vegetarian.jpg',
     icon: 'fas fa-leaf',
+    type: 'food',
     items: menuItems.filter(item => item.category === 'vegetarian')
   },
   {
+    id: 'paneer',
+    name: 'Paneer Entrees',
+    description: 'Plant-based goodness',
+    image: 'img/vegetarian.jpg',
+    icon: 'fas fa-leaf',
+    type: 'food',
+    items: menuItems.filter(item => item.category === 'paneer')
+  },
+  {
+    id: 'chicken',
+    name: 'Chicken Entrees',
+    description: 'Tender and flavorful chicken',
+    image: 'img/chicken.jpg',
+    icon: 'fas fa-drumstick-bite',
+    type: 'food',
+    items: menuItems.filter(item => item.category === 'chicken')
+  },
+  {
     id: 'lamb',
-    name: 'Lamb Specialties',
+    name: 'Lamb & Goat Entrees',
     description: 'Rich and aromatic lamb dishes',
     image: 'img/lamb.jpg',
      icon: 'fas fa-paw',
+     type: 'food',
     items: menuItems.filter(item => item.category === 'lamb')
   },
   {
+    id: 'tandoori',
+    name: 'Tandoori & Kabab',
+    description: 'Clay oven marvels',
+    image: 'img/tandoori.jpg',
+    icon: 'fas fa-fire',
+    type: 'food',
+    items: menuItems.filter(item => item.category === 'tandoori')
+  },
+  {
     id: 'seafood',
-    name: 'Seafood',
+    name: 'Seafood Items',
     description: 'Fresh catches from the sea',
     image: 'img/seafood.jpg',
     icon: 'fas fa-fish',
+    type: 'food',
     items: menuItems.filter(item => item.category === 'seafood')
   },
   {
-    id: 'beverages',
-    name: 'Beverages',
+    id: 'indo-chinese',
+    name: 'Indo Chinese Entrees',
+    description: 'Fusion flavors',
+    image: 'img/side-dishes.jpg',
+    icon: 'fas fa-hotdog',
+    type: 'food',
+    items: menuItems.filter(item => item.category === 'indo-chinese')
+  },
+  {
+    id: 'cold-beverages',
+    name: 'Cold Beverage',
     description: 'Refreshing drinks',
     image: 'img/beverages.jpg',
     icon: 'fas fa-beer',
-    items: menuItems.filter(item => item.category === 'beverages')
+    type: 'food',
+    items: menuItems.filter(item => item.category === 'cold-beverages')
+  },
+  {
+    id: 'hot-beverages',
+    name: 'Hot Beverage',
+    description: 'Refreshing drinks',
+    image: 'img/beverages.jpg',
+    icon: 'fas fa-beer',
+    type: 'food',
+    items: menuItems.filter(item => item.category === 'hot-beverages')
   },
   {
     id: 'desserts',
-    name: 'Desserts',
+    name: 'Dessert',
     description: 'Sweet endings',
     image: 'img/desserts.jpg',
      icon: 'fas fa-ice-cream',
+     type: 'food',
     items: menuItems.filter(item => item.category === 'desserts')
+  },
+  {
+    id: 'salad',
+    name: 'Salad',
+    description: 'Fresh and healthy salads',
+    image: 'img/side-dishes.jpg',
+    icon: 'fas fa-hotdog',
+    type: 'food',
+    items: menuItems.filter(item => item.category === 'salad')
   }
+  
 ], [menuItems]);
 
 
+  // Define bar categories
+  const barCategories = useMemo(() => [
+     {
+      id: 'wines',
+      name: 'Wine',
+      description: 'Fine wines and sparkling',
+      image: 'img/wines.jpg',
+      icon: 'fas fa-wine-glass-alt',
+      type: 'bar'
+    },
+    {
+      id: 'beers',
+      name: 'Imported & Domestic Beer',
+      description: 'Craft and premium beers',
+      image: 'img/beers.jpg',
+      icon: 'fas fa-beer',
+      type: 'bar'
+    },
+    {
+      id: 'indian-beer',
+      name: 'Indian Beer',
+      description: 'Craft and premium beers',
+      image: 'img/beers.jpg',
+      icon: 'fas fa-beer',
+      type: 'bar'
+    },
+     {
+      id: 'whiskey',
+      name: 'Whiskey',
+      description: 'Premium whiskeys and scotch',
+      image: 'img/whiskeys.jpg',
+      icon: 'fas fa-glass-whiskey',
+      type: 'bar'
+    },
+    {
+      id: 'vodka',
+      name: 'Vodka & Tequila',
+      description: 'Smooth vodkas and tequilas',
+      image: 'img/shots.jpg',
+      icon: 'fas fa-wine-bottle',
+      type: 'bar'
+    },
+   
+    {
+      id: 'cocktails',
+      name: 'Cocktails',
+      description: 'Signature and classic cocktails',
+      image: 'img/cocktails.jpg',
+      icon: 'fas fa-cocktail',
+      type: 'bar'
+    },
+    
+  ], []);;
+
+    // Combine all categories
+  const allCategories = [...menuCategories, ...barCategories];
+
+    // Get current categories based on menu type
+  const currentCategories = menuType === 'food' ? menuCategories : barCategories;
+
+    // Filter items based on current menu type and active category
+// Filter items based on current menu type, active category, and search query
+// Filter items based on current menu type, active category, and search query
+const filteredItems = useMemo(() => {
+  return menuItems.filter(item => {
+    const matchesType = item.type === menuType;
+    const matchesCategory = item.category === activeCategory;
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    return matchesType && matchesCategory && matchesSearch;
+  });
+}, [menuItems, menuType, activeCategory, searchQuery]);
+
+
+
+    // Update menuCategories to use currentCategories
+const menuCategories1 = useMemo(() => {
+  const categories = menuType === 'food' ? menuCategories : barCategories;
+  
+  return categories.map(category => ({
+    ...category,
+    items: menuItems.filter(item => 
+      item.category === category.id && item.type === menuType
+    )
+  }));
+}, [menuType, menuItems, menuCategories, barCategories]);
+
+
+  // Handle menu type change
+const handleMenuTypeChange = (type) => {
+  setMenuType(type);
+  
+  // Reset to first category of the new menu type
+  const categories = type === 'food' ? menuCategories : barCategories;
+  const firstCategory = categories[0];
+  if (firstCategory) {
+    setActiveCategory(firstCategory.id);
+    setCategoryImage(firstCategory.image);
+  }
+  setSearchQuery(''); // Also clear search when switching menu types
+};
+
+
+
 // Filter items based on search query
-const filteredItems = menuCategories
-  .find(c => c.id === activeCategory)
-  ?.items.filter(item => 
-    item.name.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
+// const filteredItems = menuCategories
+//   .find(c => c.id === activeCategory)
+//   ?.items.filter(item => 
+//     item.name.toLowerCase().includes(searchQuery.toLowerCase())
+//   ) || [];
 
   // Enhanced parallax effect
  useEffect(() => {
@@ -2511,7 +2821,7 @@ const handleReservationSubmit = (e) => {
                         <div className="d-flex flex-column">
                           <h5 className="pb-2">{item.name}</h5>
                           <div className="d-flex justify-content-between align-items-center mb-3">
-                            <h5 className="text-primary mb-0">₹{item.price}</h5>
+                            <h5 className="text-primary mb-0">${item.price}</h5>
 
                             {!cartItem ? (
                               <button
@@ -2572,12 +2882,24 @@ const handleReservationSubmit = (e) => {
   <div className="container-fluid">
     <div className="text-center mb-5">
       <h5 className="section-title ff-secondary text-center text-primary fw-normal">
-        Food Menu
+         {menuType === 'food' ? 'Food Menu' : 'Bar Menu'}
       </h5>
       <h1 className="mb-4">Explore Our Culinary Categories</h1>
       <p className="text-muted w-75 mx-auto d-none d-md-block">
         Discover our delicious offerings across various categories. Select a category to view our specialties.
       </p>
+    </div>
+
+
+      {/* Menu Type Filter */}
+    <div className="row mb-4">
+      <div className="col-12">
+        <MenuTypeFilter
+          menuTypes={menuTypes}
+          activeType={menuType}
+          onTypeChange={handleMenuTypeChange}
+        />
+      </div>
     </div>
 
     {/* Search bar for mobile */}
@@ -2588,7 +2910,7 @@ const handleReservationSubmit = (e) => {
           <input
             type="text"
             className="form-control"
-            placeholder="Search menu items..."
+            placeholder={`Search ${menuType === 'food' ? 'food' : 'drink'} items...`}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -2601,6 +2923,7 @@ const handleReservationSubmit = (e) => {
             </button>
           )}
         </div>
+       
       </div>
     </div>
 
@@ -2608,7 +2931,7 @@ const handleReservationSubmit = (e) => {
       {/* Mobile category tabs (horizontal scroll) */}
       <div className="d-lg-none mobile-category-tabs">
         <div className="category-scroll-container">
-          {menuCategories.map(category => (
+          {menuCategories1.map(category => (
             <div
               key={category.id}
               className={`mobile-category-tab ${activeCategory === category.id ? 'active' : ''}`}
@@ -2649,7 +2972,7 @@ const handleReservationSubmit = (e) => {
           </div>
           
           <div className="category-list">
-            {menuCategories.map(category => (
+            {menuCategories1.map(category => (
               <MenuCategory
                 key={category.id}
                 category={category}
@@ -2668,9 +2991,9 @@ const handleReservationSubmit = (e) => {
           <div className="category-header">
             <div className="d-flex justify-content-between align-items-center">
               <div>
-                <h2>{menuCategories.find(c => c.id === activeCategory)?.name}</h2>
+                <h2>{menuCategories1.find(c => c.id === activeCategory)?.name}</h2>
                 <p className="text-muted category-description">
-                  {menuCategories.find(c => c.id === activeCategory)?.description}
+                  {menuCategories1.find(c => c.id === activeCategory)?.description}
                 </p>
               </div>
               <div className="item-count">
@@ -2796,7 +3119,7 @@ const handleReservationSubmit = (e) => {
           </small>
         )}
         <div className="d-flex align-items-center">
-          <small className="text-muted">₹{item.price} x {item.qty}</small>
+          <small className="text-muted">${item.price} x {item.qty}</small>
           <div className="ms-auto">
             <div className="counter-container">
               <button
@@ -2838,7 +3161,7 @@ const handleReservationSubmit = (e) => {
           <div className="border-top p-3 mt-3">
                   <div className="d-flex justify-content-between">
                     <h5>Total:</h5>
-                    <h5>₹{total}</h5>
+                    <h5>${total}</h5>
                   </div>
                   <button className="btn btn-primary w-100 mt-3"  data-bs-dismiss="offcanvas" onClick={() => {
                       resetCheckoutState();
@@ -3522,7 +3845,7 @@ const handleReservationSubmit = (e) => {
       <div className="col-9">
         <div className="d-flex justify-content-between align-items-start mb-1">
           <h6 className="mb-0">{item.name}</h6>
-          <span className="text-primary fw-bold">₹{item.price}</span>
+          <span className="text-primary fw-bold">${item.price}</span>
         </div>
         
         {item.spicyLevel && (
@@ -3569,7 +3892,7 @@ const handleReservationSubmit = (e) => {
               +
             </button>
           </div>
-          <span className="fw-bold">₹{item.price * item.qty}</span>
+          <span className="fw-bold">${item.price * item.qty}</span>
         </div>
       </div>
     </div>
@@ -3583,20 +3906,20 @@ const handleReservationSubmit = (e) => {
                           <h6 className="mb-3 fw-bold">Bill Details</h6>
                           <div className="bill-item d-flex justify-content-between mb-2">
                             <span>Item Total</span>
-                            <span>₹{total}</span>
+                            <span>${total}</span>
                           </div>
                           <div className="bill-item d-flex justify-content-between mb-2">
                             <span>Delivery Fee | 6.0 kms</span>
-                            <span className="text-success">₹30</span>
+                            <span className="text-success">$30</span>
                           </div>
                           <div className="bill-item d-flex justify-content-between mb-2">
                             <span>GST & Restaurant Charges</span>
-                            <span>₹{Math.round(total * 0.05)}</span>
+                            <span>${Math.round(total * 0.05)}</span>
                           </div>
                           <hr />
                           <div className="bill-total d-flex justify-content-between fw-bold fs-5 mb-3">
                             <span>TO PAY</span>
-                            <span>₹{total + 30 + Math.round(total * 0.05)}</span>
+                            <span>${total + 30 + Math.round(total * 0.05)}</span>
                           </div>
                           {checkoutStep === 3 && (
                             <button className="btn btn-success w-100 py-3 fw-bold" onClick={handlePlaceOrder}>
@@ -3932,7 +4255,7 @@ const handleReservationSubmit = (e) => {
           </div>
           <div className="detail-item">
             <span className="label">Total Amount:</span>
-            <span className="value">₹{total + 30 + Math.round(total * 0.05)}</span>
+            <span className="value">${total + 30 + Math.round(total * 0.05)}</span>
           </div>
         </div>
       </div>

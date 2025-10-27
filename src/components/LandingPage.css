@@ -4289,7 +4289,7 @@ body.modal-open {
   flex-grow: 1;
   padding: 25px;
   overflow-y: auto;
-  max-height: 1025px;
+  max-height: 1375px;
 }
 
 .category-header {
@@ -6491,7 +6491,7 @@ body.modal-open {
   display: flex;
   align-items: center;
   padding: 15px;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -7391,7 +7391,7 @@ body.modal-open {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -9568,7 +9568,7 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -12844,3 +12844,71 @@ html {
 .ingredient-card { border-radius: 10px; }
 .premium-badge { border-radius: 10px; }
 .action-btn { border-radius: 10px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Menu Type Filter Styles */
+.menu-type-filter {
+  margin-bottom: 2rem;
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #e9ecef;
+  border-radius: 50px;
+  background: white;
+  color: #6c757d;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.filter-btn:hover {
+  border-color: #FEA116;
+  color: #FEA116;
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: linear-gradient(135deg, #FF6B35, #FEA116);
+  border-color: #FEA116;
+  color: white;
+  box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+}
+
+.filter-btn i {
+  font-size: 1.1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .filter-buttons {
+    gap: 0.5rem;
+  }
+  
+  .filter-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
