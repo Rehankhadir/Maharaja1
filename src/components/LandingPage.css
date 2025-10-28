@@ -587,6 +587,11 @@ html {
   height: 100%;
   display: none;
 }
+@media (max-width: 768px) {
+  .testimonial-slide {
+    padding: 0px;
+  }
+}
 
 .testimonial-slide.active {
   opacity: 1;
@@ -3743,6 +3748,8 @@ body.modal-open {
   align-items: center;
   color: white; /* ensure text is visible */
   background-color: #fff;
+  height: 100% !important;
+  overflow: auto;
 }
 
 .service-section::after {
@@ -4173,10 +4180,12 @@ body.modal-open {
 
 /* Category Sidebar */
 .category-sidebar {
-  width: 350px;
+  width: 35%;
   border-right: 1px solid #f1f1f1;
   padding: 20px;
   background: #fafafa;
+  height: 100vh;
+  overflow: auto;
 }
 
 .search-container {
@@ -4289,7 +4298,13 @@ body.modal-open {
   flex-grow: 1;
   padding: 25px;
   overflow-y: auto;
-  max-height: 1375px;
+  max-height: 100vh;
+}
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .menu-items-display {
+    max-height: 80vh;
+  }
+
 }
 
 .category-header {
@@ -4319,7 +4334,7 @@ body.modal-open {
 
 .menu-items-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
   gap: 25px;
 }
 
@@ -4558,6 +4573,7 @@ body.modal-open {
 @media (max-width: 767px) {
   .menu-items-display {
     padding: 20px 15px;
+    max-height:75vh;
   }
   
   .category-header {
@@ -9351,6 +9367,12 @@ html {
   padding: 20px;
   margin: 25px 0;
 }
+@media (max-width: 768px) {
+  .reservation-features {
+    padding: 15px;
+    margin: 15px 0;
+  }
+}
 
 .reservation-features .row {
   margin: 0 -10px;
@@ -12848,20 +12870,10 @@ html {
 
 
 
-
-
-
-
-
-
-
-
-
-
 /* Menu Type Filter Styles */
-.menu-type-filter {
+/* .menu-type-filter {
   margin-bottom: 2rem;
-}
+} */
 
 .filter-buttons {
   display: flex;
@@ -12911,4 +12923,49 @@ html {
     padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
   }
+}
+
+
+
+.panel {
+  /* height: 100vh !important; */
+  width: 100%;
+  position: relative;
+  /* overflow-x: auto; */
+  /* display: flex; */
+  /* align-items: center;
+  justify-content: center;
+  text-align: center; */
+}
+
+.footer-style{
+  height: auto !important;
+  bottom: 0 !important;
+  top: none !important;
+  overflow: auto;
+}
+
+
+@media (max-width: 768px) {
+  #bookTable{
+    /* height: 100vh !important;
+    overflow: auto; */
+    padding: 0px !important;
+  }
+}
+@media (max-width: 768px) {
+  .team-mobile{
+    height: 100vh !important;
+    overflow-y: auto;
+  }
+}
+@media (max-width: 768px) {
+  .contact-mobile{
+    height: 100vh !important;
+    overflow-y: auto;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
 }

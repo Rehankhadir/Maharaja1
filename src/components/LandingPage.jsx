@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import './LandingPage.css';
 import { Link } from "react-router-dom";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 
 // Add spicy levels configuration
@@ -1714,59 +1718,59 @@ const handleMenuTypeChange = (type) => {
 //   ) || [];
 
   // Enhanced parallax effect
- useEffect(() => {
-  const handleScroll = () => {
-    const position = window.scrollY;
-    setScrollPosition(position);
+//  useEffect(() => {
+//   const handleScroll = () => {
+//     const position = window.scrollY;
+//     setScrollPosition(position);
     
-    // Hero section parallax
-    const heroLayers = document.querySelectorAll('.parallax-hero-modern .parallax-layer');
-    heroLayers.forEach(element => {
-      const speed = element.getAttribute('data-speed') || 0.5;
-      const yPos = -(position * speed);
-      element.style.transform = `translateY(${yPos}px)`;
-    });
+//     // Hero section parallax
+//     const heroLayers = document.querySelectorAll('.parallax-hero-modern .parallax-layer');
+//     heroLayers.forEach(element => {
+//       const speed = element.getAttribute('data-speed') || 0.5;
+//       const yPos = -(position * speed);
+//       element.style.transform = `translateY(${yPos}px)`;
+//     });
 
-    // About section parallax
-    const aboutLayers = document.querySelectorAll('.parallax-about-modern .parallax-layer');
-    aboutLayers.forEach(element => {
-      const speed = element.getAttribute('data-speed') || 0.5;
-      const yPos = -(position * speed);
-      // element.style.transform = `translateY(${yPos}px)`;
-    });
+//     // About section parallax
+//     const aboutLayers = document.querySelectorAll('.parallax-about-modern .parallax-layer');
+//     aboutLayers.forEach(element => {
+//       const speed = element.getAttribute('data-speed') || 0.5;
+//       const yPos = -(position * speed);
+//       // element.style.transform = `translateY(${yPos}px)`;
+//     });
 
-    // Floating animation for hero image
-    const heroImage = document.querySelector('.hero-image-modern');
-    if (heroImage) {
-      const floatY = Math.sin(position * 0.005) * 20;
-      // heroImage.style.transform = `translateY(${floatY}px)`;
-    }
-  };
+//     // Floating animation for hero image
+//     const heroImage = document.querySelector('.hero-image-modern');
+//     if (heroImage) {
+//       const floatY = Math.sin(position * 0.005) * 20;
+//       // heroImage.style.transform = `translateY(${floatY}px)`;
+//     }
+//   };
 
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  return () => window.removeEventListener('scroll', handleScroll);
-}, []);
+//   window.addEventListener('scroll', handleScroll, { passive: true });
+//   return () => window.removeEventListener('scroll', handleScroll);
+// }, []);
 
 
 
     // Add mouse move parallax effect
-useEffect(() => {
-  const handleMouseMove = (e) => {
-    const mouseX = e.clientX / window.innerWidth - 0.5;
-    const mouseY = e.clientY / window.innerHeight - 0.5;
+// useEffect(() => {
+//   const handleMouseMove = (e) => {
+//     const mouseX = e.clientX / window.innerWidth - 0.5;
+//     const mouseY = e.clientY / window.innerHeight - 0.5;
     
-    const parallaxElements = document.querySelectorAll('.parallax-mouse');
-    parallaxElements.forEach(element => {
-      const depth = element.getAttribute('data-depth') || 20;
-      const xMove = mouseX * depth;
-      const yMove = mouseY * depth;
-      element.style.transform = `translate(${xMove}px, ${yMove}px)`;
-    });
-  };
+//     const parallaxElements = document.querySelectorAll('.parallax-mouse');
+//     parallaxElements.forEach(element => {
+//       const depth = element.getAttribute('data-depth') || 20;
+//       const xMove = mouseX * depth;
+//       const yMove = mouseY * depth;
+//       element.style.transform = `translate(${xMove}px, ${yMove}px)`;
+//     });
+//   };
 
-  window.addEventListener('mousemove', handleMouseMove);
-  return () => window.removeEventListener('mousemove', handleMouseMove);
-}, []);
+//   window.addEventListener('mousemove', handleMouseMove);
+//   return () => window.removeEventListener('mousemove', handleMouseMove);
+// }, []);
 
 
   const addToCart = (item, spicyLevel = null) => {
@@ -2037,93 +2041,6 @@ useEffect(() => {
   };
 }, []);
 
-{/* <div className="container-xxl py-5" id="order">
-  <div className="container">
-    <div className="text-center">
-      <h5 className="section-title ff-secondary text-center text-primary fw-normal">
-        Food Menu
-      </h5>
-      <h1 className="mb-5">Most Popular Items</h1>
-    </div>
-
-    <div className="multi-row-scroll-section">
-      <div className="scroll-rows-container">
-        <div className="scroll-row">
-          <div className="scroll-row-inner" id="row-1">
-            {menuItems.slice(0, 6).map((item) => (
-              <MenuCard 
-                key={item.id} 
-                item={item} 
-                cart={cart} 
-                addToCart={addToCart} 
-                setCart={setCart} 
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="scroll-row">
-          <div className="scroll-row-inner" id="row-2">
-            {menuItems.slice(6, 12).map((item) => (
-              <MenuCard 
-                key={item.id} 
-                item={item} 
-                cart={cart} 
-                addToCart={addToCart} 
-                setCart={setCart} 
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="scroll-row">
-          <div className="scroll-row-inner" id="row-3">
-            {menuItems.slice(12).map((item) => (
-              <MenuCard 
-                key={item.id} 
-                item={item} 
-                cart={cart} 
-                addToCart={addToCart} 
-                setCart={setCart} 
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div className="scroll-instruction">
-      <div className="mouse-container">
-        <div className="mouse">
-          <div className="wheel"></div>
-        </div>
-        <div className="scroll-arrow"></div>
-      </div>
-      <p>Scroll vertically or horizontally to navigate menu</p>
-      <div className="scroll-directions">
-        <span className="scroll-direction">↑↓ Vertical</span>
-        <span className="scroll-direction">←→ Horizontal</span>
-      </div>
-    </div>
-  </div>
-</div> */}
-// menu item ends
-
-
-// checkout UI starts
-
-// const [showCheckout, setShowCheckout] = useState(false);
-
-// const handleCheckout = () => {
-//   // Close the sidebar programmatically
-//   const cartSidebar = document.getElementById('cartSidebar');
-//   if (cartSidebar) {
-//     const bsOffcanvas = bootstrap.Offcanvas.getInstance(cartSidebar);
-//     if (bsOffcanvas) bsOffcanvas.hide();
-//   }
-//   // Open the checkout modal
-//   setShowCheckout(true);
-// };
 
 const [showSidebar, setShowSidebar] = useState(false);
 const [showCheckout, setShowCheckout] = useState(false);
@@ -2132,8 +2049,6 @@ const handleCheckout = () => {
   setShowSidebar(false);   // close sidebar
   setShowCheckout(true);   // open checkout modal
 };
-
-
 
 // Checkout UI Ends
 
@@ -2249,38 +2164,6 @@ const [newAddress, setNewAddress] = useState({
   landmark: ''
 });
 
-// Function to handle adding a new address
-// const handleAddNewAddress = () => {
-//   // Create a new address object with a unique ID
-//   const newAddressToAdd = {
-//     id: Date.now(), // Simple unique ID using timestamp
-//     ...newAddress,
-//     isDefault: false // New addresses are not default by default
-//   };
-  
-//   // Add the new address to the saved addresses
-//   setSavedAddresses(prevAddresses => [...prevAddresses, newAddressToAdd]);
-  
-//   // Select the new address
-//   setSelectedAddressId(newAddressToAdd.id);
-  
-//   // Close the form and reset
-//   setShowAddressForm(false);
-//   setNewAddress({
-//     type: 'home',
-//     name: '',
-//     mobile: '',
-//     address: '',
-//     locality: '',
-//     city: '',
-//     state: '',
-//     pincode: '',
-//     landmark: ''
-//   });
-  
-//   // Optional: Show success message
-//   alert('Address added successfully!');
-// };
 
 // Function to handle overlay click (close only when clicking outside form)
 const handleOverlayClick = (e) => {
@@ -2470,10 +2353,7 @@ const getSpicyLevelColor = (level) => {
   );
 
 
-
-
-
-  const [showReservationForm, setShowReservationForm] = useState(false);
+const [showReservationForm, setShowReservationForm] = useState(false);
 const [showReservationSuccess, setShowReservationSuccess] = useState(false);
 const [reservationData, setReservationData] = useState({
   name: '',
@@ -2505,12 +2385,97 @@ const handleReservationSubmit = (e) => {
   });
 };
 
+useEffect(() => {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const sections = gsap.utils.toArray(".panel");
+
+  // Create pinned scroll transitions between each section
+  sections.forEach((section, i) => {
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: "bottom top",
+      pin: true,
+      pinSpacing: false,
+      scrub: 1,
+    });
+  });
+
+  // Cleanup function
+  return () => {
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  };
+}, []);
+
+
+// Enhanced Scroll Effects (Compatible with existing parallax)
+useEffect(() => {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Text reveal animations that don't interfere with parallax
+  gsap.utils.toArray('.panel').forEach((section, index) => {
+    // Only animate elements that aren't part of parallax
+    const nonParallaxElements = section.querySelectorAll(
+      'h1:not(.parallax-layer):not(.parallax-mouse), ' +
+      'h2:not(.parallax-layer):not(.parallax-mouse), ' +
+      'p:not(.parallax-layer):not(.parallax-mouse), ' +
+      '.menu-card:not(.parallax-layer), ' +
+      '.team-item:not(.parallax-layer)'
+    );
+
+    gsap.fromTo(nonParallaxElements,
+      {
+        y: 50,
+        opacity: 0
+      },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: section,
+          start: "top 80%",
+          end: "bottom 20%",
+          toggleActions: "play none none reverse",
+          markers: false // Remove in production
+        }
+      }
+    );
+  });
+
+  // Enhanced counter animations
+  gsap.utils.toArray('[data-toggle="counter-up"]').forEach(counter => {
+    const target = +counter.innerText;
+    
+    ScrollTrigger.create({
+      trigger: counter,
+      start: "top 80%",
+      onEnter: () => {
+        gsap.fromTo(counter, 
+          { innerText: 0 },
+          { 
+            innerText: target,
+            duration: 2,
+            snap: { innerText: 1 },
+            ease: "power2.out"
+          }
+        );
+      }
+    });
+  });
+
+}, []);
+
+
 
   return (
     <>
       <div className="container-xxl bg-white p-0">
         {/* Parallax Hero Section */}
-        <div className="container-xxl position-relative p-0 landing-container">
+        <div className="container-xxl position-relative p-0 landing-container panel">
           <nav className="navbar position-fixed navbar-expand-lg navbar-dark px-4 py-3 nav-mobile nav-position">
             <div className="container-fluid glass-card nav-items py-lg-2">
               <Link to="/" className="navbar-brand p-0">
@@ -2677,10 +2642,7 @@ const handleReservationSubmit = (e) => {
         
 
         {/* About Section with Parallax */}
-        <div
-          className="container-xxl py-5 parallax-about  service-section"
-          id="about"
-        >
+        <div className="container-xxl py-5 service-section panel"  id="about">
           {/* <div className="parallax-about-bg"  data-depth="0.2"></div> */}
           <div className="container position-relative">
             <div className="row g-5 align-items-center">
@@ -2789,98 +2751,10 @@ const handleReservationSubmit = (e) => {
             </div>
           </div>
         </div>
-        {/* </div> */}
-
-        {/* Menu Section */}
-        {/* <div className="container-xxl py-5" id="order">
-          <div className="container">
-            <div className="text-center">
-              <h5 className="section-title ff-secondary text-center text-primary fw-normal">
-                Food Menu
-              </h5>
-              <h1 className="mb-5">Most Popular Items</h1>
-            </div>
-
-            <div className="row g-4">
-              {menuItems.map((item) => {
-                const cartItem = cart.find((i) => i.id === item.id);
-
-                return (
-                  <div key={item.id} className="col-lg-3 border-bottom">
-                    <div
-                      className="d-flex align-items-center flex-column"
-                      style={{ width: "90%" }}
-                    >
-                      <img
-                        className="flex-shrink-0 img-fluid rounded mb-3 floating"
-                        src={item.img}
-                        alt={item.name}
-                        style={{ width: "100%" }}
-                      />
-                      <div className="w-100 d-flex flex-column text-start">
-                        <div className="d-flex flex-column">
-                          <h5 className="pb-2">{item.name}</h5>
-                          <div className="d-flex justify-content-between align-items-center mb-3">
-                            <h5 className="text-primary mb-0">${item.price}</h5>
-
-                            {!cartItem ? (
-                              <button
-                                className="counter-container"
-                                style={{
-                                  border: "none",
-                                  justifyContent: "center",
-                                }}
-                                onClick={() => addToCart(item)}
-                              >
-                                ADD
-                              </button>
-                            ) : (
-                              <div className="d-flex align-items-center">
-                                <div className="counter-container">
-                                  <button
-                                    className="counter-btn"
-                                    onClick={() =>
-                                      setCart(
-                                        (prevCart) =>
-                                          prevCart
-                                            .map((i) =>
-                                              i.id === item.id
-                                                ? { ...i, qty: i.qty - 1 }
-                                                : i
-                                            )
-                                            .filter((i) => i.qty > 0)
-                                      )
-                                    }
-                                  >
-                                    -
-                                  </button>
-                                  <span className="counter-value">
-                                    {cartItem.qty}
-                                  </span>
-                                  <button
-                                    className="counter-btn"
-                                    onClick={() => addToCart(item)}
-                                  >
-                                    +
-                                  </button>
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div> */}
-
-        {/* // Replace the existing menu section with this new implementation */}
-<div className="container-fluid py-5" id="order">
-  <div className="container-fluid">
-    <div className="text-center mb-5">
+      
+<div className="container-fluid py-3 " id="order" style={{ backgroundColor: '#f8f9fa',height: '125vh  !important', position: 'relative' }}>
+  <div className="container-fluid" style={{ backgroundColor: '#f8f9fa' }}>
+    <div className="text-center">
       <h5 className="section-title ff-secondary text-center text-primary fw-normal">
          {menuType === 'food' ? 'Food Menu' : 'Bar Menu'}
       </h5>
@@ -2927,7 +2801,7 @@ const handleReservationSubmit = (e) => {
       </div>
     </div>
 
-    <div className="menu-container">
+    <div className="menu-container panel">
       {/* Mobile category tabs (horizontal scroll) */}
       <div className="d-lg-none mobile-category-tabs">
         <div className="category-scroll-container">
@@ -4281,11 +4155,10 @@ const handleReservationSubmit = (e) => {
 
 
         {/* <!-- Reservation Start --> */}
-       <div id="bookTable"
-       className=" py-5 px-0 wow fadeInUp"
+  <div id="bookTable"   className=" py-5 px-0 wow fadeInUp panel " style={{background: '#fff'}}
        data-wow-delay="0.1s"
        >
-  <div className="row g-0">
+  <div className="row g-0" style={{ width: '-webkit-fill-available'}}>
     <div className="col-md-6">
       <div className="video">
         <button
@@ -4299,8 +4172,8 @@ const handleReservationSubmit = (e) => {
         </button>
       </div>
     </div>
-    <div className="col-md-6 bg-dark d-flex align-items-center">
-      <div className="p-5 wow fadeInUp" data-wow-delay="0.2s">
+    <div className="col-md-6 bg-dark d-flex align-items-center justify-content-center">
+      <div className="p-3 wow fadeInUp" data-wow-delay="0.2s">
         <h5 className="section-title ff-secondary text-start text-primary fw-normal">
           Reservation
         </h5>
@@ -4527,21 +4400,6 @@ const handleReservationSubmit = (e) => {
         <p className="success-message">
           Your table has been successfully booked. We look forward to serving you!
         </p>
-        
-        {/* <div className="reservation-details">
-          <div className="detail-item">
-            <i className="fas fa-user"></i>
-            <span>{reservationData.name}</span>
-          </div>
-          <div className="detail-item">
-            <i className="fas fa-calendar"></i>
-            <span>{reservationData.date} at {reservationData.time}</span>
-          </div>
-          <div className="detail-item">
-            <i className="fas fa-users"></i>
-            <span>{reservationData.guests} {reservationData.guests === '1' ? 'Person' : 'People'}</span>
-          </div>
-        </div> */}
 
         <div className="success-notes">
           <div className="note-item">
@@ -4556,13 +4414,6 @@ const handleReservationSubmit = (e) => {
       </div>
 
       <div className="success-actions success-actions1">
-        {/* <button
-          className="btn btn-primary"
-          onClick={() => setShowReservationSuccess(false)}
-        >
-          <i className="fas fa-print me-2"></i>
-          Print Confirmation
-        </button> */}
         <button
           className="btn btn-outline-primary"
           onClick={() => setShowReservationSuccess(false)}
@@ -4576,13 +4427,13 @@ const handleReservationSubmit = (e) => {
         {/* <!-- Reservation Ends --> */}
 
         {/* <!-- Team Start --> */}
-        <div className="container-xxl pt-5 pb-3">
+        <div className="container-xxl pt-3 pb-3 panel team-mobile" style={{background:'#f8f9fa'}} >
           <div className="container">
             <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
               <h5 className="section-title ff-secondary text-center text-primary fw-normal">
                 Team Members
               </h5>
-              <h1 className="mb-5">Our Master Chefs</h1>
+              <h1 className="mb-3">Our Master Chefs</h1>
             </div>
             <div className="row g-4">
               <div
@@ -4692,14 +4543,14 @@ const handleReservationSubmit = (e) => {
 
         {/* <!-- Testimonial Start --> */}
 
-        <div className="container-xxl py-5" id="testimonials">
-          <div className="container">
-            <div className="text-center mb-5">
-              <h5 className="section-title ff-secondary text-center text-primary fw-normal">
+        <div className="panel" id="testimonials" style={{background:'#fff !important'}}>
+          <div className="container" style={{width: '100vw',maxWidth: '100vw !important'}}>
+            <div className="text-center mb-2">
+              <h5 className="section-title ff-secondary text-center text-primary fw-normal mt-3">
                 Testimonials
               </h5>
               <h1 className="mb-4">What Our Clients Say</h1>
-              <p className="w-75 mx-auto mb-5">
+              <p className="w-75 mx-auto mb-3">
                 Hear from our satisfied customers about their dining experience
                 at SangEat
               </p>
@@ -4859,13 +4710,13 @@ const handleReservationSubmit = (e) => {
         {/* <!-- Testimonial End --> */}
 
         {/* Contact Section */}
-        <div className="container-xxl py-5" id="contact">
+        <div className="container-xxl py-3 panel contact-mobile" id="contact"  style={{background: '#f1f1f1' }}>
           <div className="container">
             <div className="text-center">
               <h5 className="section-title ff-secondary text-center text-primary fw-normal">
                 Contact Us
               </h5>
-              <h1 className="mb-5">Get In Touch</h1>
+              <h1 className="mb-3">Get In Touch</h1>
             </div>
             <div className="row g-4">
               <div className="col-12">
@@ -4975,7 +4826,7 @@ const handleReservationSubmit = (e) => {
         </div>
 
         {/* Footer */}
-        <div className="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div className="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn panel footer-style" data-wow-delay="0.1s"style={{background: '#f1f1f1 !important'}}>
           <div className="container py-5">
             <div className="row g-5">
               <div className="col-lg-3 col-md-6">
