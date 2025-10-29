@@ -2353,7 +2353,7 @@ const getSpicyLevelColor = (level) => {
   );
 
 
-const [showReservationForm, setShowReservationForm] = useState(false);
+  const [showReservationForm, setShowReservationForm] = useState(false);
 const [showReservationSuccess, setShowReservationSuccess] = useState(false);
 const [reservationData, setReservationData] = useState({
   name: '',
@@ -2751,10 +2751,10 @@ useEffect(() => {
             </div>
           </div>
         </div>
-      
+
 <div className="container-fluid py-3 " id="order" style={{ backgroundColor: '#f8f9fa',height: '125vh  !important', position: 'relative' }}>
   <div className="container-fluid" style={{ backgroundColor: '#f8f9fa' }}>
-    <div className="text-center">
+            <div className="text-center">
       <h5 className="section-title ff-secondary text-center text-primary fw-normal">
          {menuType === 'food' ? 'Food Menu' : 'Bar Menu'}
       </h5>
@@ -4155,7 +4155,7 @@ useEffect(() => {
 
 
         {/* <!-- Reservation Start --> */}
-  <div id="bookTable"   className=" py-5 px-0 wow fadeInUp panel " style={{background: '#fff'}}
+  <div id="bookTable"   className=" px-0 wow fadeInUp" style={{background: '#fff'}}
        data-wow-delay="0.1s"
        >
   <div className="row g-0" style={{ width: '-webkit-fill-available'}}>
@@ -4172,7 +4172,7 @@ useEffect(() => {
         </button>
       </div>
     </div>
-    <div className="col-md-6 bg-dark d-flex align-items-center justify-content-center">
+    <div className="col-md-6 bg-dark d-flex align-items-center justify-content-center position-relative">
       <div className="p-3 wow fadeInUp" data-wow-delay="0.2s">
         <h5 className="section-title ff-secondary text-start text-primary fw-normal">
           Reservation
