@@ -968,7 +968,7 @@ html {
 .quantity-value {
   margin: 0 10px;
   font-weight: 600;
-  min-width: 20px;
+  min-width: 15px;
   text-align: center;
 }
 
@@ -4180,9 +4180,9 @@ body.modal-open {
 
 /* Category Sidebar */
 .category-sidebar {
-  width: 35%;
+  width: 33%;
   border-right: 1px solid #f1f1f1;
-  padding: 20px;
+  padding: 10px;
   background: #fafafa;
   height: 100vh;
   overflow: auto;
@@ -4335,7 +4335,7 @@ body.modal-open {
 .menu-items-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(250px, 1fr));
-  gap: 25px;
+  gap: 10px;
 }
 
 /* Menu Card */
@@ -6210,7 +6210,7 @@ body.modal-open {
 
 .quantity-value {
   font-weight: 600;
-  min-width: 20px;
+  min-width: 15px;
   text-align: center;
 }
 
@@ -12968,4 +12968,114 @@ html {
 
 html {
   scroll-behavior: smooth;
+}
+
+
+/* css  for double  prices */
+/* Single price */
+.single-price {
+  font-weight: bold;
+  color: #2c5530;
+  font-size: 1.1rem;
+}
+
+/* Dual price display */
+.dual-price {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.price-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.price-label {
+  font-size: 0.7rem;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.price-value {
+  font-weight: bold;
+  color: #2c5530;
+}
+
+.price-separator {
+  color: #ccc;
+  font-weight: normal;
+}
+
+/* Dual price selector */
+.dual-price-selector {
+  margin: 0.5rem 0;
+}
+
+
+.price-options .price-option {
+  flex: 1;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.price-options .price-option.selected {
+  border-color: #2c5530;
+  background: #f0f9f0;
+}
+
+.price-options .price-option:hover {
+  border-color: #4a7c59;
+}
+.single-price {
+  font-weight: bold;
+  color: #2c5530;
+  font-size: 1.1rem;
+}
+
+.dual-price-selector {
+  margin: 0.5rem 0;
+}
+
+.price-options {
+  display: flex;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;}
+
+.price-options .price-option {
+  flex: 1;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.price-options .price-option.selected {
+  border-color: #2c5530;
+  background: #f0f9f0;
+}
+
+.price-options .price-option:hover {
+  border-color: #4a7c59;
+}
+
+.price-label {
+  font-size: 0.7rem;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.price-value {
+  font-weight: bold;
+  color: #2c5530;
+  font-size: 0.9rem;
 }
