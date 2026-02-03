@@ -1746,7 +1746,7 @@ const menuCategories = useMemo(() => [
 const filteredItems = useMemo(() => {
   return menuItems.filter(item => {
     const matchesType = item.type === menuType;
-    const matchesCategory = item.category === activeCategory;
+    const matchesCategory = activeCategory === 'all' || item.category === activeCategory;
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
     
     return matchesType && matchesCategory && matchesSearch;
@@ -2986,6 +2986,15 @@ useEffect(() => {
     {/* Category Filter Buttons */}
     <div className="menu-category-filters mb-4">
       <div className="category-filter-buttons">
+          <button
+            className={`category-filter-btn ${activeCategory === 'all' ? 'active' : ''}`}
+            onClick={() => {
+              setActiveCategory('all');
+              setCategoryImage(menuCategories1[0]?.image || 'img/appetizers.jpg');
+            }}
+          >
+            All
+          </button>
           {menuCategories1.map(category => (
           <button
               key={category.id}
@@ -3004,7 +3013,7 @@ useEffect(() => {
     {/* Category Section Header */}
     <div className="menu-category-section-header mb-4">
       <h3 className="menu-category-title">
-        {menuCategories1.find(c => c.id === activeCategory)?.name}
+        {activeCategory === 'all' ? 'All' : menuCategories1.find(c => c.id === activeCategory)?.name}
       </h3>
           </div>
 
