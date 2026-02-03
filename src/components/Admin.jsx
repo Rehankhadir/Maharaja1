@@ -86,7 +86,7 @@ const Admin = () => {
   const [imagePreview, setImagePreview] = useState('');
   const [showFormModal, setShowFormModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState('name');
+  const [sortBy, _setSortBy] = useState('name');
   const [showScrollButton, setShowScrollButton] = useState(true);
   const [isAtBottom, setIsAtBottom] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);

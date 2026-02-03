@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import './LandingPage.css';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Header from './Header';
@@ -295,7 +295,7 @@ export const defaultMenuItems = [
 
 
 // Menu Type Filter Component - Place this outside LandingPage
-const MenuTypeFilter = ({ menuTypes, activeType, onTypeChange }) => {
+const _MenuTypeFilter = ({ menuTypes, activeType, onTypeChange }) => {
   return (
     <div className="menu-type-filter">
       <div className="filter-buttons">
@@ -464,7 +464,7 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
                   onClick={() => {
                     const cartItemsForThisItem = cart.filter(cartItem => 
                       cartItem.id === item.id && 
-                      (!item.hasSpicyOption || cartItem.spicyLevel?.id === cartItem.spicyLevel?.id)
+                      (!item.hasSpicyOption || cartItem.spicyLevel?.id === item.spicyLevel?.id)
                     );
                     if (cartItemsForThisItem.length > 0) {
                       const itemToDecrease = cartItemsForThisItem[0];
@@ -591,7 +591,7 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
 
 
 // MenuCategory Component
-const MenuCategory = ({ category, isActive, onClick, onHover, image }) => {
+const _MenuCategory = ({ category, isActive, onClick, onHover, image }) => {
   return (
     <div 
       className={`menu-category ${isActive ? 'active' : ''}`}
@@ -615,7 +615,7 @@ const MenuCategory = ({ category, isActive, onClick, onHover, image }) => {
 
 
 // Admin Panel Component
-const AdminPanel = ({ 
+const _AdminPanel = ({ 
   menuItems, 
   onAddItem, 
   onEditItem, 
@@ -634,7 +634,7 @@ const AdminPanel = ({
   });
 
   const [imagePreview, setImagePreview] = useState('');
-  const [isUploading, setIsUploading] = useState(false);
+  const [_isUploading, setIsUploading] = useState(false);
   const [mobileView, setMobileView] = useState('categories'); // 'categories', 'form', 'items'
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -794,7 +794,7 @@ const filteredItems = useMemo(() => {
   };
 
 
-    const mobileNavigation = {
+    const _mobileNavigation = {
     back: () => {
       if (mobileView === 'items') setMobileView('categories');
       else if (mobileView === 'form') setMobileView(isEditing ? 'items' : 'categories');
@@ -1506,20 +1506,20 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
 const LandingPage = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const [_scrollPosition, _setScrollPosition] = useState(0);
 
 // In your LandingPage component, add these state variables
 const [activeCategory, setActiveCategory] = useState('appetizers');
-const [hoveredCategory, setHoveredCategory] = useState(null);
-const [categoryImage, setCategoryImage] = useState('img/appetizers.jpg');
-const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const [_hoveredCategory, _setHoveredCategory] = useState(null);
+const [_categoryImage, setCategoryImage] = useState('img/appetizers.jpg');
+const [_mobileMenuOpen, _setMobileMenuOpen] = useState(false);
 const [searchQuery, setSearchQuery] = useState('');
 
   // Add menu type filter state
   const [menuType, setMenuType] = useState('food');
 
   // Define menu types
-  const menuTypes = [
+  const _menuTypes = [
     { id: 'food', name: 'Food Menu', icon: 'fas fa-utensils' },
     { id: 'bar', name: 'Bar Menu', icon: 'fas fa-glass-cheers' }
   ];
@@ -1754,10 +1754,10 @@ const menuCategories = useMemo(() => [
   ], []);;
 
     // Combine all categories
-  const allCategories = [...menuCategories, ...barCategories];
+  const _allCategories = [...menuCategories, ...barCategories];
 
     // Get current categories based on menu type
-  const currentCategories = menuType === 'food' ? menuCategories : barCategories;
+  const _currentCategories = menuType === 'food' ? menuCategories : barCategories;
 
     // Filter items based on current menu type and active category
 // Filter items based on current menu type, active category, and search query
@@ -2144,10 +2144,10 @@ useEffect(() => {
 }, []);
 
 
-const [showSidebar, setShowSidebar] = useState(false);
+const [_showSidebar, setShowSidebar] = useState(false);
 const [showCheckout, setShowCheckout] = useState(false);
 
-const handleCheckout = () => {
+const _handleCheckout = () => {
   setShowSidebar(false);   // close sidebar
   setShowCheckout(true);   // open checkout modal
 };
@@ -2156,7 +2156,7 @@ const handleCheckout = () => {
 
 
 // const [checkoutStep, setCheckoutStep] = useState(1);
-const [deliveryAddress, setDeliveryAddress] = useState({
+const [_deliveryAddress, _setDeliveryAddress] = useState({
   name: '',
   mobile: '',
   address: 'Himayath Nagar, Hyderabad',
@@ -2165,11 +2165,11 @@ const [deliveryAddress, setDeliveryAddress] = useState({
   pincode: '500081'
 });
 // const [paymentMethod, setPaymentMethod] = useState('');
-const [upiId, setUpiId] = useState('');
+const [_upiId, _setUpiId] = useState('');
 
 
 const [checkoutStep, setCheckoutStep] = useState(1);
-const [userLoggedIn, setUserLoggedIn] = useState(false);
+const [_userLoggedIn, setUserLoggedIn] = useState(false);
 const [noContactDelivery, setNoContactDelivery] = useState(true);
 const [paymentMethod, setPaymentMethod] = useState('upi');
 const [showSignupForm, setShowSignupForm] = useState(false);
@@ -2223,6 +2223,7 @@ useEffect(() => {
     document.body.style.top = '';
     document.body.style.width = '';
   };
+// eslint-disable-next-line react-hooks/exhaustive-deps -- showAddressForm declared later in component
 }, [showCheckout]);
 
 
@@ -2309,7 +2310,7 @@ const [savedAddresses, setSavedAddresses] = useState([
 
 const [selectedAddressId, setSelectedAddressId] = useState(1); // Default to home address
 
-const selectedAddress = savedAddresses.find(address => address.id === selectedAddressId);
+const _selectedAddress = savedAddresses.find(address => address.id === selectedAddressId);
 const [editingAddress, setEditingAddress] = useState(null);
 
 
@@ -2428,17 +2429,17 @@ const getSpicyLevelColor = (level) => {
 
 
  // Admin functions
-  const addMenuItem = (newItem) => {
+  const _addMenuItem = (newItem) => {
     setMenuItems(prev => [...prev, newItem]);
   };
 
-  const editMenuItem = (updatedItem) => {
+  const _editMenuItem = (updatedItem) => {
     setMenuItems(prev => prev.map(item => 
       item.id === updatedItem.id ? updatedItem : item
     ));
   };
 
-  const deleteMenuItem = (itemId) => {
+  const _deleteMenuItem = (itemId) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       setMenuItems(prev => prev.filter(item => item.id !== itemId));
     }
@@ -2447,7 +2448,7 @@ const getSpicyLevelColor = (level) => {
 
 
 
-  const [showReservationForm, setShowReservationForm] = useState(false);
+  const [_showReservationForm, setShowReservationForm] = useState(false);
 const [showReservationSuccess, setShowReservationSuccess] = useState(false);
 const [reservationData, setReservationData] = useState({
   name: '',
@@ -2459,7 +2460,7 @@ const [reservationData, setReservationData] = useState({
 });
 
 // Add this function to handle reservation form submission
-const handleReservationSubmit = (e) => {
+const _handleReservationSubmit = (e) => {
   e.preventDefault();
   // Handle form submission logic here
   console.log('Reservation data:', reservationData);
