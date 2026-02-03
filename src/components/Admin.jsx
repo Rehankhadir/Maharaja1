@@ -94,6 +94,11 @@ const Admin = () => {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
+  // Scroll to top when navigating to Admin (e.g. from header or footer)
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Lock body scroll when modal is open
   useEffect(() => {
     if (showFormModal || showDeleteModal) {
@@ -520,7 +525,7 @@ const Admin = () => {
                             </div>
                             
                             <div className="item-image">
-                              <img src={item.img} alt={item.name} style={{ width: '150px', height: 'auto', objectFit: 'cover' }} />
+                              <img src={item.img} alt={item.name} style={{ width: '150px', height: '150px', objectFit: 'cover', flexShrink: 0 }} />
                               {/* {item.hasSpicyOption && (
                                 <div className="spicy-badge" title="Spicy option available">
                                   <i className="fas fa-pepper-hot"></i>

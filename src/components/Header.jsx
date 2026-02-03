@@ -5,6 +5,18 @@ import './LandingPage.css';
 const Header = ({ cart = [], showAdminButton = true, onBookTable, scrollToSection: externalScrollToSection }) => {
   const navigate = useNavigate();
 
+  const closeNavbar = () => {
+    const collapseEl = document.getElementById('navbarCollapse');
+    const toggler = document.querySelector('.navbar-toggler');
+    if (collapseEl?.classList.contains('show')) {
+      collapseEl.classList.remove('show');
+      if (toggler) {
+        toggler.setAttribute('aria-expanded', 'false');
+        toggler.classList.add('collapsed');
+      }
+    }
+  };
+
   const scrollToSection = (id) => {
     if (externalScrollToSection) {
       externalScrollToSection(id);
@@ -18,10 +30,12 @@ const Header = ({ cart = [], showAdminButton = true, onBookTable, scrollToSectio
         }, 100);
       }
     }
+    closeNavbar();
   };
 
   const handleBookTable = () => {
     navigate('/booking');
+    closeNavbar();
   };
 
   const adminButton = showAdminButton ? (
@@ -29,6 +43,7 @@ const Header = ({ cart = [], showAdminButton = true, onBookTable, scrollToSectio
       to="/admin"
       className="btn btn-outline-primary py-2 px-3 mobile-margin"
       style={{ borderRadius: "20px", textDecoration: "none" }}
+      onClick={closeNavbar}
     >
       <i className="fas fa-cog me-1"></i> Admin
     </Link>
@@ -124,6 +139,7 @@ const Header = ({ cart = [], showAdminButton = true, onBookTable, scrollToSectio
                   className="btn py-2 px-2 mobile-margin"
                   data-bs-toggle="offcanvas"
                   data-bs-target="#cartSidebar"
+                  onClick={closeNavbar}
                 >
                   🛒{" "} <span className="badge bg-light text-dark">{cart.length}</span>
                 </button>

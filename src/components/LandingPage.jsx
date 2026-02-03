@@ -510,16 +510,16 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
             className={`ingredients-responsive-modal ${isMobile ? 'mobile' : 'desktop'}`}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header – close button only (fixed) */}
-            <div className="modal-headerr p-0">
-              <div className="header-content">
-                <button 
-                  className="close-modal-btn" style={{top: '5px', right: '5px', position: 'absolute'}}
-                  onClick={() => setShowIngredients(false)}
-                >
-                  <i className="fas fa-times"></i>
-                </button>
-              </div>
+            {/* Header – close icon top right */}
+            <div className="modal-headerr p-0 ingredients-modal-header">
+              <button
+                type="button"
+                className="ingredients-modal-close-icon"
+                onClick={() => setShowIngredients(false)}
+                aria-label="Close"
+              >
+                <i className="fas fa-times"></i>
+              </button>
             </div>
 
             {/* Content – image and body scroll together */}
@@ -561,25 +561,6 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
                 <i className="fas fa-award"></i>
                 <span>Made with premium, fresh ingredients</span>
               </div>
-            </div>
-
-            {/* Footer */}
-            <div className="modal-footer">
-              <button 
-                className="btn-secondary"
-                onClick={() => setShowIngredients(false)}
-              >
-                Cancel
-              </button>
-              <button 
-                className="btn-primary"
-                onClick={() => {
-                  onAddWithSpicyLevel(item, selectedPrice);
-                }}
-              >
-                <i className="fas fa-shopping-cart"></i>
-                Add to Cart
-              </button>
             </div>
           </div>
         </div>
@@ -3830,19 +3811,19 @@ useEffect(() => {
                             ></textarea>
                           </div>
 
-                          <div className="d-flex justify-content-between mt-4">
+                          <div className="d-flex justify-content-start mt-4">
                             <button
                               className="btn btn-outline-secondary"
                               onClick={() => setCheckoutStep(2)}
                             >
                               Back
                             </button>
-                            <button
+                            {/* <button
                               className="btn btn-success px-4 py-2 fw-bold"
                               onClick={handlePlaceOrder}
                             >
                               Place Order
-                            </button>
+                            </button> */}
                           </div>
                         </div>
                       )}
@@ -3954,7 +3935,7 @@ useEffect(() => {
                           <hr />
                           <div className="bill-total d-flex justify-content-between fw-bold fs-5 mb-3">
                             <span>TO PAY</span>
-                            <span>${total + 30 + Math.round(total * 0.05)}</span>
+                            <span>${(total + 30 + Math.round(total * 0.05)).toFixed(2)}</span>
                           </div>
                           {checkoutStep === 3 && (
                             <button className="btn btn-success w-100 py-3 fw-bold" onClick={handlePlaceOrder}>

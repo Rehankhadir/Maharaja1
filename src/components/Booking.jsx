@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import './LandingPage.css';
@@ -19,6 +19,11 @@ const formatDisplayDate = (dateStr) => {
 const Booking = () => {
   const dateInputRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState('');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [selectedTime, setSelectedTime] = useState('');
   const [numberOfGuests, setNumberOfGuests] = useState(2);
   const [fullName, setFullName] = useState('');

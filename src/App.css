@@ -36,3 +36,35 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* Global scrollbar – brand colors (maroon #5c0017, gold #FFD700) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #5c0017 rgba(92, 0, 23, 0.08);
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(92, 0, 23, 0.06);
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #5c0017, #7a001f);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #7a001f, #8b0022);
+  border-color: rgba(255, 215, 0, 0.6);
+}
+
+*::-webkit-scrollbar-corner {
+  background: rgba(92, 0, 23, 0.06);
+}
