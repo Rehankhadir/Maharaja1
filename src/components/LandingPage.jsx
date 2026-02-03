@@ -1,257 +1,288 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import './LandingPage.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Header from './Header';
+import Footer from './Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
 
-// Add spicy levels configuration
+
+// Add spicy levels configuration - all 6 levels
 const spicyLevels = [
-  { id: 1, name: "Mild", level: 1, emoji: "🌱" },
-  { id: 2, name: "Mild Plus", level: 2, emoji: "🌿" },
-  { id: 3, name: "Medium", level: 3, emoji: "🌶️" },
-  { id: 4, name: "Medium Plus", level: 4, emoji: "🌶️🌶️" },
-  { id: 5, name: "Hot", level: 5, emoji: "🌶️🌶️🌶️" },
-  { id: 6, name: "Extra Hot", level: 6, emoji: "🔥" }
+  { id: 1, name: "Mild", level: 1, chiliCount: 1 },
+  { id: 2, name: "Mild Plus", level: 2, chiliCount: 2 },
+  { id: 3, name: "Medium", level: 3, chiliCount: 2 },
+  { id: 4, name: "Medium Plus", level: 4, chiliCount: 3 },
+  { id: 5, name: "Hot", level: 5, chiliCount: 3 },
+  { id: 6, name: "Extra Hot", level: 6, chiliCount: 4 }
 ];
 
-const defaultMenuItems = [
-  { id: 1, name: "Root & leaf samosa", price: 5.99, img: "img/samosa.jpg", hasSpicyOption: false, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 2, name: "Chef’s blend pakora", price: 5.99, img: "img/pakora.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 3, name: "Crispy golden aloo tikki", price: 5.99, img: "img/alootikki.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 4, name: "Gilded paneer Pakora", price: 7.99, img: "img/paneerpakora.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 5, name: "Cauliflower Cloud Fritters", price: 6.99, img: "img/cauliflower-fritter.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 6, name: "Herb & Spice Marinated Chicken Pakora", price: 7.99, img: "img/chicken-pakora.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 7, name: "Chef's crafted chat samosa ", price: 6.99, img: "img/samosa-chaat.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 8, name: "Chef’s crafted chat tikki", price: 6.99, img: "img/chaat-tikki.webp", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 9, name: "Mixed platter", price: 8.99, img: "img/platter.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 10, name: "Gourmet Chili Gobi", price: 9.99, img: "img/gobi-chilli.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 11, name: "Spiced chicken 65*", price: 9.99, img: "img/chicken65.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 12, name: "Wedge potato ", price: 5.99, img: "img/potato-wedges.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 13, name: "Masala papad", price: 4.99, img: "img/masala-papad.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 14, name: "Papdi chat", price: 6.99, img: "img/Papdi-Chat.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+export const defaultMenuItems = [
+  // { id: 1, name: "Root & leaf samosa", description: "Seasoned potatoes filled in crisp turnover.", price: 5.99, img: "img/samosa.jpg", hasSpicyOption: false, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 1, name: "Root & leaf samosa", description: "Seasoned potatoes filled in crisp turnover.", price: 5.99, img: "img/Root&leafsamosa.png", hasSpicyOption: false, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  // { id: 2, name: "Chef's blend pakora", description: "Vegetables in a lightly seasoned lentil flour batter, then deep fried.", price: 5.99, img: "img/pakora.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 2, name: "Chef's blend pakora", description: "Vegetables in a lightly seasoned lentil flour batter, then deep fried.", price: 5.99, img: "img/pakora1.png", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  // { id: 3, name: "Crispy golden aloo tikki", description: "Mildly spiced minced deep fried potatoes with gram flour.", price: 5.99, img: "img/alootikki.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 3, name: "Crispy golden aloo tikki", description: "Mildly spiced minced deep fried potatoes with gram flour.", price: 5.99, img: "img/Crispygoldenalootikki.png", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  // { id: 4, name: "Gilded paneer Pakora", description: "Cubes of homemade cheese, deep fried, served with chutney.", price: 7.99, img: "img/paneerpakora.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 4, name: "Gilded paneer Pakora", description: "Cubes of homemade cheese, deep fried, served with chutney.", price: 7.99, img: "img/Gildedpaneerpakora.png", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 5, name: "Cauliflower Cloud Fritters", description: "Light and fluffy cauliflower florets coated in spiced batter, fried until crispy and served with mint chutney.", price: 6.99, img: "img/cauliflower-fritter.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 6, name: "Herb & Spice Marinated Chicken Pakora", description: "Mildly spiced boneless chicken fritters flavored with fresh onion, garlic and ginger.", price: 7.99, img: "img/Herb&SpiceMarinatedChickenPakora.png", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 7, name: "Chef's crafted chat samosa ", description: "one samosa topped with Punjabi chickpeas, vegetable, and chutney.", price: 6.99, img: "img/Chefscraftedchatsamosa.png", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 8, name: "Chef's crafted chat tikki", description: "two aloo tikka topped with Punjabi chickpeas, vegetable, and chutney.", price: 6.99, img: "img/Chefscraftedchattikki.png", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 9, name: "Mixed platter", description: "A delightful assortment of our finest appetizers including samosas, pakoras, and tikkis served with dipping sauces.", price: 8.99, img: "img/platter.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 10, name: "Gourmet Chili Gobi", description: "Deep fried crispy cauliflower  cooked with hot & tangy sauce.", price: 9.99, img: "img/GourmetChilliGobi.png", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 11, name: "Spiced chicken 65*", description: "Deep fried chicken cooked with mustrad seed, carry leaves, whole red chillies and tossed  with hot sauce.", price: 9.99, img: "img/chicken65.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 12, name: "Wedge potato ", description: "Crispy potato wedges seasoned with aromatic spices and herbs, served hot with your choice of dipping sauce.", price: 5.99, img: "img/Wedgepotato.png", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 13, name: "Masala papad", description: "Crispy lentil wafers topped with fresh onions, tomatoes, cilantro, and a blend of tangy spices.", price: 4.99, img: "img/Masalapapad.png", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 14, name: "Papdi chat", description: "Crispy flour crackers topped with spiced chickpeas, yogurt, tamarind chutney, and fresh herbs for a tangy treat.", price: 6.99, img: "img/Papdichat.png", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
 
 
-  { id: 15, name: "Heirloom Tomato soup", price: 5.99, img: "img/Heirloom-Tomato-Soup.jpg", hasSpicyOption: true, category: "soups",ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 16, name: "Lemon & Herb Infused Chicken Soup", price: 5.99, img: "img/Lemon-Herb-Infused-Chicken-Soup.webp", hasSpicyOption: true, category: "soups", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 17, name: "Artisanal Lentil Soup", price: 5.99, img: "img/lentil-soup.webp", hasSpicyOption: true, category: "soups", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 18, name: "Hot & sour soup ", price: 5.99, img: "img/Hot-and-sour-soup.webp", hasSpicyOption: true, category: "soups", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 19, name: "South touch sambar soup", price: 5.99, img: "img/South-Indian-Sambar.jpg", hasSpicyOption: true, category: "soups", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 15, name: "Heirloom Tomato soup", description: "Tomato extract in cream sauce.", price: 5.99, img: "img/HeirloomTomatosoup.png", hasSpicyOption: true, category: "soups",ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 16, name: "Lemon & Herb Infused Chicken Soup", description: "Delicately spiced chicken soup.", price: 5.99, img: "img/Lemon&Herbinfusedchickensoup.png", hasSpicyOption: true, category: "soups", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 17, name: "Artisanal Lentil Soup", description: "Pureed lentils with delicate spice.", price: 5.99, img: "img/ArtisanalLentilsoup.png", hasSpicyOption: true, category: "soups", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 18, name: "Hot & sour soup ", description: "Tangy and spicy soup with vegetables, tofu, and aromatic spices, balancing heat and sourness perfectly.", price: 5.99, img: "img/Hot-and-sour-soup.webp", hasSpicyOption: true, category: "soups", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 19, name: "South touch sambar soup", description: "Traditional South Indian lentil soup with vegetables, tamarind, and aromatic spices, served hot and tangy.", price: 5.99, img: "img/South-Indian-Sambar.jpg", hasSpicyOption: true, category: "soups", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
 
 
-  { id: 20, name: "Tandoor-Kissed Naan", price: 2.99, img: "img/tandoor-naan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 21, name: "Garlic butter naan", price: 3.99, img: "img/garlic-butternaan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 22, name: "Butter Roti", price: 2.99, img: "img/butter-roti.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 23, name: "Tandoor-Baked Onion Naan ", price: 3.99, img: "img/onion-naan.webp", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 24, name: "The Royal Paneer Naan", price: 3.99, img: "img/paneer-naan.webp", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 25, name: "Amritsari Aloo Kulcha", price: 3.99, img: "img/aloo-kulcha.webp", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 26, name: "Chef special naan ", price: 4.99, img: "img/special-naan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 27, name: "Peshwari Naan", price: 4.99, img: "img/peshwari-naan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 28, name: "Keema Naan", price: 4.99, img: "img/keema-naan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 29, name: "Spiced chilli Naan", price: 3.99, img: "img/chilli-naan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 20, name: "Tandoor-Kissed Naan", description: "Baked unleavened whole wheat bread.", price: 2.99, img: "img/TandoorKissedNaan.png", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 21, name: "Garlic butter naan", description: "Bread topped with fresh garlic and herbs.", price: 3.99, img: "img/GarlicbutterNaan.png", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 22, name: "Butter Roti", description: "Baked unleavened whole wheat bread.", price: 2.99, img: "img/ButterRoti.png", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 23, name: "Tandoor-Baked Onion Naan ", description: "Naan filled with onion homemade cheese, and spices.", price: 3.99, img: "img/TandoorBakedOnionNaan.png", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 24, name: "The Royal Paneer Naan", description: "Naan filled with homemade cheese, and spice.", price: 3.99, img: "img/TheRoyalPaneerNaan.png", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 26, name: "Chef special naan ", description: "Naan stuffed with chicken, onion, home made cheese & light spices.", price: 3.99, img: "img/special-naan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 28, name: "Keema Naan", description: "Naan filled with lamb meat and spiced.", price: 4.99, img: "img/Keemanaan.png", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 29, name: "Spiced chilli Naan", description: "Naan filled with spicy chilis.", price: 4.99, img: "img/chilli-naan.jpg", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 25, name: "Amritsari Aloo Kulcha", description: "Naan filled with spiced potatoes.", price: 4.99, img: "img/AmritsariAlooKulcha.png", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 27, name: "Peshwari Naan", description: "Sweet naan stuffed with a mixture of nuts, raisins, and coconut, offering a delightful dessert-like flavor.", price: 3.99, img: "img/PeshwariNaan.png", hasSpicyOption: false, category: "breads", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
 
 
-  { id: 30, name: "Veggie pulao", price: 15.99, img: "img/veg-pulao.webp", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 31, name: "Chicken biryani", price: 15.99, img: "img/Chicken-Biryani.jpg", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 32, name: "Lamb biryani", price: 16.99, img: "img/Lamb-Biryani.jpg", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 33, name: "Chef special Goat biryani", price: 16.99, img: "img/goat-biryani.webp", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 34, name: "Shrimp Briyani", price: 16.99, img: "img/shrimp-Biryani.webp", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 35, name: "Royal biryani", price: 16.99, img: "img/royal-biryani.jpg", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 36, name: "Jira Rice", price: 6.99, img: "img/jeera-rice.jpg", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-
-  { id: 37, name: "Veggie jalfrezi", price: 14.99, img: "img/vegetable-jalfrezi.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 38, name: "Spiced Blossom (Aloo Gobi)", price: 14.99, img: "img/Aloo-Gobi.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 39, name: "Classic punjabi dal Tadka", price: 14.99, img: "img/dal-tadka.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 40, name: "House-Spiced Dal Makhani", price: 14.99, img: "img/Dal-Makhani.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 41, name: "Punjab's Finest Chana Masala", price: 14.99, img: "img/chana-masala.webp", hasSpicyOption: true, category: "vegetarian", ingredients: ["Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 42, name: "Bindi masala Punjabi style", price: 14.99, img: "img/bhindi-masala.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 43, name: "From the Fire ( baigan ka bartha )", price: 14.99, img: "img/baigan-bharta.webp", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 44, name: "Chef special malai kofta ", price: 14.99, img: "img/Malai-Kofta.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 45, name: "Navratan korma ", price: 14.99, img: "img/navratan-korma.webp", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 46, name: "Palak Chole, Punjabi Style", price: 14.99, img: "img/PalakChole.webp", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 47, name: "Creamy aloo saag ", price: 14.99, img: "img/Saag-Aloo.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 48, name: "Aromatic Mushroom & Saag", price: 14.99, img: "img/mashroom-saag.jpeg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 49, name: "Restaurant Style Aloo mutter", price: 14.99, img: "img/aloo-matar.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 50, name: "Punjabi Kadhi, Aromatic & Creamy", price: 14.99, img: "img/punjabi-kadhi.webp", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 51, name: "Veggie makhni", price: 14.99, img: "img/veg-makhni.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-
-  { id: 52, name: "Royal Paneer butter masala", price: 15.99, img: "img/paneer-butter-masala.webp", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 53, name: "Signature Palak Paneer", price: 15.99, img: "img/palak-paneer.webp", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 54, name: "Paneer Bhurji Nawabi", price: 15.99, img: "img/Paneer-Bhurji.webp", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 55, name: "The Paneer Kadai", price: 15.99, img: "img/Kadai-Paneer.jpg", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 56, name: "Chef's Special Paneer Tikka Masala", price: 15.99, img: "img/paneer-tikkamasala.webp", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 57, name: "Shahi mutter Paneer", price: 15.99, img: "img/shahi-matar-paneer.jpg", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 58, name: "Kajju Butter Masala", price: 15.99, img: "img/kaju-butter-masala.webp", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 59, name: "Paneer Angara", price: 15.99, img: "img/paneer-angara.jpg", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-
-  { id: 60, name: "Gourmet Chicken Tikka Masala", price: 15.99, img: "img/chickken-tikkka-masala.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 61, name: "Royal butter chicken", price: 15.99, img: "img/butter-chicken.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 62, name: "Authentic chicken curry ", price: 15.99, img: "img/Chicken-Curry.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 63, name: "Shahi chicken korma", price: 15.99, img: "img/shahi-chicken-korma.webp", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 64, name: "Spiced & tangy Chicken vindaloo", price: 15.99, img: "img/chicken-vindaloo.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 65, name: "The chicken kadai ", price: 15.99, img: "img/kadai-chicken.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 66, name: "Punjab’s finest chicken saag ", price: 15.99, img: "img/Chicken-Saag.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 67, name: "Chicken jalfrezi", price: 15.99, img: "img/Chicken-Jalfrezi.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 68, name: "Chicken leg lovers (curry style)", price: 15.99, img: "img/Chicken-leg-curry.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 69, name: "Aromatic Chicken Rogani", price: 15.99, img: "img/chicken-rogan.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 70, name: "Fine Egg curry", price: 14.99, img: "img/egg-curry.webp", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 71, name: "Coconut-Kissed Chicken Madras", price: 15.99, img: "img/chicken-madras.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 72, name: "Fiery Angara Chicken with Aromatic Herbs", price: 15.99, img: "img/angara-chicken.webp", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 73, name: "Chicken pasanda", price: 15.99, img: "img/chicken-pasanda.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 74, name: "Chef's Special Kashmiri Chicken", price: 15.99, img: "img/kashmiri-chicken.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 75, name: "Mango chicken masala", price: 15.99, img: "img/Mango-Chicken-Curry.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 30, name: "Veggie pulao", description: "Rice cooked with vegetable and spices.", price: 15.99, img: "img/VeggiePulao.png", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 31, name: "Chicken biryani", description: "Basmati rice cooked with boneless chicken.", price: 15.99, img: "img/ChickenBiryani.png", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 32, name: "Lamb biryani", description: "Basmati rice cooked with boneless lamb.", price: 16.99, img: "img/LambBiryani.png", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 33, name: "Chef special Goat biryani", description: "Rice cooked with goat meat.", price: 16.99, img: "img/ChefspecialGoatBiryani.png", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 34, name: "Shrimp Briyani", description: "Shrimp cooked with rice and spices.", price: 16.99, img: "img/ShrimpBriyani.png", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 35, name: "Royal biryani", description: "Lamb, chicken, shrimp, goat, and vegetable cooked with spices with rice.", price: 16.99, img: "img/royal-biryani.jpg", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 36, name: "Jira Rice", description: "", price: 6.99, img: "img/JeeraRice.png", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
 
 
 
-  { id: 76, name: "Authentic lamb curry ", price: 16.99, img: "img/lamb-curry.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 77, name: "Gourmet lamb tikka masala ", price: 16.99, img: "img/LambTikkaMasala.webp", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 78, name: "Butter lamb ", price: 16.99, img: "img/butter-lamb.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 79, name: "Buna gost", price: 16.99, img: "img/Bhuna-Mutton.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 80, name: "Lamb psanda ", price: 16.99, img: "img/Lamb_Pasanda.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 81, name: "Lamb kadai ", price: 16.99, img: "img/lamb-karahi.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 82, name: "Lamb rogan josh ", price: 16.99, img: "img/lamb-rogan-josh.webp", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 83, name: "Lamb korma ", price: 16.99, img: "img/lamb-kkorma.webp", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 84, name: "Lamb saag", price: 16.99, img: "img/lamb-saag.webp", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 85, name: "Lamb angara", price: 16.99, img: "img/lamb-angara.webp", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 86, name: "Goat curry", price: 16.99, img: "img/goat-mutton-curry.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-
-
-  { id: 87, name: "Tandoori chicken(6)", price: 16.99, img: "img/Chicken-Tandoori.webp", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 88, name: "Chicken tikka", price: 16.99, img: "img/chickentikka.webp", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 89, name: "Seekh kabab", price: 16.99, img: "img/seekh-kabab.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 90, name: "tandoori fish ", price: 16.99, img: "img/tandoori-fish.jpeg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 91, name: "Tandoori shrimp", price: 16.99, img: "img/tandoori-shrimp.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 92, name: "Mix Grill ", price: 17.99, img: "img/tandoori-mix-grill.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 93, name: "Malai kabab", price: 15.99, img: "img/malai-kabab.webp", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 94, name: "Lamb chop", price: 21.99, img: "img/lamb-chops.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-
-
-  { id: 95, name: "Fish or shrimp curry ", price: 16.99, img: "img/fish-curry.jpg", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 96, name: "Fish or shrimp tikka masala ", price: 16.99, img: "img/Fish-Tikka-Masala.jpg", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 97, name: "Butter shrimp or fish ", price: 16.99, img: "img/butter-fish.webp", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 98, name: "Fish or shrimp vindaloo", price: 16.99, img: "img/fish-vindaloo.webp", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 99, name: "Fish or shrimp saag", price: 16.99, img: "img/Fish-Sagwala.jpg", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 100, name: "Fish or shrimp korma ", price: 16.99, img: "img/fish-korma.webp", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
 
 
 
-  { id: 101, name: "Chilli paneer", price: 16.99, img: "img/chilli-paneer.jpg", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 102, name: "Vegi manchurian", price: 16.99, img: "img/veg-manchurian.jpg", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 103, name: "Chilli chicken", price: 16.99, img: "img/chilli-chicken.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 104, name: "Lamb chilli", price: 16.99, img: "img/lamb-chilli.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 105, name: "Wok-Tossed chicken fried rice", price: 16.99, img: "img/chicken-fried-rice.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 106, name: "Wok-Tossed Egg Fried Rice", price: 16.99, img: "img/EggFriedRice.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+
+  { id: 37, name: "Mix vegitable", description: "Fresh vegetable cooked with spices onion, green peppers, and tomatoes.", price: 14.99, img: "img/Mixvegitable.png", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 38, name: "Spiced Blossom (Aloo Gobi)", description: "Cauliflower and potatoes cooked with fresh spices and ginger.", price: 14.99, img: "img/SpicedBlossom(AlooGobi).png", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 39, name: "Classic punjabi dal Tadka", description: "Yellow lentils with blended spices.", price: 14.99, img: "img/ClassicpunjabiDaltadka.png", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 40, name: "House-Spiced Dal Makhani", description: "Black lentils with aromatic spices in a creamy sauce.", price: 14.99, img: "img/House-SpiccedDalMakhni.png", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 41, name: "Punjab's Finest Chana Masala", description: "Chickpeas cooked with herbs and spices, Punjabi style.", price: 14.99, img: "img/Punjab'sFinestChanaMasala.png", hasSpicyOption: true, category: "vegetarian", ingredients: ["Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 42, name: "Bindi masala Punjabi style", description: "", price: 14.99, img: "img/bhindi-masala.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 43, name: "From the Fire ( baigan ka bartha )", description: "Chopped eggplant cooked with tomatoes, onion, green peas, and tasty spice.", price: 14.99, img: "img/FromtheFireBaigankabartha.png", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 45, name: "Navratan korma ", description: " Nine fresh vegetable with nuts in a mildly spiced, thick yogurt sauce.", price: 14.99, img: "img/Navratankorma.png", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 46, name: "Palak Chole, Punjabi Style", description: "Spinach and chickpeas cooked in tomato and onion gravy with light cream.", price: 14.99, img: "img/PalakCholePunjabstyle.png", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 47, name: "Creamy aloo saag ", description: "Potato cubes cooked with spinach and light spices.", price: 14.99, img: "img/Creamyaloosaag.png", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 48, name: "Aromatic Mushroom & Saag", description: "Tender mushrooms cooked with spinach, tomato, and onion sauce.", price: 14.99, img: "img/AromaticMushrom&Saag.png", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 49, name: "Restaurant Style Aloo mutter", description: "Potatoes cooked with green peas and spices.", price: 14.99, img: "img/RestaurantStyleAlooMutter.png", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 50, name: "Punjabi Kadhi, Aromatic & Creamy", description: "Crispy pastry dumplings stuffed with mildly spicy vegetable and cooked in a light yogurt sauce.", price: 14.99, img: "img/PunjabiKadhiAromatic&Creamy.png", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 51, name: "Veggie makhni", description: " Vegetable cooked in a tomato and cream sauce.", price: 14.99, img: "img/VeggieMakhni.png", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },    
 
 
-  { id: 107, name: "Mango lassi ", price: 4.99, img: "img/Mango-Lassi.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food"},
-  { id: 108, name: "Sweet lassi ", price: 4.99, img: "img/sweet-lassi.webp", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 109, name: "Salty lassi with jeera ", price: 4.99, img: "img/salted-lassi.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 110, name: "Badam milk ", price: 4.99, img: "img/badam-milk.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 111, name: "Mango milk shake", price: 4.99, img: "img/MangoMilkshake.webp", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 112, name: "Orange juice ", price: 2.99, img: "img/orange-juice.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 113, name: "Pineapple juice ", price: 2.99, img: "img/pineapple-juice.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 114, name: "Indian Lime soda ", price: 4.99, img: "img/lime-soda.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 115, name: "Pepsi", price: 2.99, img: "img/pepsi.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 116, name: "Diet Pepsi", price: 2.99, img: "img/diet-pepsi.webp", hasSpicyOption: false, category: "cold-beverages", ingredients:["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 117, name: "Lemonade", price: 2.99, img: "img/lemonade.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 118, name: "Starry", price: 2.99, img: "img/starry.webp", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 119, name: "Mt. Dew", price: 2.99, img: "img/Mountain-Dew.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 120, name: "Root Beer", price: 2.99, img: "img/root-beer.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 121, name: "Water Bottle", price: 1.99, img: "img/water.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+
+  { id: 52, name: "Royal Paneer butter masala", description: "Cubes of paneer cooked in a mild cream sauce.", price: 15.99, img: "img/RoyalPaneerButterMasala.png", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 53, name: "Signature Palak Paneer", description: "Fresh spinach cooked with homemade cheese cubed in a special blend of spices.", price: 15.99, img: "img/SignaturePalakPaneer.png", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 54, name: "Paneer Bhurji Nawabi", description: "Homemade cheese cooked with fresh tomatoes, onion, spices in dry version.", price: 15.99, img: "img/PaneerBhurjiNawabi.png", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 55, name: "The Paneer Kadai", description: "Pieces of cheese sautéed with onion, green peppers, tomatoes, and exotic spices.", price: 15.99, img: "img/ThePaneerKadai.png", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 56, name: "Chef's Special Paneer Tikka Masala", description: "Homemade cheese cooked with a flavorful tomato sauce.", price: 15.99, img: "img/Chef'sSpecialPaneerTikkaMasala.jpg", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 57, name: "Shahi mutter Paneer", description: "Homemade cheese cooked with fresh tomatoes, onion, spices and creamy gravy.", price: 15.99, img: "img/ShahimutterPaneer.png", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 58, name: "Kajju Butter Masala", description: "", price: 15.99, img: "img/KajjuButterMasala.png", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 59, name: "Paneer Angara", description: "", price: 15.99, img: "img/paneer-angara.jpg", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 44, name: "Chef special malai kofta ", description: " Fresh vegetables and cheese croquettes simmered in a mild cream sauce.", price: 15.99, img: "img/ChefSpecialMalaikofta.png", hasSpicyOption: true, category: "paneer", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
 
 
-  { id: 122, name: "Chai", price: 2.99, img: "img/chai.jpg", hasSpicyOption: false, category: "hot-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 123, name: "Indian style coffee ", price: 3.99, img: "img/coffee1.jpg", hasSpicyOption: false, category: "hot-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+
+  { id: 60, name: "Gourmet Chicken Tikka Masala", description: "Tender pieces of chicken tikka cooked with garlic, ginger, tomatoes and herbs.", price: 15.99, img: "img/GourmetChickeTikkaMasala.png", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 61, name: "Royal butter chicken", description: "Tender pieces of chicken tikka cooked in a mild, rich tomato sauce.", price: 15.99, img: "img/RoyalButterchicken.png", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 62, name: "Authentic chicken curry", description: "Mildly spiced pieces of chicken cooked in mild spices.", price: 15.99, img: "img/Authenticchickencurry.png", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 63, name: "Shahi chicken korma", description: "Chicken cooked in a creamy sauce with cashews.", price: 15.99, img: "img/shahi-chicken-korma.webp", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 64, name: "Spiced & tangy Chicken vindaloo", description: "Chicken cooked in hot spices potatoes, and vinegar.", price: 15.99, img: "img/Spiced&tangyChickenvindaloo.png", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 65, name: "The chicken kadai ", description: "Chicken sautéed with onion, green peppers, tomatoes, and spices.", price: 15.99, img: "img/Thechickenkadai.png", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 66, name: "Punjab's finest chicken saag ", description: "Chicken cooked with mildly-spiced spinach, cream, and herbs.", price: 15.99, img: "img/Punjab'sfinestchickensaag.png", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 67, name: "Chicken jalfrezi", description: ".", price: 15.99, img: "img/Chicken-Jalfrezi.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 68, name: "Chicken leg lovers (curry style)", description: ".", price: 15.99, img: "img/Chicken-leg-curry.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 69, name: "Aromatic Chicken Rogani", description: "Tender chunks of savory chicken cooked in yogurt , herb and spices", price: 15.99, img: "img/AromaticchickenRogani.png", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 70, name: "Fine Egg curry", description: "boiled eggs cooked in a blend of onion,tomato, ginger,garlic and spices.", price: 14.99, img: "img/FineEggcurry.png", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 71, name: "Coconut-Kissed Chicken Madras", description: "Boneless chicken pieces cooked in a coconut sauce.", price: 15.99, img: "img/CoconutKissedChickenMadras.png", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 72, name: "Fiery Angara Chicken with Aromatic Herbs", description: " Chicken pieces in a special garlic sauce.", price: 15.99, img: "img/angara-chicken.webp", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 73, name: "Chicken pasanda", description: ".", price: 15.99, img: "img/chicken-pasanda.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 74, name: "Chef's Special Kashmiri Chicken", description: ".", price: 15.99, img: "img/kashmiri-chicken.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 75, name: "Mango chicken masala", description: "Chicken cooked with mango pulp.", price: 15.99, img: "img/Mangochickenmasala.png", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
 
 
-  { id: 124, name: "Rasmalai", price: 4.99, img: "img/rasmalai.webp", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 125, name: "Gulab jamun ", price: 3.99, img: "img/gulabjamun.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 126, name: "Badam kheer", price: 3.99, img: "img/Badam-Kheer.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 127, name: "Gajar halwa", price: 4.99, img: "img/gajarhalwa.webp", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 128, name: "Kulfi ", price: 3.99, img: "img/kulfi.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 129, name: "Pishtasho kulfi", price: 3.99, img: "img/pistakulfi.webp", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+
+  { id: 76, name: "Authentic lamb curry ", description: "Tender pieces of lamb cooked in freshly ground spices and sauce.", price: 16.99, img: "img/Authenticlambcurry.png", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 77, name: "Gourmet lamb tikka masala ", description: "Tender pieces of lamb with garlic, ginger, and herbs.", price: 16.99, img: "img/Gourmetlambtikkamasala.png", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 78, name: "Butter lamb ", description: "cubed lamb cooked in rich and flavorful sauce.", price: 16.99, img: "img/Butterlamb.png", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 79, name: "Buna gost", description: "Pieces of lamb cooked with onion ginger, green peas, and spices.", price: 16.99, img: "img/Bunagost.png", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 80, name: "Lamb psanda ", description: ".", price: 16.99, img: "img/Lamb_Pasanda.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 81, name: "Lamb kadai ", description: "Lamb sauteed with onion, green peppers,tomatoes, and spices.", price: 16.99, img: "img/LambKadai.png", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 82, name: "Lamb rogan josh ", description: "Tender morsels of lamb cooked in freshly ground spices and mild sauce, with a touch of yogurt.", price: 16.99, img: "img/Lambroganjosh.png", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 83, name: "Lamb korma ", description: "Pieces of lamb cooked in a yogurt sauce with cashews.", price: 16.99, img: "img/Lambkorma.png", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 84, name: "Lamb saag", description: " Cubed lamb cooked with freshly chopped spinach in a rich sauce.", price: 16.99, img: "img/Lambsaag.png", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 85, name: "Lamb angara", description: "Lamb pieces cooked in a special garlic sauce.", price: 16.99, img: "img/lamb-angara.webp", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 86, name: "Goat curry", description: "Tender pieces of goat cooked with freshly graound spices and ssauce.", price: 16.99, img: "img/Goatcurry.png", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
 
 
-  { id: 130, name: "Raita", price: 2.99, img: "img/raita.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 131, name: "Plain yogurt", price: 2.99, img: "img/plain-yogurt.webp", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 132, name: "Mint chutney", price: 1.99, img: "img/Mint-Chutney.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 133, name: "Tamred chutney", price: 1.99, img: "img/tamarind-chutney.webp", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 134, name: "Indian pickle ( achar )", price: 1.99, img: "img/pickle.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 135, name: "Mango chutney", price: 2.99, img: "img/mango-chutney.webp", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 136, name: "Coconut chutney", price: 2.99, img: "img/coconut-chutner.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 137, name: "House Green salad", price: 2.99, img: "img/salad.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+
+
+
+  { id: 87, name: "Tandoori chicken(6)", description: "Chicken legs marinated in homemade fresh yogurt and freshly ground herbs, tenderly barbecued in our clay oven.", price: 16.99, img: "img/Tandoorichicken.png", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 88, name: "Chicken tikka", description: "Succulent cubes of chicken  breast, subtly marinated in yogurt and specially blended spices and broiled in tandoor.", price: 16.99, img: "img/Chickentikka.png", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 89, name: "Seekh kabab", description: "Finely minced chicken seasoned with fresh onion and herbs, cooked on skewers.", price: 16.99, img: "img/Seekhkabab.png", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 90, name: "tandoori fish ", description: "Salmon marinated in aromatic herbs and spices, then broiled in the tandoor.", price: 16.99, img: "img/TandooriFish.png", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 91, name: "Tandoori shrimp", description: "Subtly seasoned shrimp with spices and green herbs, simmerd in our clay oven .", price: 16.99, img: "img/Tandoorishrimp.png", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 92, name: "Mix Grill ", description: "An assortment of chicken, lamb and shrimp, individuallyy marinated and reasted.", price: 17.99, img: "img/MixGrill.png", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 93, name: "Malai kabab", description: ".", price: 15.99, img: "img/malai-kabab.webp", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  { id: 94, name: "Lamb chop", description: ".", price: 21.99, img: "img/lamb-chops.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+
+
+  
+
+
+
+
+
+
+  { id: 95, name: "Fish or shrimp curry ", description: " Shrimp or salmon cooked in a mildly spices sauce.", price: 16.99, img: "img/fish-curry.jpg", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 96, name: "Fish or shrimp tikka masala ", description: "Shrimp or salmon cooked with spices in a light cream sauce.", price: 16.99, img: "img/Fish-Tikka-Masala.jpg", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 97, name: "Butter shrimp or fish ", description: "Shrimp or salmon cooked in a rich sauce with mild spices.", price: 16.99, img: "img/butter-fish.webp", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 98, name: "Fish or shrimp vindaloo", description: "Shrimp or salmon cooked in tangy tomato and curry saice with cubed potatoes and fresh spices.", price: 16.99, img: "img/fish-vindaloo.webp", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 99, name: "Fish or shrimp saag", description: "Shrimp or salmon cooked with mildly spiced spinach and touch of cream .", price: 16.99, img: "img/Fish-Sagwala.jpg", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 100, name: "Fish or shrimp korma ", description: "Shrimp or salmon cooked in creamy sauce with cashews.", price: 16.99, img: "img/fish-korma.webp", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+
+
+
+  { id: 101, name: "Chilli paneer", description: " Cubes of paneer sauteed with onion and bell peppers in a tangy sauce.", price: 12.99, img: "img/chilli-paneer.jpg", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 102, name: "Vegi manchurian", description: ".", price: 12.99, img: "img/veg-manchurian.jpg", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 103, name: "Chilli chicken", description: "Batter fried chicken cubes tossed with diced bell pappers, onoin,ginger and garlic finished with a spicy sauce.", price: 13.99, img: "img/chilli-chicken.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 104, name: "Lamb chilli", description: ".", price: 14.99, img: "img/lamb-chilli.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 105, name: "Wok-Tossed chicken fried rice", description: "Basmati rice sauteed with chicken cubes, carrots,cabbage,bell pappeer and garnish with spring onion.", price: 9.99, img: "img/chicken-fried-rice.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 106, name: "Wok-Tossed Egg Fried Rice", description: "Basmati rice sauteed with Eggs, carrots,cabbage,bell pappeer and garnish with spring onion.", price: 10.99, img: "img/EggFriedRice.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+
+
+
+
+
+
+  { id: 107, name: "Mango lassi ", description: "A refreshing yogurt drink,with and sugar.", price: 4.99, img: "img/Mangolassi.png", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food"},
+  { id: 108, name: "Sweet lassi ", description: "A cool yogurt drink.", price: 4.99, img: "img/Sweetlassi.png", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 109, name: "Salty lassi with jeera ", description: "A cool yogurt drink with salt and crushed cumin.", price: 4.99, img: "img/salted-lassi.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 110, name: "Badam milk ", description: "", price: 4.99, img: "img/BadamMilk.png", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 111, name: "Mango milk shake", description: "", price: 4.99, img: "img/MangoMilkshake.webp", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 112, name: "Orange juice ", description: "", price: 2.99, img: "img/Orangejuice.png", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 113, name: "Pineapple juice ", description: "", price: 2.99, img: "img/Pineapplejuice.png", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 114, name: "Indian Lime soda ", description: "", price: 4.99, img: "img/lime-soda.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 115, name: "Pepsi", description: "", price: 2.99, img: "img/pepsi.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 116, name: "Diet Pepsi", description: "", price: 2.99, img: "img/diet-pepsi.webp", hasSpicyOption: false, category: "cold-beverages", ingredients:["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 117, name: "Lemonade", description: "", price: 2.99, img: "img/lemonade.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 118, name: "Starry", description: "", price: 2.99, img: "img/starry.webp", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 119, name: "Mt. Dew", description: "", price: 2.99, img: "img/Mountain-Dew.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 120, name: "Root Beer", description: "", price: 2.99, img: "img/root-beer.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 121, name: "Water Bottle", description: "", price: 1.99, img: "img/water.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+
+
+  { id: 122, name: "Chai", description: "", price: 2.99, img: "img/Chai.png", hasSpicyOption: false, category: "hot-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 123, name: "Indian style coffee ", description: "", price: 3.99, img: "img/coffee1.jpg", hasSpicyOption: false, category: "hot-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+
+
+  { id: 124, name: "Rasmalai", description: "Homemade cheese pieces dipped in sweetened milk, flavored with pistachios and rose water,served cold ", price: 4.99, img: "img/Rasmalai.png", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 125, name: "Gulab jamun ", description: "Homemade soft milk balls dipped in honey syrup", price: 3.99, img: "img/Gulabjamun.png", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 126, name: "Badam kheer", description: "Homemade rice pudding flavored with cardamom", price: 3.99, img: "img/Badamkheer.png", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 127, name: "Gajar halwa", description: "Carrot halwa is a classic sweet dish made with carrot,sugar,card-amom powder and milk", price: 4.99, img: "img/Gajarhalwa.png", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 128, name: "Kulfi ", description: "Indian style ice cream with nutty taste of pistachios,almonds and touch of rosewater", price: 3.99, img: "img/Kulfi.png", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 129, name: "Pishtasho kulfi", description: "", price: 3.99, img: "img/pistakulfi.webp", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+
+
+  { id: 130, name: "Raita", description: "Homemade yogurt with cucumber, potatoes and mild spice", price: 2.99, img: "img/Raita.png", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 131, name: "Plain yogurt", description: "", price: 2.99, img: "img/Plainyogurt.png", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 132, name: "Mint chutney", description: "", price: 1.99, img: "img/Mintchutney.png", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 133, name: "Tamred chutney", description: "", price: 1.99, img: "img/Tamarindchutney.png", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 134, name: "Indian pickle ( achar )", description: "", price: 1.99, img: "img/Indianpickle(Achar).png", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 135, name: "Mango chutney", description: "", price: 2.99, img: "img/MangoChutney.png", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 136, name: "Coconut chutney", description: "", price: 2.99, img: "img/coconut-chutner.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 137, name: "House Green salad", description: "", price: 5.99, img: "img/HouseGreensalad.png", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
   
   
 
   // bar menus
-  { id: 138, name: "Cabernet-Sauvignon", price: 8.00,price2: 30.00, img: "img/Cabernet-Sauvignon.jpg", hasSpicyOption: false, category: "wines", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "bar" },
-  { id: 139, name: "Malbec", price: 8.00,price2: 30.00, img: "img/malbec.jpg", hasSpicyOption: false, category: "wines", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar" },
-  { id: 140, name: "Pinot Noir", price: 8.00,price2: 30.00, img: "img/Pinot-Noir.webp", hasSpicyOption: false, category: "wines", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar" },
-  { id: 141, name: "Chardonnay", price: 8.00,price2: 30.00, img: "img/Chardonnay.png", hasSpicyOption: false, category: "wines", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar" },
-  { id: 142, name: "Moscato", price: 8.00,price2: 30.00, img: "img/Moscato.jpg", hasSpicyOption: false, category: "wines", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar" },
+  { id: 138, name: "Cabernet-Sauvignon", description: "Full-bodied red wine with rich dark fruit flavors, tannins, and oak notes, perfect with red meats.", price: 8.00,price2: 30.00, img: "img/Cabernet-Sauvignon.jpg", hasSpicyOption: false, category: "wines", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "bar" },
+  { id: 139, name: "Malbec", description: "Bold red wine with dark fruit flavors, smooth tannins, and a velvety finish, pairs well with grilled meats.", price: 8.00,price2: 30.00, img: "img/malbec.jpg", hasSpicyOption: false, category: "wines", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar" },
+  { id: 140, name: "Pinot Noir", description: "Elegant red wine with cherry and berry flavors, light-bodied with smooth tannins, versatile and refined.", price: 8.00,price2: 30.00, img: "img/Pinot-Noir.webp", hasSpicyOption: false, category: "wines", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar" },
+  { id: 141, name: "Chardonnay", description: "Full-bodied white wine with buttery, oaky flavors and citrus notes, smooth and rich, pairs with creamy dishes.", price: 8.00,price2: 30.00, img: "img/Chardonnay.png", hasSpicyOption: false, category: "wines", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar" },
+  { id: 142, name: "Moscato", description: "Sweet, light white wine with floral and fruity flavors, low alcohol, refreshing and perfect for desserts.", price: 8.00,price2: 30.00, img: "img/Moscato.jpg", hasSpicyOption: false, category: "wines", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar" },
   
   
-  { id: 143, name: "Heineken", price: 6.00, img: "img/heineken.jpg", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 144, name: "Corona Extra", price: 6.00, img: "img/corona-extra-beer.jpeg", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 145, name: "Stella", price: 6.00, img: "img/stella.jpg", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 146, name: "Modelo", price: 6.00, img: "img/modelo.webp", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 147, name: "Riggs", price: 6.00, img: "img/riggs.jpg", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 148, name: "Anti Hero", price: 6.00, img: "img/anti-hero.jpeg", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 149, name: "Golden Monkey", price: 6.00, img: "img/golden-monkey.jpg", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 150, name: "Samuel Adam", price: 6.00, img: "img/samuel-adams.webp", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 151, name: "Blue Moon", price: 6.00, img: "img/bluemoon.webp", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] , type: "bar" },
-  { id: 152, name: "N.A. Beer", price: 6.00, img: "img/bluemoon.webp", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 143, name: "Heineken", description: "Premium Dutch lager with a crisp, refreshing taste and balanced bitterness, smooth and golden.", price: 6.00, img: "img/heineken.jpg", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 144, name: "Corona Extra", description: "Light Mexican lager with a crisp, refreshing taste, best served with a lime wedge, smooth and easy-drinking.", price: 6.00, img: "img/corona-extra-beer.jpeg", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 145, name: "Stella", description: "Belgian pilsner with a crisp, refreshing taste and balanced bitterness, smooth and golden, easy-drinking.", price: 6.00, img: "img/stella.jpg", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 146, name: "Modelo", description: "Mexican lager with a smooth, crisp taste and light body, refreshing and perfect for any occasion.", price: 6.00, img: "img/modelo.webp", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 147, name: "Riggs", description: "Craft beer with unique flavors, smooth and refreshing, perfect for beer enthusiasts seeking quality.", price: 6.00, img: "img/riggs.jpg", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 148, name: "Anti Hero", description: "Craft IPA with hoppy bitterness and citrus notes, bold and flavorful, perfect for IPA lovers.", price: 6.00, img: "img/anti-hero.jpeg", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 149, name: "Golden Monkey", description: "Belgian-style tripel ale with complex flavors, fruity notes, and higher alcohol content, bold and rich.", price: 6.00, img: "img/golden-monkey.jpg", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 150, name: "Samuel Adam", description: "American craft lager with rich, full flavor and balanced taste, smooth and refreshing, classic choice.", price: 6.00, img: "img/samuel-adams.webp", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 151, name: "Blue Moon", description: "Belgian-style wheat ale with orange peel and coriander, smooth, citrusy, and refreshing, served with orange slice.", price: 6.00, img: "img/bluemoon.webp", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] , type: "bar" },
+  { id: 152, name: "N.A. Beer", description: "Non-alcoholic beer with the taste of traditional beer, refreshing and perfect for those avoiding alcohol.", price: 6.00, img: "img/bluemoon.webp", hasSpicyOption: false, category: "beers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
   
   
   
-  { id: 153, name: "Haywords 5000", price: 8.00, img: "img/HAYWARDS.jpg", hasSpicyOption: false, category: "indian-beer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 154, name: "Taj Mahal", price: 8.00, img: "img/tajmahal.webp", hasSpicyOption: false, category: "indian-beer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 155, name: "Flying Horse", price: 8.00, img: "img/flying-horse.jpg", hasSpicyOption: false, category: "indian-beer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 156, name: "Kingfisher", price: 6.00, img: "img/kingfisher.webp", hasSpicyOption: false, category: "indian-beer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 157, name: "Maharaja", price: 6.00, img: "img/maharaja-beer.jpg", hasSpicyOption: false, category: "indian-beer", ingredients:["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 158, name: "Beera", price: 6.00, img: "img/bira.webp", hasSpicyOption: false, category: "indian-beer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 153, name: "Haywords 5000", description: "Strong Indian beer with bold flavors and higher alcohol content, smooth and refreshing, perfect for celebrations.", price: 8.00, img: "img/HAYWARDS.jpg", hasSpicyOption: false, category: "indian-beer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 154, name: "Taj Mahal", description: "Premium Indian lager with a smooth, crisp taste and balanced flavor, refreshing and easy-drinking.", price: 8.00, img: "img/tajmahal.webp", hasSpicyOption: false, category: "indian-beer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 155, name: "Flying Horse", description: "Indian strong beer with bold flavors and higher alcohol content, smooth and refreshing, perfect for beer lovers.", price: 8.00, img: "img/flying-horse.jpg", hasSpicyOption: false, category: "indian-beer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 156, name: "Kingfisher", description: "Popular Indian lager with a light, crisp taste and smooth finish, refreshing and perfect with spicy food.", price: 6.00, img: "img/kingfisher.webp", hasSpicyOption: false, category: "indian-beer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 157, name: "Maharaja", description: "Premium Indian beer with rich, full flavor and smooth taste, refreshing and perfect for royal dining.", price: 6.00, img: "img/maharaja-beer.jpg", hasSpicyOption: false, category: "indian-beer", ingredients:["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 158, name: "Beera", description: "Craft Indian beer with unique flavors and smooth taste, refreshing and perfect for modern beer enthusiasts.", price: 6.00, img: "img/bira.webp", hasSpicyOption: false, category: "indian-beer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
   
   
-  { id: 159, name: "Blue Label", price: 24.00, img: "img/blue-label.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 160, name: "The Macallan 15", price: 20.00, img: "img/macallan.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 161, name: "Glenlivet 18", price: 17.00, img: "img/glenlivet-18.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 162, name: "The Macallan 12", price: 17.00, img: "img/macallan12.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 163, name: "Glenlivet 12", price: 13.00, img: "img/Glenlivet.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 164, name: "Glenfiddich 12", price: 13.00, img: "img/Glenfiddich-12.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 165, name: "Black Label", price: 13.00, img: "img/blacklabel.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 166, name: "Indri", price: 13.00, img: "img/indri.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 167, name: "Woodford Reserve", price: 10.00, img: "img/woodford.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 168, name: "Hennessy", price: 10.00, img: "img/hennessy.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 169, name: "Red Label", price: 10.00, img: "img/redlabel.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 170, name: "Jack Deniel", price: 7.00, img: "img/jackdaniels.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 171, name: "Dewar's", price: 7.00, img: "img/dewars.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] , type: "bar" },
-  { id: 172, name: "Crown Royal", price: 7.00, img: "img/crown-royal.png", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 173, name: "Jameson", price: 7.00, img: "img/jameson.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 174, name: "Patiala Peg", price: 7.00, img: "img/patialapeg.webp", hasSpicyOption: false, category: "whiskey", ingredients:["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] , type: "bar" },
-  { id: 175, name: "Our Choice", price: 11.00, img: "img/ourchoise.webp", hasSpicyOption: false, category: "whiskey", ingredients:["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 176, name: "Guest Choice", price: 24.00, img: "img/guestchoise.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 159, name: "Blue Label", description: "Premium blended Scotch whisky with exceptional smoothness and complexity, aged to perfection, luxurious and refined.", price: 24.00, img: "img/blue-label.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 160, name: "The Macallan 15", description: "Premium single malt Scotch whisky aged 15 years, rich with sherry oak influence, smooth and complex.", price: 20.00, img: "img/macallan.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 161, name: "Glenlivet 18", description: "Aged single malt Scotch whisky with rich, complex flavors, smooth finish, and elegant character, premium quality.", price: 17.00, img: "img/glenlivet-18.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 162, name: "The Macallan 12", description: "Single malt Scotch whisky aged 12 years, smooth with sherry oak notes, rich and balanced, classic choice.", price: 17.00, img: "img/macallan12.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 163, name: "Glenlivet 12", description: "Classic single malt Scotch whisky with smooth, fruity flavors and a light, balanced finish, approachable and refined.", price: 13.00, img: "img/Glenlivet.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 164, name: "Glenfiddich 12", description: "Single malt Scotch whisky with pear and oak flavors, smooth and balanced, perfect for whisky enthusiasts.", price: 13.00, img: "img/Glenfiddich-12.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 165, name: "Black Label", description: "Premium blended Scotch whisky with rich, complex flavors, smooth finish, and exceptional quality, aged 12 years.", price: 13.00, img: "img/blacklabel.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 166, name: "Indri", description: "Premium Indian single malt whisky with rich, complex flavors, smooth finish, and distinctive character.", price: 13.00, img: "img/indri.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 167, name: "Woodford Reserve", description: "Premium Kentucky bourbon with rich, complex flavors, smooth finish, and notes of vanilla and oak.", price: 10.00, img: "img/woodford.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 168, name: "Hennessy", description: "Premium cognac with rich, smooth flavors, aged to perfection, elegant and refined, perfect for sipping.", price: 10.00, img: "img/hennessy.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 169, name: "Red Label", description: "Classic blended Scotch whisky with smooth, balanced flavors, versatile and perfect for cocktails or neat.", price: 10.00, img: "img/redlabel.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 170, name: "Jack Deniel", description: "Tennessee whiskey with smooth, mellow flavors and distinctive charcoal filtering, classic and iconic.", price: 7.00, img: "img/jackdaniels.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 171, name: "Dewar's", description: "Blended Scotch whisky with smooth, balanced flavors, aged and refined, perfect for cocktails or sipping.", price: 7.00, img: "img/dewars.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] , type: "bar" },
+  { id: 172, name: "Crown Royal", description: "Canadian whisky with smooth, mellow flavors and a rich finish, elegant and refined, perfect for any occasion.", price: 7.00, img: "img/crown-royal.png", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 173, name: "Jameson", description: "Irish whiskey with smooth, triple-distilled flavors, light and approachable, perfect for cocktails or neat.", price: 7.00, img: "img/jameson.jpg", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 174, name: "Patiala Peg", description: "Indian whisky with bold flavors and smooth finish, named after the royal city, strong and flavorful.", price: 7.00, img: "img/patialapeg.webp", hasSpicyOption: false, category: "whiskey", ingredients:["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] , type: "bar" },
+  { id: 175, name: "Our Choice", description: "House-selected premium whisky with exceptional quality and smooth flavors, carefully chosen for discerning palates.", price: 11.00, img: "img/ourchoise.webp", hasSpicyOption: false, category: "whiskey", ingredients:["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 176, name: "Guest Choice", description: "Ultra-premium whisky selection for special occasions, exceptional quality and smoothness, the finest available.", price: 24.00, img: "img/guestchoise.webp", hasSpicyOption: false, category: "whiskey", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
   
   
-  { id: 177, name: "Grey Goose", price: 13.00, img: "img/Grey-Goose.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 178, name: "Absolute", price: 7.00, img: "img/absolutevodka.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 179, name: "Tito's", price: 7.00, img: "img/titosvodka.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 180, name: "Smirnoff", price: 7.00, img: "img/smirnoff.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 181, name: "Don Julio Anejo", price: 10.00, img: "img/donjulio.webp", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 182, name: "Don Julio Repesado", price: 10.00, img: "img/Don-Julio-Reposado.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 183, name: "Patron Anejo", price: 10.00, img: "img/patron.webp", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 184, name: "Patron Blanco", price: 7.00, img: "img/patronblanco.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 185, name: "1800", price: 7.00, img: "img/1800.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 186, name: "Jose Cuervo", price: 5.00, img: "img/jose.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 177, name: "Grey Goose", description: "Premium French vodka with exceptional smoothness and clean taste, distilled from fine French wheat, luxurious.", price: 13.00, img: "img/Grey-Goose.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 178, name: "Absolute", description: "Swedish vodka with smooth, clean taste and crisp finish, perfect for cocktails or shots, classic choice.", price: 7.00, img: "img/absolutevodka.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 179, name: "Tito's", description: "American craft vodka with smooth, clean taste, distilled from corn, perfect for cocktails, popular choice.", price: 7.00, img: "img/titosvodka.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 180, name: "Smirnoff", description: "Russian vodka with smooth, clean taste and crisp finish, versatile and perfect for cocktails or shots.", price: 7.00, img: "img/smirnoff.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 181, name: "Don Julio Anejo", description: "Premium aged tequila with rich, complex flavors, smooth finish, and notes of oak and vanilla, luxurious.", price: 10.00, img: "img/donjulio.webp", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 182, name: "Don Julio Repesado", description: "Premium rested tequila with smooth, balanced flavors, aged in oak barrels, perfect for sipping or cocktails.", price: 10.00, img: "img/Don-Julio-Reposado.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 183, name: "Patron Anejo", description: "Premium aged tequila with rich, smooth flavors, aged in oak barrels, elegant and refined, perfect for sipping.", price: 10.00, img: "img/patron.webp", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 184, name: "Patron Blanco", description: "Premium silver tequila with clean, crisp agave flavors, smooth and perfect for cocktails or shots.", price: 7.00, img: "img/patronblanco.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 185, name: "1800", description: "Premium tequila with smooth, clean agave flavors, perfect for cocktails or shots, quality and affordable.", price: 7.00, img: "img/1800.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 186, name: "Jose Cuervo", description: "Classic tequila with smooth, authentic agave flavors, perfect for margaritas and cocktails, iconic and reliable.", price: 5.00, img: "img/jose.jpg", hasSpicyOption: false, category: "vodka", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
   
   
-  { id: 187, name: "Dirty Martini", price: 10.00, img: "img/martini.jpg", hasSpicyOption: false, category: "cocktails", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 188, name: "Sex on the Beach", price: 10.00, img: "img/sotb.jpg", hasSpicyOption: false, category: "cocktails", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 189, name: "Mojito's", price: 10.00, img: "img/mojito.webp", hasSpicyOption: false, category: "cocktails", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 190, name: "Bloody Marry", price: 10.00, img: "img/bloodmarry.jpg", hasSpicyOption: false, category: "cocktails", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 191, name: "Blue Hawaii", price: 10.00, img: "img/BlueHawaii.jpg", hasSpicyOption: false, category: "cocktails", ingredients:["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
-  { id: 192, name: "Long Island Ice Tea", price: 10.00, img: "img/longisland.webp", hasSpicyOption: false, category: "cocktails", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 187, name: "Dirty Martini", description: "Classic martini with olive brine, vodka or gin, and dry vermouth, savory, briny, and sophisticated, garnished with olives.", price: 10.00, img: "img/martini.jpg", hasSpicyOption: false, category: "cocktails", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 188, name: "Sex on the Beach", description: "Tropical cocktail with vodka, peach schnapps, cranberry, and orange juice, sweet, fruity, and refreshing.", price: 10.00, img: "img/sotb.jpg", hasSpicyOption: false, category: "cocktails", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 189, name: "Mojito's", description: "Refreshing cocktail with white rum, fresh mint, lime, sugar, and soda water, cool, minty, and invigorating.", price: 10.00, img: "img/mojito.webp", hasSpicyOption: false, category: "cocktails", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 190, name: "Bloody Marry", description: "Classic brunch cocktail with vodka, tomato juice, spices, and Worcestershire sauce, savory, spicy, and bold.", price: 10.00, img: "img/bloodmarry.jpg", hasSpicyOption: false, category: "cocktails", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 191, name: "Blue Hawaii", description: "Tropical cocktail with rum, blue curacao, pineapple juice, and coconut, sweet, fruity, and vibrant blue color.", price: 10.00, img: "img/BlueHawaii.jpg", hasSpicyOption: false, category: "cocktails", ingredients:["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
+  { id: 192, name: "Long Island Ice Tea", description: "Strong cocktail with vodka, rum, gin, tequila, triple sec, lemon, and cola, potent, sweet, and deceptively smooth.", price: 10.00, img: "img/longisland.webp", hasSpicyOption: false, category: "cocktails", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ], type: "bar"  },
   
 ].map(item => ({
   ...item,
@@ -367,13 +398,14 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
 
   return (
     <>
-      <div className="menu-card">
-        <div className="menu-image-container">
-          <img className="menu-image" src={item.img} alt={item.name} />
-          {item.hasSpicyOption && (
-            <div className="spicy-badge">
-              <i className="fas fa-pepper-hot"></i> 
-            </div>
+      <div className="chefs-special-card">
+        <div className="chefs-special-image-wrapper">
+          <img className="chefs-special-image" src={item.img} alt={item.name} />
+          {/* Veg/Non-Veg Badge */}
+          {(item.isVeg !== undefined) && (
+            <span className={item.isVeg ? 'chefs-special-veg-badge' : 'chefs-special-meat-badge'}>
+              <i className={`fas ${item.isVeg ? 'fa-leaf' : 'fa-drumstick-bite'}`}></i>
+            </span>
           )}
           {/* Ingredients Toggle Button */}
           {item.ingredients && item.ingredients.length > 0 && (
@@ -389,18 +421,22 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
             </button>
           )}
         </div>
-        <div className="menu-content">
-          <h5 className="menu-title">{item.name}</h5>
-          
+        <div className="chefs-special-card-content">
+          <h3 className="chefs-special-dish-title">{item.name}</h3>
+          {/* Description */}
+          {item.description && (
+            <p className="chefs-special-description">{item.description}</p>
+          )}
+          {/* Spice Level */}
           {item.hasSpicyOption && (
-            <div className="spicy-indicator-small">
-              <small className="text-muted">
-                <i className="fas fa-pepper-hot"></i> Adjustable spice level
-              </small>
+            <div className="chefs-special-spice">
+              <i className="fas fa-fire me-2"></i>
+              <span>Spice: {spicyLevels.map(level => level.name).join(', ')}</span>
             </div>
-          )}    
-          <div className="menu-details">
-            <span className="menu-price">
+          )}
+          <div className="chefs-special-separator"></div>
+          <div className="chefs-special-price-row menu-details">
+            <span className="chefs-special-price">
               <PriceDisplay   
                 item={item} 
                 onPriceSelect={setSelectedPrice}
@@ -412,10 +448,10 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
                 className="add-to-cart-btn"
                 onClick={() => {
                   if (item.hasSpicyOption) {
-                    setSelectedItem({...item, selectedPrice}); // UPDATED THIS LINE
+                    setSelectedItem({...item, selectedPrice});
                     setShowSpicyModal(true);
                   } else {
-                    addToCart(item, null, selectedPrice); // UPDATED THIS LINE
+                    addToCart(item, null, selectedPrice);
                   }
                 }}
               >
@@ -455,7 +491,7 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
                       setSelectedItem({...item, selectedPrice});
                       setShowSpicyModal(true);
                     } else {
-                      addToCart(item, null, selectedPrice); // UPDATED THIS LINE
+                      addToCart(item, null, selectedPrice);
                     }
                   }}
                 >
@@ -474,14 +510,9 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
             className={`ingredients-responsive-modal ${isMobile ? 'mobile' : 'desktop'}`}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header */}
+            {/* Header – close button only (fixed) */}
             <div className="modal-headerr p-0">
               <div className="header-content">
-                <div className="dish-info">
-                  <img src={item.img} alt={item.name} className="dish-thumbnail" />
-                 
-                </div>
-                 
                 <button 
                   className="close-modal-btn" style={{top: '5px', right: '5px', position: 'absolute'}}
                   onClick={() => setShowIngredients(false)}
@@ -491,8 +522,11 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
               </div>
             </div>
 
-            {/* Content */}
+            {/* Content – image and body scroll together */}
             <div className="modal-contentt">
+              <div className="ingredients-modal-dish-image-wrap">
+                <img src={item.img} alt={item.name} className="dish-thumbnail" />
+              </div>
               <div className="ingredients-section">
                 <div className="dish-details mb-3">
                     <h3 style={{color:'#000'}}>{item.name}</h3>
@@ -1245,9 +1279,37 @@ const filteredItems = useMemo(() => {
 
 // Spicy Level Modal Component
 const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
-  const [selectedSpicyLevel, setSelectedSpicyLevel] = useState(spicyLevels[2]); // Default to Medium
+  const [selectedSpicyLevel, setSelectedSpicyLevel] = useState(spicyLevels[0]); // Default to Mild
+  const [selectedExtras, setSelectedExtras] = useState([]);
+  const [removedIngredients, setRemovedIngredients] = useState([]);
+  
+  // Reset state when modal opens/closes
+  useEffect(() => {
+    if (show) {
+      setSelectedSpicyLevel(spicyLevels[0]);
+      setSelectedExtras([]);
+      setRemovedIngredients([]);
+    }
+  }, [show]);
 
-  const [hoveredLevel, setHoveredLevel] = useState(null);
+  const availableExtras = ['Extra Cheese', 'Extra Spices', 'Extra Onions', 'Extra Tomatoes'];
+  const availableIngredients = item?.ingredients || ['Chicken', 'Yogurt', 'Garlic', 'Ginger', 'Spices'];
+
+  const toggleExtra = (extra) => {
+    setSelectedExtras(prev => 
+      prev.includes(extra) 
+        ? prev.filter(e => e !== extra)
+        : [...prev, extra]
+    );
+  };
+
+  const toggleIngredient = (ingredient) => {
+    setRemovedIngredients(prev => 
+      prev.includes(ingredient) 
+        ? prev.filter(i => i !== ingredient)
+        : [...prev, ingredient]
+    );
+  };
 
    // Prevent background scroll when modal is open
   useEffect(() => {
@@ -1265,7 +1327,11 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
   if (!show) return null;
 
   const handleConfirm = () => {
-    onConfirm(selectedSpicyLevel);
+    onConfirm({
+      spicyLevel: selectedSpicyLevel,
+      extras: selectedExtras,
+      removedIngredients: removedIngredients
+    });
     onClose();
   };
     const handleOverlayClick = (e) => {
@@ -1274,220 +1340,160 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
     }
   };
 
-   const handleModalScroll = (e) => {
-    // Prevent the overlay from scrolling
-    e.stopPropagation();
-  };
-
-
   const getSpicyLevelColor = (level) => {
     const colors = [
-      '#4CAF50', // Mild - Green
-      '#8BC34A', // Mild Plus - Light Green
-      '#FFC107', // Medium - Yellow
+      '#4CAF50', // Mild - Dark Green
+      '#66BB6A', // Mild Plus - Light Green
+      '#FFC107', // Medium - Yellow/Orange
       '#FF9800', // Medium Plus - Orange
       '#F44336', // Hot - Red
-      '#D32F2F'  // Extra Hot - Dark Red
+      '#B71C1C'  // Extra Hot - Dark Red (faded when disabled)
     ];
     return colors[level - 1] || '#FFC107';
   };
 
    const getSpicyIcon = (level) => {
-    const icons = [
-      '🌱', // Mild
-      '🌿', // Mild Plus
-      '🌶️', // Medium
-      '🌶️', // Medium Plus
-      '🌶️', // Hot
-      '🔥'  // Extra Hot
-    ];
-    return icons[level - 1] || '🌶️';
+    const levelData = spicyLevels.find(l => l.id === level);
+    const chiliCount = levelData?.chiliCount || 1;
+    const color = getSpicyLevelColor(level);
+    return (
+      <span className="chili-icons" style={{ color }}>
+        {[...Array(chiliCount)].map((_, i) => (
+          <i key={i} className="fas fa-pepper-hot"></i>
+        ))}
+      </span>
+    );
   };
 
-  const getSpicyDescription = (level) => {
-    const descriptions = [
-      'Very mild, perfect for beginners',
-      'Slight warmth, gentle spice',
-      'Balanced heat, noticeable but comfortable',
-      'Warm and flavorful, good kick',
-      'Spicy and bold, for heat lovers',
-      'Extremely hot, proceed with caution!'
-    ];
-    return descriptions[level - 1] || 'Balanced heat';
-  };
+
+  if (!item) return null;
+
+  const isVegetarian = item.type === 'vegetarian' || (item.type === 'food' && !item.name.toLowerCase().includes('chicken') && !item.name.toLowerCase().includes('meat') && !item.name.toLowerCase().includes('fish'));
 
   return (
-    <div className="spicy-modal-overlay enhanced" onClick={handleOverlayClick}>
+    <div className="customize-modal-overlay" onClick={handleOverlayClick}>
       <div 
-        className="spicy-modal-content enhanced" 
+        className="customize-modal-content" 
         onClick={(e) => e.stopPropagation()}
-        onScroll={handleModalScroll}
       >
-        {/* Animated Header */}
-        <div className="spicy-modal-header enhanced">
-        
-          <div className="header-content">
-            <h5>Customize Your Spice Level</h5>
-            {/* <p>How spicy would you like it?</p> */}
-          </div>
-          <button type="button" className="btn-close" onClick={onClose}></button>
+        {/* Header */}
+        <div className="customize-modal-header">
+          <h2 className="dish-name">{item.name}</h2>
+          <button type="button" className="btn-close-customize" onClick={onClose}>
+            <i className="fas fa-times"></i>
+          </button>
         </div>
         
         {/* Scrollable Content */}
-        <div className="spicy-modal-scrollable" onScroll={handleModalScroll}>
-          {/* Item Preview */}
-          <div className="spicy-modal-body enhanced">
-            <div className="item-preview enhanced">
-              <div className="item-image-container">
-                <img src={item.img} alt={item.name} className="item-preview-img" />
-                <div className="item-overlay"></div>
+        <div className="customize-modal-scrollable">
+          {/* Dish Image */}
+          <div className="dish-image-container">
+            <img src={item.img} alt={item.name} className="dish-image" />
               </div>
-              <div className="item-preview-info">
-                <h6>{item.name}</h6>
-                <p className="price">${item.price}</p>
-                <div className="spicy-preview">
-                  <span className="current-level" style={{ color: getSpicyLevelColor(selectedSpicyLevel.id) }}>
-                    {getSpicyIcon(selectedSpicyLevel.id)} {selectedSpicyLevel.name}
-                  </span>
+
+          {/* Dietary + Price */}
+          <div className="dietary-row">
+            <div className="dietary-tag">
+              <i className={`fas ${isVegetarian ? 'fa-leaf' : 'fa-drumstick-bite'}`}></i>
+              <span>{isVegetarian ? 'Vegetarian' : 'Non-Vegetarian'}</span>
                 </div>
-              </div>
+            <div className="dish-price">${item.price}</div>
             </div>
             
-            {/* Enhanced Spicy Level Selector */}
-            <div className="spicy-levels enhanced">
-              {/* <div className="level-indicator">
-                <div className="level-scale">
-                  {spicyLevels.map(level => (
-                    <div 
-                      key={level.id}
-                      className={`scale-mark ${selectedSpicyLevel.id >= level.id ? 'active' : ''}`}
-                      style={{ 
-                        backgroundColor: selectedSpicyLevel.id >= level.id ? getSpicyLevelColor(level.id) : '#e9ecef'
-                      }}
-                    ></div>
-                  ))}
+          {/* Dish Description */}
+          {item.description && (
+            <div className="dish-description">
+              {item.description}
                 </div>
-                
-                <div className="level-labels">
-                  {spicyLevels.map(level => (
-                    <span 
-                      key={level.id}
-                      className={`level-label ${selectedSpicyLevel.id === level.id ? 'active' : ''}`}
-                      style={{ color: getSpicyLevelColor(level.id) }}
-                    >
-                      {level.name}
-                    </span>
-                  ))}
-                </div>
-              </div> */}
+          )}
 
-              {/* Interactive Spicy Options */}
-              <div className="spicy-options enhanced">
+          {/* Customize Spice Level Section */}
+          <div className="customize-section customize-section-spice-level">
+            <div className="section-header">
+              <h3>Customize Spice Level</h3>
+              <span className="required-badge">Required</span>
+                </div>
+            <p className="section-instruction">
+              Choose your preferred spice intensity. You can customize this for any dish.
+            </p>
+
+            <div className="spice-options-horizontal">
                 {spicyLevels.map(level => (
-                  <div 
+                <button
                     key={level.id}
-                    className={`spicy-option enhanced ${selectedSpicyLevel.id === level.id ? 'selected' : ''} ${hoveredLevel === level.id ? 'hovered' : ''}`}
-                    onClick={() => setSelectedSpicyLevel(level)}
-                    onMouseEnter={() => setHoveredLevel(level.id)}
-                    onMouseLeave={() => setHoveredLevel(null)}
+                  className={`spice-option-btn level-${level.id} ${selectedSpicyLevel.id === level.id ? 'selected' : ''} ${level.id === 6 ? 'disabled' : ''}`}
+                  onClick={() => level.id !== 6 && setSelectedSpicyLevel(level)}
+                  disabled={level.id === 6}
                     style={{
-                      borderColor: selectedSpicyLevel.id === level.id ? getSpicyLevelColor(level.id) : '#e9ecef',
-                      background: selectedSpicyLevel.id === level.id ? 
-                        `linear-gradient(135deg, ${getSpicyLevelColor(level.id)}15, ${getSpicyLevelColor(level.id)}08)` : 
-                        'white'
-                    }}
-                  >
-                    <div className="option-header">
-                      <div className="spicy-icon" style={{ color: getSpicyLevelColor(level.id) }}>
-                        {getSpicyIcon(level.id)}
+                    backgroundColor: selectedSpicyLevel.id === level.id ? getSpicyLevelColor(level.id) : 'rgba(255,255,255,0.05)',
+                    borderColor: selectedSpicyLevel.id === level.id ? getSpicyLevelColor(level.id) : '#444',
+                    color: selectedSpicyLevel.id === level.id ? '#fff' : (level.id === 6 ? '#666' : getSpicyLevelColor(level.id)),
+                    opacity: level.id === 6 ? 0.35 : 1
+                  }}
+                >
+                  <span className="spice-icon">{getSpicyIcon(level.id)}</span>
+                  <span className="spice-name">{level.name}</span>
+                </button>
+              ))}
                       </div>
-                      <div className="option-info">
-                        <span className="option-name" style={{ color: getSpicyLevelColor(level.id) }}>
-                          {level.name}
-                        </span>
-                        <span className="option-description">
-                          {getSpicyDescription(level.id)}
-                        </span>
+            
+            <div className="spice-notes">
+              <p>Note: Some spice levels may not be available for this dish.</p>
+              <p>Select your preferred spice level. This customization is available for all dishes.</p>
                       </div>
                     </div>
                     
-                    <div className="spicy-visual">
-                      <div className="pepper-container">
-                        {[...Array(6)].map((_, index) => (
-                          <div 
-                            key={index}
-                            className={`pepper ${index < level.level ? 'active' : ''}`}
-                            style={{
-                              backgroundColor: index < level.level ? getSpicyLevelColor(level.id) : '#e9ecef',
-                              transform: `scale(${index < level.level ? 1 : 0.8})`
-                            }}
-                          >
-                            {index < level.level && <div className="pepper-detail"></div>}
-                          </div>
+          {/* Customize Your Dish Section */}
+          <div className="customize-section">
+            <h3 style={{color: 'rgb(245 245 245/var(--tw-text-opacity,1))', fontFamily: '"Playfair Display","Playfair Display Fallback", serif', fontSize: '1.125rem',lineHeight: '1.75rem'}}>Customize Your Dish</h3>
+            
+            {/* Add Extras */}
+            <div className="customize-subsection">
+              <h4>Add Extras</h4>
+              <div className="customize-options">
+                {availableExtras.map(extra => (
+                  <button
+                    key={extra}
+                    className={`customize-option-btn ${selectedExtras.includes(extra) ? 'selected' : ''}`}
+                    onClick={() => toggleExtra(extra)}
+                  >
+                    {extra}
+                  </button>
                         ))}
                       </div>
                     </div>
                     
-                    <div className="selection-indicator">
-                      <div 
-                        className="indicator-dot"
-                        style={{ 
-                          backgroundColor: selectedSpicyLevel.id === level.id ? getSpicyLevelColor(level.id) : 'transparent',
-                          borderColor: getSpicyLevelColor(level.id)
-                        }}
-                      >
-                        {selectedSpicyLevel.id === level.id && <div className="indicator-inner"></div>}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Spicy Meter */}
-              <div className="spicy-meter">
-                <div className="meter-labels">
-                  <span>Mild</span>
-                  <span>Hot</span>
-                </div>
-                <div className="meter-track">
-                  <div 
-                    className="meter-fill"
-                    style={{
-                      width: `${(selectedSpicyLevel.id / spicyLevels.length) * 100}%`,
-                      background: `linear-gradient(90deg, ${getSpicyLevelColor(1)}, ${getSpicyLevelColor(selectedSpicyLevel.id)})`
-                    }}
-                  ></div>
-                  <div 
-                    className="meter-thumb"
-                    style={{
-                      left: `${((selectedSpicyLevel.id - 0.5) / spicyLevels.length) * 100}%`,
-                      backgroundColor: getSpicyLevelColor(selectedSpicyLevel.id)
-                    }}
+            {/* Remove Ingredients */}
+            <div className="customize-subsection">
+              <h4>Remove Ingredients</h4>
+              <div className="customize-options">
+                {availableIngredients.map(ingredient => (
+                  <button
+                    key={ingredient}
+                    className={`customize-option-btn ${removedIngredients.includes(ingredient) ? 'selected' : ''}`}
+                    onClick={() => toggleIngredient(ingredient)}
                   >
-                    <span className="thumb-label">{selectedSpicyLevel.name}</span>
-                  </div>
-                </div>
+                    {ingredient}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
         </div>
         
-        {/* Fixed Action Buttons */}
-        <div className="spicy-modal-footer enhanced">
-          <button className="btn btn-outline-secondary" onClick={onClose}>
-            <i className="fas fa-times me-2"></i>
-            Cancel
+        {/* Footer */}
+        <div className="customize-modal-footer">
+          <button 
+            className="btn-add-to-cart"
+            onClick={handleConfirm}
+          >
+            Add to Cart - ${item.price}
           </button>
           <button 
-            className="btn btn-primary spicy-confirm-btn"
-            onClick={handleConfirm}
-            style={{
-              background: `linear-gradient(135deg, ${getSpicyLevelColor(selectedSpicyLevel.id)}, ${getSpicyLevelColor(Math.max(1, selectedSpicyLevel.id - 1))})`,
-              borderColor: getSpicyLevelColor(selectedSpicyLevel.id)
-            }}
+            className="btn-close-modal"
+            onClick={onClose}
           >
-            <i className="fas fa-pepper-hot me-2"></i>
-            Add {selectedSpicyLevel.name} Spice
+            Close
           </button>
         </div>
       </div>
@@ -1498,6 +1504,7 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
 
 
 const LandingPage = () => {
+  const navigate = useNavigate();
   const [cart, setCart] = useState([]);
   const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -1521,8 +1528,34 @@ const [searchQuery, setSearchQuery] = useState('');
   const [showSpicyModal, setShowSpicyModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const [showAdminPanel, setShowAdminPanel] = useState(false);
-  const [menuItems, setMenuItems] = useState(defaultMenuItems);
+  // Load menuItems from localStorage or use default
+  const [menuItems, setMenuItems] = useState(() => {
+    const stored = localStorage.getItem('menuItems');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        return parsed.length > 0 ? parsed : defaultMenuItems;
+      } catch (e) {
+        return defaultMenuItems;
+      }
+    }
+    return defaultMenuItems;
+  });
+
+  // Sync menuItems to localStorage
+  useEffect(() => {
+    localStorage.setItem('menuItems', JSON.stringify(menuItems));
+  }, [menuItems]);
+  
+  // Booking modal state
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
+  const [numberOfGuests, setNumberOfGuests] = useState(2);
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [specialRequests, setSpecialRequests] = useState('');
 
 
   // Define your menu categories and items
@@ -1888,57 +1921,57 @@ const handleAddWithSpicyLevel = (item, selectedPrice = 'price') => {
 
   // testimonials starts
   // Testimonial carousel functionality
-useEffect(() => {
-  const testimonialSlides = document.querySelectorAll('.testimonial-slide');
-  const dots = document.querySelectorAll('.dot');
-  const prevBtn = document.querySelector('.prev-btn');
-  const nextBtn = document.querySelector('.next-btn');
-  let currentSlide = 0;
+// useEffect(() => {
+//   const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+//   const dots = document.querySelectorAll('.dot');
+//   const prevBtn = document.querySelector('.prev-btn');
+//   const nextBtn = document.querySelector('.next-btn');
+//   let currentSlide = 0;
 
-  function showSlide(index) {
-    // Hide all slides
-    testimonialSlides.forEach(slide => {
-      slide.classList.remove('active');
-    });
-    dots.forEach(dot => {
-      dot.classList.remove('active');
-    });
+//   function showSlide(index) {
+//     // Hide all slides
+//     testimonialSlides.forEach(slide => {
+//       slide.classList.remove('active');
+//     });
+//     dots.forEach(dot => {
+//       dot.classList.remove('active');
+//     });
     
-    // Show the selected slide
-    testimonialSlides[index].classList.add('active');
-    dots[index].classList.add('active');
-    currentSlide = index;
-  }
+//     // Show the selected slide
+//     testimonialSlides[index].classList.add('active');
+//     dots[index].classList.add('active');
+//     currentSlide = index;
+//   }
 
-  // Next slide function
-  function nextSlide() {
-    let nextIndex = (currentSlide + 1) % testimonialSlides.length;
-    showSlide(nextIndex);
-  }
+//   // Next slide function
+//   function nextSlide() {
+//     let nextIndex = (currentSlide + 1) % testimonialSlides.length;
+//     showSlide(nextIndex);
+//   }
 
-  // Previous slide function
-  function prevSlide() {
-    let prevIndex = (currentSlide - 1 + testimonialSlides.length) % testimonialSlides.length;
-    showSlide(prevIndex);
-  }
+//   // Previous slide function
+//   function prevSlide() {
+//     let prevIndex = (currentSlide - 1 + testimonialSlides.length) % testimonialSlides.length;
+//     showSlide(prevIndex);
+//   }
 
-  // Add event listeners
-  if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-  if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+//   // Add event listeners
+//   if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+//   if (prevBtn) prevBtn.addEventListener('click', prevSlide);
   
-  // Add click events to dots
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      showSlide(index);
-    });
-  });
+//   // Add click events to dots
+//   dots.forEach((dot, index) => {
+//     dot.addEventListener('click', () => {
+//       showSlide(index);
+//     });
+//   });
 
-  // Auto slide every 5 seconds
-  const autoSlide = setInterval(nextSlide, 5000);
+//   // Auto slide every 5 seconds
+//   const autoSlide = setInterval(nextSlide, 5000);
 
-  // Clean up interval on component unmount
-  return () => clearInterval(autoSlide);
-}, []);
+//   // Clean up interval on component unmount
+//   return () => clearInterval(autoSlide);
+// }, []);
 
 // testimonials ends
 
@@ -2139,6 +2172,7 @@ const [checkoutStep, setCheckoutStep] = useState(1);
 const [userLoggedIn, setUserLoggedIn] = useState(false);
 const [noContactDelivery, setNoContactDelivery] = useState(true);
 const [paymentMethod, setPaymentMethod] = useState('upi');
+const [showSignupForm, setShowSignupForm] = useState(false);
 
 
 // Function to reset checkout state
@@ -2147,6 +2181,7 @@ const resetCheckoutState = () => {
   setUserLoggedIn(false);
   setNoContactDelivery(true);
   setPaymentMethod('upi');
+  setShowSignupForm(false);
 };
 
 
@@ -2410,16 +2445,6 @@ const getSpicyLevelColor = (level) => {
   };
 
 
-   // Add this to your navbar for admin access
-  const adminButton = (
-    <button
-      className="btn btn-outline-primary py-2 px-3"
-      onClick={() => setShowAdminPanel(true)}
-      style={{ marginRight: "10px", borderRadius: "20px" }}
-    >
-      <i className="fas fa-cog me-1"></i> Admin
-    </button>
-  );
 
 
   const [showReservationForm, setShowReservationForm] = useState(false);
@@ -2454,46 +2479,17 @@ const handleReservationSubmit = (e) => {
   });
 };
 
+// Text reveal animations
 useEffect(() => {
   gsap.registerPlugin(ScrollTrigger);
 
-  const sections = gsap.utils.toArray(".panel");
-
-  // Create pinned scroll transitions between each section
-  sections.forEach((section, i) => {
-    ScrollTrigger.create({
-      trigger: section,
-      start: "top top",
-      end: "bottom top",
-      pin: true,
-      pinSpacing: false,
-      scrub: 1,
-    });
-  });
-
-  // Cleanup function
-  return () => {
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-  };
-}, []);
-
-
-// Enhanced Scroll Effects (Compatible with existing parallax)
-useEffect(() => {
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Text reveal animations that don't interfere with parallax
+  // Text reveal animations
   gsap.utils.toArray('.panel').forEach((section, index) => {
-    // Only animate elements that aren't part of parallax
-    const nonParallaxElements = section.querySelectorAll(
-      'h1:not(.parallax-layer):not(.parallax-mouse), ' +
-      'h2:not(.parallax-layer):not(.parallax-mouse), ' +
-      'p:not(.parallax-layer):not(.parallax-mouse), ' +
-      '.menu-card:not(.parallax-layer), ' +
-      '.team-item:not(.parallax-layer)'
+    const elements = section.querySelectorAll(
+      'h1, h2, p, .menu-card, .team-item'
     );
 
-    gsap.fromTo(nonParallaxElements,
+    gsap.fromTo(elements,
       {
         y: 50,
         opacity: 0
@@ -2509,13 +2505,13 @@ useEffect(() => {
           start: "top 80%",
           end: "bottom 20%",
           toggleActions: "play none none reverse",
-          markers: false // Remove in production
+          markers: false
         }
       }
     );
   });
 
-  // Enhanced counter animations
+  // Counter animations
   gsap.utils.toArray('[data-toggle="counter-up"]').forEach(counter => {
     const target = +counter.innerText;
     
@@ -2536,6 +2532,10 @@ useEffect(() => {
     });
   });
 
+  // Cleanup function
+  return () => {
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  };
 }, []);
 
 
@@ -2544,175 +2544,286 @@ useEffect(() => {
     <>
       <div className="container-xxl bg-white p-0">
         {/* Parallax Hero Section */}
-        <div className="container-xxl position-relative p-0 landing-container panel">
-          <nav className="navbar position-fixed navbar-expand-lg navbar-dark px-4 py-3 nav-mobile nav-position">
-            <div className="container-fluid glass-card nav-items py-lg-2">
-              <Link to="/" className="navbar-brand p-0">
-                <h1 className="text-primary m-0" style={{ fontSize: "28px" }}>
-                  <i className="fa fa-utensils me-3"></i>SangEat
-                </h1>
-              </Link>
-              <button
-                className="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse"
-              >
-                <span className="fa fa-bars"></span>
-              </button>
-              <div className="collapse navbar-collapse" id="navbarCollapse">
-                <div className="navbar-nav ms-auto py-0">
-                  <button
-                    type="button"
-                    className="nav-item nav-link btn btn-link p-0 text-primary mobile-margin"
-                    onClick={() => scrollToSection("home")}
-                  >
-                    Home
-                  </button>
-                  <button
-                    type="button"
-                    className="nav-item nav-link btn btn-link p-0 text-primary mobile-margin"
-                    onClick={() => scrollToSection("about")}
-                  >
-                    About
-                  </button>
-                  <button
-                    type="button"
-                    className="nav-item nav-link btn btn-link p-0 text-primarymobile-margin"
-                    onClick={() => scrollToSection("order")}
-                  >
-                    Menu
-                  </button>
-                  <button
-                    type="button"
-                    className="nav-item nav-link btn btn-link p-0 text-primary mobile-margin"
-                    onClick={() => scrollToSection("contact")}
-                  >
-                    Contact
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary py-2 px-4 mr-2 mobile-margin" style={{ marginRight: "10px", borderRadius: "20px" }}
-                     onClick={() => scrollToSection("bookTable")}
-                  >
-                    Book A Table
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary py-2 px-4 mr-2" style={{ marginRight: "10px", borderRadius: "20px"  }} onClick={() => scrollToSection("order")}
-                  >
-                    Order Now
-                  </button>
-                  <button
-                    className="btn py-2 px-2"
-                    data-bs-toggle="offcanvas"
-                    data-bs-target="#cartSidebar"
-                  >
-                    🛒{" "} <span className="badge bg-light text-dark">{cart.length}</span>
-                  </button>
-                  {adminButton}
-                </div>
-              </div>
-            </div>
-          </nav>
+        <div className="position-relative p-0 landing-container panel" style={{ width: '100%', maxWidth: '100%' }}>
+          {/* Header Component */}
+          <Header 
+            cart={cart} 
+            showAdminButton={true}
+            onBookTable={() => setShowBookingModal(true)}
+            scrollToSection={scrollToSection}
+          />
 
-          {/* Enhanced Parallax Hero */}
-          <div className="parallax-hero-modern" id="home">
-            {/* Background layers with different parallax speeds */}
-            <div 
-              className="parallax-layer parallax-back-modern" 
-              data-speed="0.1"
-            ></div>
-            <div 
-              className="parallax-layer parallax-base-modern" 
-              data-speed="0.3"
-            ></div>
-            <div 
-              className="parallax-layer parallax-front-modern" 
-              data-speed="0.5"
-            ></div>
-            
-            {/* Floating particles */}
-            <div className="floating-particles">
-              {[...Array(15)].map((_, i) => (
-                <div 
-                  key={i}
-                  className="particle"
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    animationDelay: `${Math.random() * 5}s`,
-                    animationDuration: `${3 + Math.random() * 4}s`
-                  }}
-                ></div>
-              ))}
+          {/* Hero Section - Image Style */}
+          <div className="hero-section-image-exact" id="home">
+            <div className="hero-background-layers">
+              <img 
+                alt="Authentic Indian Food" 
+                className="hero-bg-image" 
+                src="https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop" 
+              />
+              <div className="hero-gradient-overlay-1"></div>
+              <div className="hero-gradient-overlay-2"></div>
+              <div className="hero-gradient-overlay-3"></div>
             </div>
-
-            <div className="hero-content-modern">
-              <div className="container my-5 py-5">
-                <div className="row align-items-center g-5" style={{ paddingTop: "200px" }}>
-                  <div className="col-lg-6 text-center text-lg-start">
-                    <div className="hero-text-modern">
-                      <h1 className="display-3 text-white animated slideInLeft hero-title-modern">
-                        Enjoy Our
-                        <br />
-                        <span className="text-primary">Delicious Meal</span>
-                      </h1>
-                      <p className="text-white animated slideInLeft mb-4 pb-2 hero-subtitle">
-                        Don't wait on hunger! Choose from our wide range of fast
-                        food, desi specials, and healthy bites – delivered piping
-                        hot in minutes.
-                      </p>
-                      <div className="hero-buttons">
-                        <button
-                          className="btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft hero-btn-modern" onClick={() => scrollToSection("bookTable")}
-                        >
-                          Book A Table
-                        </button>
-                        <button
-                          className="btn btn-outline-light py-sm-3 px-sm-5 animated slideInLeft hero-btn-modern" onClick={() => scrollToSection("order")}
-                        >
-                          View Menu
-                        </button>
+            <div className="container-fluid p-0">
+              <div className="row g-0 align-items-center min-vh-100">
+                <div className="col-lg-6 col-md-12">
+                  <div className="hero-content-exact">
+                    <h1 className="hero-title-exact">
+                      Authentic Indian Food in Champaign
+                    </h1>
+                    <p className="hero-description-exact">
+                      Savor the rich flavors of India with our freshly prepared dishes. Dine in, takeout, or delivery.
+                    </p>
+                    <div className="hero-buttons-exact">
+                      <button
+                        className="btn btn-order-online-exact"
+                        onClick={() => scrollToSection("order")}
+                      >
+                        <i className="fas fa-shopping-cart me-2"></i>
+                        Order Online
+                      </button>
+                      <button
+                        className="btn btn-get-directions-exact"
+                        onClick={() => navigate('/booking')}
+                      >
+                        <i className="fas fa-utensils me-2"></i>
+                        Book a Table
+                      </button>
+                    </div>
+                    <div className="hero-stats-exact">
+                      <div className="hero-stats-top-line"></div>
+                      <div className="hero-stats-content-wrapper">
+                        <div className="stat-item-exact">
+                          <div className="stat-icon-wrapper">
+                            <i className="fas fa-star stat-star-icon"></i>
+                            <div className="stat-value-exact">4.7</div>
                       </div>
+                          <div className="stat-label-exact">Top Rated</div>
+                      </div>
+                        <div className="stat-divider-vertical"></div>
+                        <div className="stat-item-exact">
+                          <div className="stat-value-exact">15-25 min</div>
+                          <div className="stat-label-exact">Pickup Time</div>
+                      </div>
+                        <div className="stat-divider-vertical"></div>
+                        <div className="stat-item-exact">
+                          <div className="stat-value-exact">100%</div>
+                          <div className="stat-label-exact">Fresh Ingredients</div>
                     </div>
                   </div>
-                  <div className="col-lg-6 text-center text-lg-end overflow-hidden">
-                    <div className="hero-image-container parallax-mouse" data-depth="15">
-                      <img
-                        className="img-fluid floating hero-image-modern"
-                        src="img/hero.png"
-                        alt="Delicious Food"
-                      />
-                      <div className="floating-elements">
-                        <div className="floating-element element-1" data-speed="0.8">
-                          <i className="fas fa-utensils"></i>
-                        </div>
-                        <div className="floating-element element-2" data-speed="1.2">
-                          <i className="fas fa-pepper-hot"></i>
-                        </div>
-                        <div className="floating-element element-3" data-speed="0.6">
-                          <i className="fas fa-leaf"></i>
-                        </div>
-                      </div>
-                    </div>
+                      <div className="hero-stats-bottom-line"></div>
+                </div>
+                    {/* <div 
+                      className="scroll-indicator-exact"
+                      onClick={() => {
+                        const aboutSection = document.getElementById('about');
+                        if (aboutSection) {
+                          aboutSection.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}
+                    >
+                      <i className="fas fa-chevron-down"></i>
+                    </div> */}
                   </div>
                 </div>
               </div>
             </div>
-            
-            {/* Scroll indicator */}
-            {/* <div className="scroll-indicator-modern">
-              <div className="scroll-arrow"></div>
-            </div> */}
+          </div>
+       
+
+        </div>
+
+        {/* Chef's Special Section */}
+        <div className="chefs-special-section">
+          <div className="container-fluid py-5">
+            <div className="text-center mb-5">
+              <h2 className="chefs-special-title"> Chef's Special </h2>
+              <p className="chefs-special-subtitle">
+                Our most beloved dishes, handpicked by our master chef
+              </p>
+            </div>
+            <div className="row g-4">
+              {defaultMenuItems.slice(0, 3).map((item) => {
+                const isVeg = ['vegetarian', 'paneer'].includes(item.category);
+                const handleCardClick = () => {
+                  if (item.hasSpicyOption) {
+                    setSelectedItem({ ...item, selectedPrice: 'price' });
+                    setShowSpicyModal(true);
+                  } else {
+                    addToCart(item, null, 'price');
+                  }
+                };
+                return (
+                  <div key={item.id} className="col-lg-4 col-md-6">
+                    <div
+                      className="chefs-special-card"
+                      role="button"
+                      tabIndex={0}
+                      onClick={handleCardClick}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleCardClick(); }}
+                    >
+                      <div className="chefs-special-image-wrapper">
+                        <img
+                          src={item.img}
+                          alt={item.name}
+                          className="chefs-special-image"
+                        />
+                        <span className={isVeg ? 'chefs-special-veg-badge' : 'chefs-special-meat-badge'}>
+                          <i className={isVeg ? 'fas fa-leaf' : 'fas fa-drumstick-bite'}></i>
+                        </span>
+                      </div>
+                      <div className="chefs-special-card-content">
+                        <h3 className="chefs-special-dish-title">{item.name}</h3>
+                        <p className="chefs-special-description">
+                          {item.description || 'No description available'}
+                        </p>
+                        <div className="chefs-special-spice">
+                          <i className="fas fa-fire me-2"></i>
+                          <span>{item.hasSpicyOption ? 'Spice: Mild, Medium, Hot' : 'No spice option'}</span>
+                        </div>
+                        <div className="chefs-special-separator"></div>
+                        <div className="chefs-special-price">${Number(item.price).toFixed(2)}</div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 
+        {/* Special Offers Section */}
+        <div className="special-offers-section">
+          <div className="container-fluid py-5">
+            <div className="text-center mb-5">
+              <h2 className="special-offers-title">Special Offers</h2>
+              <p className="special-offers-subtitle">
+                Exclusive deals and promotions just for you
+              </p>
+            </div>
+            <div className="row g-4">
+              <div className="col-lg-4 col-md-6">
+                <div className="special-offer-card bg-gradient-to-br from-maroon to-maroon-dark ">
+                  <div className="special-offer-badge">20% OFF</div>
+                  <div className="special-offer-icon">
+                    <i className="fas fa-tag"></i>
+                  </div>
+                  <h3 className="special-offer-card-title">Weekend Special</h3>
+                  <p className="special-offer-card-description">
+                    20% off on all main course items
+                  </p>
+                  <div className="special-offer-validity">
+                    <i className="far fa-clock me-2"></i>
+                    <span>Valid every Friday & Saturday</span>
+                  </div>
+                  <button className="special-offer-button special-offer-button-light">
+                    View Menu
+                  </button>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6">
+                <div className="special-offer-card special-offer-card-golden to-gold-dark from-gold bg-gradient-to-br">
+                  <div className="special-offer-badge special-offer-badge-golden">15% OFF</div>
+                  <div className="special-offer-icon special-offer-icon-dark">
+                    <i className="fas fa-tag"></i>
+                  </div>
+                  <h3 className="special-offer-card-title special-offer-card-title-dark">Family Combo</h3>
+                  <p className="special-offer-card-description special-offer-card-description-dark">
+                    Special family meal for 4 people
+                  </p>
+                  <div className="special-offer-validity special-offer-validity-dark">
+                    <i className="far fa-clock me-2"></i>
+                    <span>Available all week</span>
+                  </div>
+                  <button className="special-offer-button special-offer-button-dark">
+                    View Menu
+                  </button>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6">
+                <div className="special-offer-card  bg-gradient-to-br from-maroon to-maroon-dark">
+                  <div className="special-offer-badge">10% OFF</div>
+                  <div className="special-offer-icon">
+                    <i className="fas fa-tag"></i>
+                  </div>
+                  <h3 className="special-offer-card-title">Lunch Special</h3>
+                  <p className="special-offer-card-description">
+                    Combo meals starting from $12.99
+                  </p>
+                  <div className="special-offer-validity">
+                    <i className="far fa-clock me-2"></i>
+                    <span>Monday to Friday, 11 AM - 3 PM</span>
+                  </div>
+                  <button className="special-offer-button special-offer-button-light">
+                    View Menu
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        
+        {/* Why Choose Sang Eat Section */}
+        <div className="why-choose-section">
+          <div className="container py-5">
+            <div className="row">
+              <div className="col-12 text-center mb-5">
+                <h2 className="why-choose-title">Why Choose Sang Eat</h2>
+                <p className="why-choose-subtitle">Experience the perfect blend of tradition and innovation</p>
+              </div>
+            </div>
+            <div className="row g-4">
+              <div className="col-lg-4 col-md-6">
+                <div className="why-choose-card why-choose-card-authentic">
+                  <div className="why-choose-card-overlay"></div>
+                  <div className="why-choose-card-content">
+                    <div className="why-choose-icon-wrapper">
+                      <i className="fas fa-utensils why-choose-icon icon-red"></i>
+                    </div>
+                    <h3 className="why-choose-card-title">Authentic Flavors</h3>
+                    <p className="why-choose-card-description">
+                      Traditional recipes passed down through generations, prepared with the finest ingredients and authentic spices.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6">
+                <div className="why-choose-card why-choose-card-premium">
+                  <div className="why-choose-card-overlay"></div>
+                  <div className="why-choose-card-content">
+                    <div className="why-choose-icon-wrapper">
+                      <div className="why-choose-icon-circle">
+                        <i className="fas fa-award why-choose-icon icon-gold"></i>
+                      </div>
+                    </div>
+                    <h3 className="why-choose-card-title">Premium Experience</h3>
+                    <p className="why-choose-card-description">
+                      Elegant ambiance with royal touches, ensuring every visit is a memorable dining experience.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-4 col-md-6">
+                <div className="why-choose-card why-choose-card-fresh">
+                  <div className="why-choose-card-overlay"></div>
+                  <div className="why-choose-card-content">
+                    <div className="why-choose-icon-wrapper">
+                      <i className="fas fa-leaf why-choose-icon icon-red"></i>
+                    </div>
+                    <h3 className="why-choose-card-title">Fresh Daily</h3>
+                    <p className="why-choose-card-description">
+                      All dishes are prepared fresh daily using locally sourced ingredients and traditional cooking methods.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        {/* About Section with Parallax */}
-        <div className="container-xxl py-5 service-section panel"  id="about">
-          {/* <div className="parallax-about-bg"  data-depth="0.2"></div> */}
+        {/* About Section */}
+        {/* <div className="container-xxl py-5 service-section panel"  id="about">
           <div className="container position-relative">
             <div className="row g-5 align-items-center">
               <div className="col-lg-6">
@@ -2819,29 +2930,35 @@ useEffect(() => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
-<div className="container-fluid py-3 " id="order" style={{ backgroundColor: '#f8f9fa',height: '125vh  !important', position: 'relative' }}>
-  <div className="container-fluid" style={{ backgroundColor: '#f8f9fa' }}>
-            <div className="text-center">
-      <h5 className="section-title ff-secondary text-center text-primary fw-normal">
-         {menuType === 'food' ? 'Food Menu' : 'Bar Menu'}
-      </h5>
-      <h1 className="mb-4">Explore Our Culinary Categories</h1>
-      <p className="text-muted w-75 mx-auto d-none d-md-block">
-        Discover our delicious offerings across various categories. Select a category to view our specialties.
+<div className="container-fluid py-5 menu-section-redesign" id="order" style={{ position: 'relative' }}>
+  <div className="container">
+    {/* Header Section */}
+    <div className="text-center mb-5">
+      <h2 className="menu-section-title">Our Menu</h2>
+      <p className="menu-section-subtitle">
+        Discover our authentic Indian dishes, each prepared with care and traditional spices
       </p>
     </div>
 
-
-      {/* Menu Type Filter */}
-    <div className="row mb-4">
-      <div className="col-12">
-        <MenuTypeFilter
-          menuTypes={menuTypes}
-          activeType={menuType}
-          onTypeChange={handleMenuTypeChange}
-        />
+    {/* Modern Menu Type Filter */}
+    <div className="menu-type-filter-container mb-5">
+      <div className="menu-type-buttons">
+        <button
+          className={`menu-type-btn ${menuType === 'food' ? 'active' : ''}`}
+          onClick={() => handleMenuTypeChange('food')}
+        >
+          <i className="fas fa-utensils me-2"></i>
+          Food Menu
+        </button>
+        <button
+          className={`menu-type-btn ${menuType === 'bar' ? 'active' : ''}`}
+          onClick={() => handleMenuTypeChange('bar')}
+        >
+          <i className="fas fa-wine-glass me-2"></i>
+          Bar Menu
+        </button>
       </div>
     </div>
 
@@ -2870,83 +2987,34 @@ useEffect(() => {
       </div>
     </div>
 
-    <div className="menu-container panel">
-      {/* Mobile category tabs (horizontal scroll) */}
-      <div className="d-lg-none mobile-category-tabs">
-        <div className="category-scroll-container">
+    {/* Category Filter Buttons */}
+    <div className="menu-category-filters mb-4">
+      <div className="category-filter-buttons">
           {menuCategories1.map(category => (
-            <div
+          <button
               key={category.id}
-              className={`mobile-category-tab ${activeCategory === category.id ? 'active' : ''}`}
+            className={`category-filter-btn ${activeCategory === category.id ? 'active' : ''}`}
               onClick={() => {
                 setActiveCategory(category.id);
                 setCategoryImage(category.image);
               }}
             >
-              <div className="tab-icon">
-                <i className={category.icon}></i>
-              </div>
-              <span>{category.name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="menu-content-wrapper">
-        {/* Desktop category sidebar */}
-        <div className="category-sidebar d-none d-lg-block">
-          <div className="search-container mb-3">
-            <i className="fas fa-search"></i>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search menu items..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            {searchQuery && (
-              <button 
-                className="clear-search"
-                onClick={() => setSearchQuery('')}
-              >
-                <i className="fas fa-times"></i>
+            {category.name}
               </button>
-            )}
-          </div>
-          
-          <div className="category-list">
-            {menuCategories1.map(category => (
-              <MenuCategory
-                key={category.id}
-                category={category}
-                isActive={activeCategory === category.id}
-                onClick={() => {
-                  setActiveCategory(category.id);
-                  setCategoryImage(category.image);
-                }}
-              />
             ))}
           </div>
         </div>
         
-        {/* Menu items display */}
-        <div className="menu-items-display">
-          <div className="category-header">
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <h2>{menuCategories1.find(c => c.id === activeCategory)?.name}</h2>
-                <p className="text-muted category-description">
-                  {menuCategories1.find(c => c.id === activeCategory)?.description}
-                </p>
-              </div>
-              <div className="item-count">
-                {filteredItems.length} items
-              </div>
-            </div>
+    {/* Category Section Header */}
+    <div className="menu-category-section-header mb-4">
+      <h3 className="menu-category-title">
+        {menuCategories1.find(c => c.id === activeCategory)?.name}
+      </h3>
           </div>
 
+    {/* Menu Items Grid */}
           {filteredItems.length > 0 ? (
-            <div className="menu-items-grid">
+      <div className="menu-items-grid-redesign">
               {filteredItems.map(item => (
                 <MenuCard 
                   key={item.id} 
@@ -2961,10 +3029,10 @@ useEffect(() => {
               ))}
             </div>
           ) : (
-            <div className="no-items-found">
+      <div className="no-items-found-redesign">
               <i className="fas fa-search fa-3x mb-3"></i>
               <h4>No items found</h4>
-              <p className="text-muted">
+        <p>
                 {searchQuery 
                   ? `No items match "${searchQuery}" in this category` 
                   : 'No items available in this category'
@@ -2972,7 +3040,7 @@ useEffect(() => {
               </p>
               {searchQuery && (
                 <button 
-                  className="btn btn-primary"
+            className="btn-clear-search"
                   onClick={() => setSearchQuery('')}
                 >
                   Clear Search
@@ -2980,8 +3048,6 @@ useEffect(() => {
               )}
             </div>
           )}
-        </div>
-      </div>
     </div>
 
     {/* Floating View Cart Button */}
@@ -2992,24 +3058,44 @@ useEffect(() => {
           data-bs-toggle="offcanvas"
           data-bs-target="#cartSidebar"
         >
-          <span className="cart-icon"><i class="fas fa-shopping-cart"></i></span>
+        <span className="cart-icon"><i className="fas fa-shopping-cart"></i></span>
           <span className="cart-text">View Cart</span>
           <span className="cart-count-badge">{cart.length}</span>
         </button>
       </div>
     )}
-  </div>
 </div>
 
+{/* Gallery Section */}
+<div className="gallery-section">
+  <div className="container py-5">
+    <div className="text-center mb-5">
+      <h2 className="gallery-title">Our Gallery</h2>
+      <p className="gallery-subtitle">
+        A glimpse into our culinary artistry
+      </p>
+    </div>
+    <div className="gallery-grid">
+      {defaultMenuItems.slice(0, 6).map((item) => (
+        <div key={item.id} className="gallery-item">
+          <img src={item.img} alt={item.name} className="gallery-image" />
+          <div className="gallery-overlay">
+            <span className="gallery-item-name">{item.name}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
 
 {/* Add the Spicy Level Modal */}
       <SpicyLevelModal
         show={showSpicyModal}
         onClose={() => setShowSpicyModal(false)}
         item={selectedItem}
-        onConfirm={(spicyLevel) => {
+        onConfirm={(customization) => {
           if (selectedItem) {
-            addToCart(selectedItem, spicyLevel, selectedItem.selectedPrice); 
+            addToCart(selectedItem, customization?.spicyLevel || customization, selectedItem.selectedPrice); 
           }
         }}
       />
@@ -3113,7 +3199,7 @@ useEffect(() => {
                     <h5>Total:</h5>
                     <h5>${total}</h5>
                   </div>
-                  <button className="btn btn-primary w-100 mt-3"  data-bs-dismiss="offcanvas" onClick={() => {
+                  <button className="btn btn-primary cart-checkout-btn w-100 mt-3"  data-bs-dismiss="offcanvas" onClick={() => {
                       resetCheckoutState();
                       setShowCheckout(true);
                     }}>
@@ -3128,23 +3214,22 @@ useEffect(() => {
             className="modal fade show d-block checkout-modal"
             tabIndex="-1"
             role="dialog"
-            style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
           >
             <div
-              className="modal-dialog modal-xl modal-dialog-centered"
+              className="modal-dialog modal-dialog-centered checkout-modal-dialog"
               role="document"
-              style={{ maxWidth: "1100px" }}
+              style={{ maxWidth: "890px" }}
             >
               <div
-                className="modal-content"
+                className="modal-content checkout-modal-content"
                 style={{
-                  borderRadius: "15px",
+                  borderRadius: "12px",
                   overflow: "hidden",
                   maxHeight: "90vh",
                 }}
               >
                 {/* Header with Animated Timeline */}
-                <div className="modal-header position-relative border-0 pb-0 pt-4">
+                <div className="modal-header position-relative border-0 pb-3 pt-3 px-4">
                   <div className="w-100 timeline-border">
                     {/* Animated Timeline */}
                     <div className="animated-timeline mb-4">
@@ -3223,163 +3308,153 @@ useEffect(() => {
                 <div className="modal-body p-0" style={{ overflowY: "auto" }}>
                   <div className="row g-0">
                     {/* Left Column - Checkout Process */}
-                    <div
-                      className="col-md-7 p-3"
-                      style={{ borderRight: "1px solid #eee" }}
-                    >
+                    <div className="col-md-7 checkout-left-col">
                       {/* Step 1: Login/Signup */}
                       {/* Step 1: Login/Signup */}
                       {checkoutStep === 1 && (
                         <div className="checkout-step animate-fade-in">
-                          {/* <div className="text-center mb-5">
-      <div className="mb-4">
-        <div className="auth-icon-container mb-3">
-          <i className="fas fa-user-circle auth-main-icon"></i>
-        </div>
-        <h3 className="fw-bold text-gradient">Welcome to Sang Eats</h3>
-        <p className="text-muted">Sign in or create an account to continue with your order</p>
-      </div>
-    </div> */}
+                         
 
-                          <div className="row g-4">
-                            {/* Login Section */}
-                            <div className="col-lg-6">
-                              <div className="auth-card card h-100 border-0 shadow-sm hover-lift">
+                          <div className="row g-4 justify-content-center">
+                            <div className="col-lg-12">
+                              <div className="auth-card card h-100 border-0 hover-lift">
                                 <div className="card-body p-2 text-center">
-                                  <div className="auth-icon mb-4">
-                                    <i className="fas fa-sign-in-alt"></i>
-                                  </div>
-                                  <h5 className="card-title mb-3">
-                                    Existing Customer
-                                  </h5>
-                                  <p className="text-muted small mb-4">
-                                    Welcome back! Sign in to your account
-                                  </p>
+                                  {!showSignupForm ? (
+                                    <>
+                                      <div className="auth-icon mb-4">
+                                        <i className="fas fa-sign-in-alt"></i>
+                                      </div>
+                                      <h5 className="card-title mb-3">
+                                        Existing Customer
+                                      </h5>
+                                      <p className="text-muted small mb-4">
+                                        Welcome back! Sign in to your account
+                                      </p>
 
-                                  <div className="mb-4">
-                                    <div className="form-floating mb-3">
-                                      <input
-                                        type="number"
-                                        className="form-control"
-                                        id="mobileNumber"
-                                        placeholder="9876543210"
-                                      />
-                                      <label htmlFor="loginEmail">
-                                        Mobile Number
-                                      </label>
-                                    </div>
+                                      <div className="mb-4">
+                                        <div className="form-floating mb-3">
+                                          <input
+                                            type="number"
+                                            className="form-control"
+                                            id="mobileNumber"
+                                            placeholder="9876543210"
+                                          />
+                                          <label htmlFor="mobileNumber">
+                                            Mobile Number
+                                          </label>
+                                        </div>
 
-                                    <div className="form-check text-start mb-3">
-                                      <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        id="rememberMe"
-                                      />
-                                      <label
-                                        className="form-check-label small"
-                                        htmlFor="rememberMe"
+                                        <div className="form-check text-start mb-3">
+                                          <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            id="rememberMe"
+                                          />
+                                          <label
+                                            className="form-check-label small"
+                                            htmlFor="rememberMe"
+                                          >
+                                            Remember me
+                                          </label>
+                                        </div>
+                                      </div>
+
+                                      <button
+                                        className="btn btn-primary w-100 py-3 mb-3 fw-bold"
+                                        onClick={() => {
+                                          setUserLoggedIn(true);
+                                          setCheckoutStep(2);
+                                        }}
                                       >
-                                        Remember me
-                                      </label>
-                                    </div>
-                                  </div>
-
-                                  <button
-                                    className="btn btn-primary w-100 py-3 mb-3 fw-bold"
-                                    onClick={() => {
-                                      setUserLoggedIn(true);
-                                      setCheckoutStep(2);
-                                    }}
-                                  >
-                                    SIGN IN
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Signup Section */}
-                            <div className="col-lg-6">
-                              <div className="auth-card card h-100 border-0 shadow-sm hover-lift">
-                                <div className="card-body p-2 text-center">
-                                  <div className="auth-icon mb-4">
-                                    <i className="fas fa-user-plus"></i>
-                                  </div>
-                                  <h5 className="card-title mb-3">
-                                    New Customer
-                                  </h5>
-                                  <p className="text-muted small mb-4">
-                                    Create an account for faster checkout and
-                                    order tracking
-                                  </p>
-
-                                  <div className="mb-4">
-                                    <div className="form-floating mb-3">
-                                      <input
-                                        type="number"
-                                        className="form-control"
-                                        id="signUpMobileNummber"
-                                        placeholder="9876543210"
-                                      />
-                                      <label htmlFor="signupPassword">
-                                        Mobile Number
-                                      </label>
-                                    </div>
-                                    <div className="form-floating mb-3">
-                                      <input
-                                        type="text"
-                                        className="form-control"
-                                        id="signupName"
-                                        placeholder="Name"
-                                      />
-                                      <label htmlFor="signupName"> Name</label>
-                                    </div>
-                                    <div className="form-floating mb-3">
-                                      <input
-                                        type="email"
-                                        className="form-control"
-                                        id="signupEmail"
-                                        placeholder="name@example.com"
-                                      />
-                                      <label htmlFor="signupEmail">Email address</label>
-                                    </div>
-                                  </div>
-
-                                  <div className="form-check text-start mb-4">
-                                    <input
-                                      className="form-check-input"
-                                      type="checkbox"
-                                      id="termsAgree"
-                                    />
-                                    <label
-                                      className="form-check-label small"
-                                      htmlFor="termsAgree"
-                                    >
-                                      I agree to the{" "}
-                                      <a
-                                        href="#terms"
-                                        className="text-decoration-none"
+                                        SIGN IN
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="btn btn-link auth-form-switch text-decoration-none p-0 mb-0"
+                                        onClick={() => setShowSignupForm(true)}
                                       >
-                                        Terms of Service
-                                      </a>{" "}
-                                      and{" "}
-                                      <a
-                                        href="#privacy"
-                                        className="text-decoration-none"
-                                      >
-                                        Privacy Policy
-                                      </a>
-                                    </label>
-                                  </div>
+                                        New customer? Create account
+                                      </button>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <div className="auth-icon mb-4">
+                                        <i className="fas fa-user-plus"></i>
+                                      </div>
+                                      <h5 className="card-title mb-3">
+                                        New Customer
+                                      </h5>
+                                      <p className="text-muted small mb-4">
+                                        Create an account for faster checkout and order tracking
+                                      </p>
 
-                                  <button
-                                    className="btn btn-success w-100 py-3 fw-bold"
-                                    onClick={() => {
-                                      setUserLoggedIn(true);
-                                      setCheckoutStep(2);
-                                    }}
-                                  >
-                                    CREATE ACCOUNT
-                                  </button>
+                                      <div className="mb-4">
+                                        <div className="form-floating mb-3">
+                                          <input
+                                            type="number"
+                                            className="form-control"
+                                            id="signUpMobileNummber"
+                                            placeholder="9876543210"
+                                          />
+                                          <label htmlFor="signUpMobileNummber">
+                                            Mobile Number
+                                          </label>
+                                        </div>
+                                        <div className="form-floating mb-3">
+                                          <input
+                                            type="text"
+                                            className="form-control"
+                                            id="signupName"
+                                            placeholder="Name"
+                                          />
+                                          <label htmlFor="signupName">Name</label>
+                                        </div>
+                                        <div className="form-floating mb-3">
+                                          <input
+                                            type="email"
+                                            className="form-control"
+                                            id="signupEmail"
+                                            placeholder="name@example.com"
+                                          />
+                                          <label htmlFor="signupEmail">Email address</label>
+                                        </div>
+                                      </div>
+
+                                      <div className="form-check text-start mb-4">
+                                        <input
+                                          className="form-check-input"
+                                          type="checkbox"
+                                          id="termsAgree"
+                                        />
+                                        <label
+                                          className="form-check-label small"
+                                          htmlFor="termsAgree"
+                                        >
+                                          I agree to the{" "}
+                                          <a href="#terms" className="text-decoration-none">Terms of Service</a>{" "}
+                                          and{" "}
+                                          <a href="#privacy" className="text-decoration-none">Privacy Policy</a>
+                                        </label>
+                                      </div>
+
+                                      <button
+                                        className="btn btn-success w-100 py-3 mb-3 fw-bold"
+                                        onClick={() => {
+                                          setUserLoggedIn(true);
+                                          setCheckoutStep(2);
+                                        }}
+                                      >
+                                        CREATE ACCOUNT
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="btn btn-link auth-form-switch text-decoration-none p-0 mb-0"
+                                        onClick={() => setShowSignupForm(false)}
+                                      >
+                                        Already have an account? Sign in
+                                      </button>
+                                    </>
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -3773,7 +3848,7 @@ useEffect(() => {
                     </div>
 
                     {/* Right Column - Order Summary */}
-                    <div className="col-md-5 p-4" style={{ backgroundColor: '#f8f9fa' }}>
+                    <div className="col-md-5 checkout-right-col">
                       <div className="sticky-top" style={{ top: '20px' }}>
                         <h5 className="mb-4 fw-bold">Order Summary</h5>
 
@@ -3782,81 +3857,81 @@ useEffect(() => {
                             <p className="text-muted text-center">Your cart is empty</p>
                           ) : (
                             cart.map((item, index) => (
-  <div key={`${item.id}-${item.spicyLevel?.id || 'default'}-${index}`} className="order-item-card mb-3 p-3">
-    <div className="row align-items-center">
-      <div className="col-3">
-        <img
-          src={item.img}
-          alt={item.name}
-          className="rounded w-100"
-          style={{ height: "60px", objectFit: "cover" }}
-        />
-      </div>
-      <div className="col-9">
-        <div className="d-flex justify-content-between align-items-start mb-1">
-          <h6 className="mb-0">{item.name}</h6>
-          <span className="text-primary fw-bold">${item.finalPrice}</span>
-        </div>
+                              <div key={`${item.id}-${item.spicyLevel?.id || 'default'}-${index}`} className="order-item-card mb-3 p-3">
+                                <div className="row align-items-center">
+                                  <div className="col-3">
+                                    <img
+                                      src={item.img}
+                                      alt={item.name}
+                                      className="rounded w-100"
+                                      style={{ height: "60px", objectFit: "cover" }}
+                                    />
+                                  </div>
+                                  <div className="col-9">
+                                    <div className="d-flex justify-content-between align-items-start mb-1">
+                                      <h6 className="mb-0">{item.name}</h6>
+                                      <span className="text-primary fw-bold">${item.finalPrice}</span>
+                                    </div>
 
-        {item.selectedPrice === 'price2' && (
-          <div className="mb-2">
-            <span className="badge bg-success">
-              <i className="fas fa-wine-bottle me-1"></i>
-              Bottle
-            </span>
-          </div>
-        )}
-        
-        {item.spicyLevel && (
-          <div className="mb-2">
-            <span 
-              className="badge"
-              style={{ 
-                backgroundColor: getSpicyLevelColor(item.spicyLevel.id),
-                color: 'white',
-                fontSize: '0.7rem',
-                padding: '0.2rem 0.5rem'
-              }}
-            >
-              <i className="fas fa-pepper-hot me-1"></i>
-              {item.spicyLevel.name} Spice
-            </span>
-          </div>
-        )}
-        
-        <div className="d-flex justify-content-between align-items-center">
-          <div className="quantity-controls">
-            <button
-              className="quantity-btn"
-              onClick={() =>
-                setCart((prevCart) =>
-                  prevCart
-                    .map((i) =>
-                      i.id === item.id && 
-                      i.spicyLevel?.id === item.spicyLevel?.id
-                        ? { ...i, qty: i.qty - 1 }
-                        : i
-                    )
-                    .filter((i) => i.qty > 0)
-                )
-              }
-            >
-              -
-            </button>
-            <span className="mx-2 fw-bold">{item.qty}</span>
-            <button
-              className="quantity-btn"
-              onClick={() => addToCart(item, item.spicyLevel, item.selectedPrice)} // Pass existing spicy level
-            >
-              +
-            </button>
-          </div>
-          <span className="fw-bold">${item.finalPrice * item.qty}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-))
+                                    {item.selectedPrice === 'price2' && (
+                                      <div className="mb-2">
+                                        <span className="badge bg-success">
+                                          <i className="fas fa-wine-bottle me-1"></i>
+                                          Bottle
+                                        </span>
+                                      </div>
+                                    )}
+                                    
+                                    {item.spicyLevel && (
+                                      <div className="mb-2">
+                                        <span 
+                                          className="badge"
+                                          style={{ 
+                                            backgroundColor: getSpicyLevelColor(item.spicyLevel.id),
+                                            color: 'white',
+                                            fontSize: '0.7rem',
+                                            padding: '0.2rem 0.5rem'
+                                          }}
+                                        >
+                                          <i className="fas fa-pepper-hot me-1"></i>
+                                          {item.spicyLevel.name} Spice
+                                        </span>
+                                      </div>
+                                    )}
+                                    
+                                    <div className="d-flex justify-content-between align-items-center">
+                                      <div className="quantity-controls">
+                                        <button
+                                          className="quantity-btn"
+                                          onClick={() =>
+                                            setCart((prevCart) =>
+                                              prevCart
+                                                .map((i) =>
+                                                  i.id === item.id && 
+                                                  i.spicyLevel?.id === item.spicyLevel?.id
+                                                    ? { ...i, qty: i.qty - 1 }
+                                                    : i
+                                                )
+                                                .filter((i) => i.qty > 0)
+                                            )
+                                          }
+                                        >
+                                          -
+                                        </button>
+                                        <span className="mx-2 fw-bold">{item.qty}</span>
+                                        <button
+                                          className="quantity-btn"
+                                          onClick={() => addToCart(item, item.spicyLevel, item.selectedPrice)} // Pass existing spicy level
+                                        >
+                                          +
+                                        </button>
+                                      </div>
+                                      <span className="fw-bold">${(item.finalPrice * item.qty).toFixed(2)}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))
                           )}
                         </div>
 
@@ -4240,7 +4315,7 @@ useEffect(() => {
 
 
         {/* <!-- Reservation Start --> */}
-  <div id="bookTable"   className=" px-0 wow fadeInUp" style={{background: '#fff'}}
+  {/* <div id="bookTable"   className=" px-0 wow fadeInUp" style={{background: '#fff'}}
        data-wow-delay="0.1s"
        >
   <div className="row g-0" style={{ width: '-webkit-fill-available'}}>
@@ -4304,10 +4379,10 @@ useEffect(() => {
       </div>
     </div>
   </div>
-</div>
+</div> */}
 
 {/* Modern Reservation Form Modal */}
-{showReservationForm && (
+{/* {showReservationForm && (
   <div className="modern-modal-overlay" onClick={() => setShowReservationForm(false)}>
     <div className="modern-modal-content" onClick={(e) => e.stopPropagation()}>
       <div className="modern-modal-header">
@@ -4345,20 +4420,7 @@ useEffect(() => {
             />
           </div>
 
-          {/* <div className="form-group">
-            <label className="form-label">
-              <i className="fas fa-envelope icon"></i>
-              Email Address
-            </label>
-            <input
-              type="email"
-              className="form-control-modern"
-              placeholder="your@email.com"
-              value={reservationData.email}
-              onChange={(e) => setReservationData({...reservationData, email: e.target.value})}
-              required
-            />
-          </div> */}
+          
 
           <div className="form-group">
             <label className="form-label">
@@ -4454,7 +4516,7 @@ useEffect(() => {
       </form>
     </div>
   </div>
-)}
+)} */}
 
 {/* Modern Success Popup Modal */}
 {showReservationSuccess && (
@@ -4512,112 +4574,136 @@ useEffect(() => {
         {/* <!-- Reservation Ends --> */}
 
         {/* <!-- Team Start --> */}
-        <div className="container-xxl pt-3 pb-3 panel team-mobile" style={{background:'#f8f9fa'}} >
+        {/* Our Story Section */}
+        <div className="our-story-section" id="about">
+          <div className="container py-5 pl-3 pr-3">
+            <div className="row align-items-center">
+              <div className="col-lg-6">
+                <div className="our-story-content">
+                  <h2 className="our-story-title">Our Story</h2>
+                  <p className="our-story-text">
+                    Sang Eat was born from a passion for authentic Indian cuisine and a desire to bring the royal flavors of India to food lovers everywhere. Our journey began over 15 years ago when our founder, a master chef from Mumbai, decided to share the rich culinary heritage of India with the world.
+                  </p>
+                  <p className="our-story-text">
+                    Every dish at Sangeet tells a story - from the aromatic spices sourced directly from India to the traditional cooking methods passed down through generations. We believe that food is not just nourishment, but an experience that brings people together and creates lasting memories.
+                  </p>
+                  <p className="our-story-text">
+                    Our commitment to authenticity, quality, and excellence has made us a beloved destination for those seeking the true taste of India in an elegant, royal setting.
+                  </p>
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="our-story-stats-grid">
+                  <div className="story-stat-card">
+                    <i className="fas fa-user-tie story-stat-icon"></i>
+                    <div className="story-stat-number">15+</div>
+                    <div className="story-stat-label">Years of Excellence</div>
+                  </div>
+                  <div className="story-stat-card">
+                    <i className="fas fa-award story-stat-icon"></i>
+                    <div className="story-stat-number">50+</div>
+                    <div className="story-stat-label">Awards Won</div>
+                  </div>
+                  <div className="story-stat-card">
+                    <i className="fas fa-users story-stat-icon"></i>
+                    <div className="story-stat-number">100K+</div>
+                    <div className="story-stat-label">Happy Customers</div>
+                  </div>
+                  <div className="story-stat-card">
+                    <i className="fas fa-heart story-stat-icon"></i>
+                    <div className="story-stat-number">100%</div>
+                    <div className="story-stat-label">Authentic Recipes</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="container-xxl pt-5 pb-5 panel team-mobile master-chefs-section">
           <div className="container">
-            <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
-              <h5 className="section-title ff-secondary text-center text-primary fw-normal">
-                Team Members
-              </h5>
-              <h1 className="mb-3">Our Master Chefs</h1>
+            <div className="text-center mb-3">
+              {/* <div className="chef-hat-icon mb-3">
+                <span style={{color: '#FFD700', fontSize: '3rem', display: 'inline-block'}}>👨‍🍳</span>
+              </div> */}
+              <h1 className="master-chefs-title">Meet Our Master Chefs</h1>
+              <p className="master-chefs-subtitle">
+                The culinary artists behind every dish, bringing authentic Indian flavors to your table
+              </p>
             </div>
             <div className="row g-4">
-              <div
-                className="col-lg-3 col-md-6 wow fadeInUp"
-                data-wow-delay="0.1s"
-              >
-                <div className="team-item text-center rounded overflow-hidden">
-                  <div className="rounded-circle overflow-hidden m-4">
-                    <img className="img-fluid" src="img/team-1.jpg" alt="" />
+              <div className="col-lg-4 col-md-6">
+                <div className="chef-card">
+                  <div className="chef-image-wrapper">
+                    <img className="chef-image" src="img/chef9.jpg" alt="Chef Rajesh Kumar" />
+                    <div className="chef-role-badge">
+                      <i className="fas fa-medal me-2"></i>Head Chef
                   </div>
-                  <h5 className="mb-0">Full Name</h5>
-                  <small>Designation</small>
-                  <div className="d-flex justify-content-center mt-3">
-                    <button type="button" className="btn btn-square btn-primary mx-1">
-                      <i className="fab fa-facebook-f"></i>
-                    </button>
-
-                    <button type="button" className="btn btn-square btn-primary mx-1">
-                      <i className="fab fa-twitter"></i>
-                    </button>
-
-                    <button type="button" className="btn btn-square btn-primary mx-1">
-                      <i className="fab fa-instagram"></i>
-                    </button>
+                  </div>
+                  <h3 className="chef-name">Chef Rajesh Kumar</h3>
+                  <div className="chef-details">
+                    <span className="chef-experience">
+                      <i className="fas fa-clock me-1"></i>20+ Years
+                    </span>
+                    <span className="chef-separator">•</span>
+                    <span className="chef-cuisine">North Indian Cuisine</span>
+                </div>
+                  <p className="chef-description">
+                    Master chef from Delhi with expertise in traditional tandoor cooking and royal Mughlai dishes.
+                  </p>
+                  <div className="chef-awards">
+                    <span className="award-badge">Michelin Star Experience</span>
+                    <span className="award-badge">Master Chef India Winner</span>
+              </div>
+                  </div>
+                  </div>
+              <div className="col-lg-4 col-md-6">
+                <div className="chef-card">
+                  <div className="chef-image-wrapper">
+                    <img className="chef-image" src="img/chef8.jpg" alt="Chef Priya Sharma" />
+                    <div className="chef-role-badge">
+                      <i className="fas fa-medal me-2"></i>Sous Chef
+                </div>
+              </div>
+                  <h3 className="chef-name">Chef Priya Sharma</h3>
+                  <div className="chef-details">
+                    <span className="chef-experience">
+                      <i className="fas fa-clock me-1"></i>15+ Years
+                    </span>
+                    <span className="chef-separator">•</span>
+                    <span className="chef-cuisine">South Indian & Vegetarian</span>
+                  </div>
+                  <p className="chef-description">
+                    Expert in authentic South Indian flavors and innovative vegetarian cuisine, bringing traditional recipes to life.
+                  </p>
+                  <div className="chef-awards">
+                    <span className="award-badge">Best Vegetarian Chef Award</span>
+                    <span className="award-badge">Regional Cuisine Expert</span>
                   </div>
                 </div>
               </div>
-              <div
-                className="col-lg-3 col-md-6 wow fadeInUp"
-                data-wow-delay="0.3s"
-              >
-                <div className="team-item text-center rounded overflow-hidden">
-                  <div className="rounded-circle overflow-hidden m-4">
-                    <img className="img-fluid" src="img/team-2.jpg" alt="" />
+              <div className="col-lg-4 col-md-6">
+                <div className="chef-card">
+                  <div className="chef-image-wrapper">
+                    <img className="chef-image" src="img/chef7.jpg" alt="Chef Arjun Patel" />
+                    <div className="chef-role-badge">
+                      <i className="fas fa-medal me-2"></i>Pastry Chef
                   </div>
-                  <h5 className="mb-0">Full Name</h5>
-                  <small>Designation</small>
-                  <div className="d-flex justify-content-center mt-3">
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                      <i className="fab fa-facebook-f"></i>
-                    </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                      <i className="fab fa-twitter"></i>
-                    </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                      <i className="fab fa-instagram"></i>
-                    </button>
                   </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-3 col-md-6 wow fadeInUp"
-                data-wow-delay="0.5s"
-              >
-                <div className="team-item text-center rounded overflow-hidden">
-                  <div className="rounded-circle overflow-hidden m-4">
-                    <img className="img-fluid" src="img/team-3.jpg" alt="" />
+                  <h3 className="chef-name">Chef Arjun Patel</h3>
+                  <div className="chef-details">
+                    <span className="chef-experience">
+                      <i className="fas fa-clock me-1"></i>12+ Years
+                    </span>
+                    <span className="chef-separator">•</span>
+                    <span className="chef-cuisine">Indian Desserts</span>
                   </div>
-                  <h5 className="mb-0">Full Name</h5>
-                  <small>Designation</small>
-                  <div className="d-flex justify-content-center mt-3">
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                      <i className="fab fa-facebook-f"></i>
-                    </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                      <i className="fab fa-twitter"></i>
-                    </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                      <i className="fab fa-instagram"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-3 col-md-6 wow fadeInUp"
-                data-wow-delay="0.7s"
-              >
-                <div className="team-item text-center rounded overflow-hidden">
-                  <div className="rounded-circle overflow-hidden m-4">
-                    <img className="img-fluid" src="img/team-4.jpg" alt="" />
-                  </div>
-                  <h5 className="mb-0">Full Name</h5>
-                  <small>Designation</small>
-                  <div className="d-flex justify-content-center mt-3">
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                      <i className="fab fa-facebook-f"></i>
-                    </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                      <i className="fab fa-twitter"></i>
-                    </button>
-
-                  <button type="button" className="btn btn-square btn-primary mx-1">
-                      <i className="fab fa-instagram"></i>
-                    </button>
+                  <p className="chef-description">
+                    Specialized in traditional Indian sweets and modern dessert fusion, creating unforgettable sweet experiences.
+                  </p>
+                  <div className="chef-awards">
+                    <span className="award-badge">Dessert Innovation Award</span>
+                    <span className="award-badge">Sweet Master</span>
                   </div>
                 </div>
               </div>
@@ -4628,174 +4714,156 @@ useEffect(() => {
 
         {/* <!-- Testimonial Start --> */}
 
-        <div className="panel" id="testimonials" style={{background:'#fff !important'}}>
-          <div className="container" style={{width: '100vw',maxWidth: '100vw !important'}}>
-            <div className="text-center mb-2">
-              <h5 className="section-title ff-secondary text-center text-primary fw-normal mt-3">
-                Testimonials
-              </h5>
-              <h1 className="mb-4">What Our Clients Say</h1>
-              <p className="w-75 mx-auto mb-3">
-                Hear from our satisfied customers about their dining experience
-                at SangEat
+        <div className="testimonials-section" id="testimonials">
+          <div className="container py-3">
+            <div className="text-center mb-5">
+              <h1 className="testimonials-title">What Our Guests Say</h1>
+              <p className="testimonials-subtitle">
+                Real experiences from our valued customers
               </p>
             </div>
-
-            <div className="testimonial-carousel">
-              <div className="testimonial-track">
-                <div className="testimonial-slide active">
-                  <div className="testimonial-card">
-                    <div className="testimonial-rating">
-                      <span className="star">★</span>
-                      <span className="star">★</span>
-                      <span className="star">★</span>
-                      <span className="star">★</span>
-                      <span className="star">★</span>
-                    </div>
-                    <div className="testimonial-content">
-                      <i className="fa fa-quote-left quote-icon"></i>
-                      <p className="testimonial-text">
-                        The food at SangEat is absolutely incredible! The
-                        flavors are authentic and every dish tells a story. The
-                        Chicken Tikka was perfectly spiced and cooked to
-                        perfection.
-                      </p>
-                      <i className="fa fa-quote-right quote-icon"></i>
-                    </div>
-                    <div className="testimonial-author">
-                      <img
-                        className="testimonial-avatar"
-                        src="img/testimonial-1.jpg"
-                        alt="Sarah Johnson"
-                      />
-                      <div className="author-info">
-                        <h5 className="mb-0">Sarah Johnson</h5>
-                        <small>Food Blogger</small>
-                      </div>
+            <div className="row g-4">
+              <div className="col-lg-6 col-md-6">
+                <div className="testimonial-card-new to-maroon-dark-testimonials from-maroon-testimonials bg-gradient-to-br-testimonials">
+                  <div className="testimonial-header">
+                    <div className="testimonial-avatar-new">P</div>
+                    <div className="testimonial-stars">
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
                     </div>
                   </div>
-                </div>
-
-                <div className="testimonial-slide">
-                  <div className="testimonial-card">
-                    <div className="testimonial-rating">
-                      <span className="star">★</span>
-                      <span className="star">★</span>
-                      <span className="star">★</span>
-                      <span className="star">★</span>
-                      <span className="star">★</span>
+                  <div className="testimonial-quote-wrapper">
+                    {/* <span className="testimonial-quote-mark">"</span> */}
+                    <p className="testimonial-quote">
+                      Absolutely authentic flavors! The butter chicken was divine, and the ambiance is perfect for a royal dining experience.
+                    </p>
                     </div>
-                    <div className="testimonial-content">
-                      <i className="fa fa-quote-left quote-icon"></i>
-                      <p className="testimonial-text">
-                        I've been to many Indian restaurants, but SangEat stands
-                        out with its exceptional service and authentic flavors.
-                        The Brioche Omelette is now my weekend favorite!
-                      </p>
-                      <i className="fa fa-quote-right quote-icon"></i>
-                    </div>
-                    <div className="testimonial-author">
-                      <img
-                        className="testimonial-avatar"
-                        src="img/testimonial-2.jpg"
-                        alt="Michael Chen"
-                      />
-                      <div className="author-info">
-                        <h5 className="mb-0">Michael Chen</h5>
-                        <small>Regular Customer</small>
+                  <h5 className="testimonial-name">Priya Sharma</h5>
+                  <p className="testimonial-location">New York</p>
                       </div>
                     </div>
+              <div className="col-lg-6 col-md-6">
+                <div className="testimonial-card-new to-maroon-dark-testimonials from-maroon-testimonials bg-gradient-to-br-testimonials">
+                  <div className="testimonial-header">
+                    <div className="testimonial-avatar-new">R</div>
+                    <div className="testimonial-stars">
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
                   </div>
                 </div>
-
-                <div className="testimonial-slide">
-                  <div className="testimonial-card">
-                    <div className="testimonial-rating">
-                      <span className="star">★</span>
-                      <span className="star">★</span>
-                      <span className="star">★</span>
-                      <span className="star">★</span>
-                      <span className="star">☆</span>
+                  <div className="testimonial-quote-wrapper">
+                    {/* <span className="testimonial-quote-mark">"</span> */}
+                    <p className="testimonial-quote">
+                      Best Indian restaurant in town! The spices are perfectly balanced, and the service is exceptional. Highly recommended!
+                    </p>
                     </div>
-                    <div className="testimonial-content">
-                      <i className="fa fa-quote-left quote-icon"></i>
-                      <p className="testimonial-text">
-                        The ambiance and food quality make SangEat perfect for
-                        family dinners. We celebrated my daughter's birthday
-                        here and the staff went above and beyond to make it
-                        special.
-                      </p>
-                      <i className="fa fa-quote-right quote-icon"></i>
-                    </div>
-                    <div className="testimonial-author">
-                      <img
-                        className="testimonial-avatar"
-                        src="img/testimonial-3.jpg"
-                        alt="Priya Sharma"
-                      />
-                      <div className="author-info">
-                        <h5 className="mb-0">Priya Sharma</h5>
-                        <small>Local Guide</small>
+                  <h5 className="testimonial-name">Raj Patel</h5>
+                  <p className="testimonial-location">Chicago</p>
                       </div>
                     </div>
+              <div className="col-lg-6 col-md-6">
+                <div className="testimonial-card-new to-maroon-dark-testimonials from-maroon-testimonials bg-gradient-to-br-testimonials">
+                  <div className="testimonial-header">
+                    <div className="testimonial-avatar-new">S</div>
+                    <div className="testimonial-stars">
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
                   </div>
                 </div>
-
-                <div className="testimonial-slide">
-                  <div className="testimonial-card">
-                    <div className="testimonial-rating">
-                      <span className="star">★</span>
-                      <span className="star">★</span>
-                      <span className="star">★</span>
-                      <span className="star">★</span>
-                      <span className="star">★</span>
+                  <div className="testimonial-quote-wrapper">
+                    {/* <span className="testimonial-quote-mark">"</span> */}
+                    <p className="testimonial-quote">
+                      As someone who loves Indian cuisine, Sangeet exceeded all expectations. The naan bread is to die for!
+                    </p>
                     </div>
-                    <div className="testimonial-content">
-                      <i className="fa fa-quote-left quote-icon"></i>
-                      <p className="testimonial-text">
-                        As someone from India, I can attest to the authenticity
-                        of the flavors at SangEat. Their Signature Roast Chicken
-                        Superbow reminds me of home. Highly recommended!
-                      </p>
-                      <i className="fa fa-quote-right quote-icon"></i>
+                  <h5 className="testimonial-name">Sarah Johnson</h5>
+                  <p className="testimonial-location">Los Angeles</p>
+                      </div>
                     </div>
-                    <div className="testimonial-author">
-                      <img
-                        className="testimonial-avatar"
-                        src="img/testimonial-4.jpg"
-                        alt="Raj Patel"
-                      />
-                      <div className="author-info">
-                        <h5 className="mb-0">Raj Patel</h5>
-                        <small>Food Critic</small>
+              <div className="col-lg-6 col-md-6">
+                <div className="testimonial-card-new to-maroon-dark-testimonials from-maroon-testimonials bg-gradient-to-br-testimonials">
+                  <div className="testimonial-header">
+                    <div className="testimonial-avatar-new">A</div>
+                    <div className="testimonial-stars">
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                      <i className="fas fa-star"></i>
+                  </div>
+                </div>
+                  <div className="testimonial-quote-wrapper">
+                    {/* <span className="testimonial-quote-mark">"</span> */}
+                    <p className="testimonial-quote">
+                      Feels like home! The dal makhani reminded me of my grandmother's cooking. Truly authentic and delicious.
+                    </p>
+                    </div>
+                  <h5 className="testimonial-name">Amit Kumar</h5>
+                  <p className="testimonial-location">San Francisco</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+        {/* <!-- Testimonial End --> */}
 
-              <div className="testimonial-nav">
-                <button className="nav-btn prev-btn">
-                  <i className="fa fa-chevron-left"></i>
-                </button>
-                <div className="nav-dots">
-                  <span className="dot active"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
-                  <span className="dot"></span>
+        {/* Newsletter Section */}
+        <div className="newsletter-section">
+          <div className="container py-5">
+            <div className="newsletter-content">
+              <div className="newsletter-icon-wrapper">
+                <i className="fas fa-envelope newsletter-icon"></i>
                 </div>
-                <button className="nav-btn next-btn">
-                  <i className="fa fa-chevron-right"></i>
+              <h2 className="newsletter-title">Stay Updated</h2>
+              <p className="newsletter-description">
+                Subscribe to our newsletter for exclusive offers, new menu items, and special events.
+              </p>
+              <div className="newsletter-form-wrapper">
+                <form className="newsletter-form" onSubmit={(e) => e.preventDefault()}>
+                  <input
+                    type="email"
+                    className="newsletter-input"
+                    placeholder="Enter your email address"
+                    required
+                  />
+                  <button type="submit" className="newsletter-button">
+                    Subscribe
                 </button>
+                </form>
               </div>
             </div>
           </div>
         </div>
 
-        {/* <!-- Testimonial End --> */}
+        {/* Ready to Experience Section */}
+        <div className="ready-experience-section">
+          <div className="container py-5">
+            <div className="ready-experience-content">
+              <h2 className="ready-experience-title">Ready to Experience Royal Dining?</h2>
+              <p className="ready-experience-description">
+                Reserve your table today and embark on a culinary journey through the flavors of India.
+              </p>
+              <button 
+                className="ready-experience-button"
+                onClick={() => navigate('/booking')}
+              >
+                Reserve Your Table <i className="fas fa-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </div>
+        </div>
 
         {/* Contact Section */}
-        <div className="container-xxl py-3 panel contact-mobile" id="contact"  style={{background: '#f1f1f1' }}>
+        {/* <div className="container-xxl py-3 panel contact-mobile" id="contact"  style={{background: '#f1f1f1' }}>
           <div className="container">
             <div className="text-center">
               <h5 className="section-title ff-secondary text-center text-primary fw-normal">
@@ -4844,6 +4912,7 @@ useEffect(() => {
                   allowFullScreen=""
                   aria-hidden="false"
                   tabIndex="0"
+                  title="Restaurant Location Map"
                 ></iframe>
               </div>
               <div className="col-md-6">
@@ -4908,120 +4977,129 @@ useEffect(() => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
-        {/* Footer */}
-        <div className="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn panel footer-style" data-wow-delay="0.1s"style={{background: '#f1f1f1 !important'}}>
-          <div className="container py-5">
-            <div className="row g-5">
-              <div className="col-lg-3 col-md-6">
-                <h4 className="section-title ff-secondary text-start text-primary fw-normal mb-4">
-                  Company
-                </h4>
-                <Link className="btn btn-link" to="/about">
-                  About Us
-                </Link>
-                <Link className="btn btn-link" to="/contact">
-                  Contact Us
-                </Link>
-                <Link className="btn btn-link" to="/">
-                  Reservation
-                </Link>
-                <Link className="btn btn-link" to="/">
-                  Privacy Policy
-                </Link>
-                <Link className="btn btn-link" to="/">
-                  Terms & Condition
-                </Link>
-              </div>
-              <div className="col-lg-3 col-md-6">
-                <h4 className="section-title ff-secondary text-start text-primary fw-normal mb-4">
-                  Contact
-                </h4>
-                <p className="mb-2">
-                  <i className="fa fa-map-marker-alt me-3"></i>123 Street, New
-                  York, USA
-                </p>
-                <p className="mb-2">
-                  <i className="fa fa-phone-alt me-3"></i>+012 345 67890
-                </p>
-                <p className="mb-2">
-                  <i className="fa fa-envelope me-3"></i>info@example.com
-                </p>
-                <div className="d-flex pt-2">
-                  <Link className="btn btn-outline-light btn-social" to="/">
-                    <i className="fab fa-twitter"></i>
-                  </Link>
-                  <Link className="btn btn-outline-light btn-social" to="/">
-                    <i className="fab fa-facebook-f"></i>
-                  </Link>
-                  <Link className="btn btn-outline-light btn-social" to="/">
-                    <i className="fab fa-youtube"></i>
-                  </Link>
-                  <Link className="btn btn-outline-light btn-social" to="/">
-                    <i className="fab fa-linkedin-in"></i>
-                  </Link>
-                </div>
-              </div>
-              <div className="col-lg-3 col-md-6">
-                <h4 className="section-title ff-secondary text-start text-primary fw-normal mb-4">
-                  Opening
-                </h4>
-                <h5 className="text-light fw-normal">Monday - Saturday</h5>
-                <p>09AM - 09PM</p>
-                <h5 className="text-light fw-normal">Sunday</h5>
-                <p>10AM - 08PM</p>
-              </div>
-              <div className="col-lg-3 col-md-6">
-                <h4 className="section-title ff-secondary text-start text-primary fw-normal mb-4">
-                  Newsletter
-                </h4>
-                <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-                <div className="position-relative mx-auto" style={{ maxWidth: "400px" }}>
+        {/* Footer Component */}
+        <Footer 
+          onBookTable={() => setShowBookingModal(true)}
+          scrollToSection={scrollToSection}
+        />
+
+         {/* Booking Modal */}
+        {showBookingModal && (
+          <div className="booking-modal-overlay" onClick={() => setShowBookingModal(false)}>
+            <div className="booking-modal-content" onClick={(e) => e.stopPropagation()}>
+              <button className="booking-modal-close" onClick={() => setShowBookingModal(false)}>
+                <i className="fas fa-times"></i>
+              </button>
+              <h2 className="booking-modal-title">Book a Table</h2>
+              <p className="booking-modal-subtitle">Reserve your table for an unforgettable dining experience</p>
+              
+              <form className="booking-form" onSubmit={(e) => {
+                e.preventDefault();
+                // Handle form submission here
+                alert('Booking confirmed! We will contact you soon.');
+                setShowBookingModal(false);
+              }}>
+                <div className="booking-form-group">
+                  <label className="booking-label">
+                    <i className="fas fa-calendar-alt me-2"></i>Select Date
+                  </label>
                   <input
-                    className="form-control border-primary w-100 py-3 ps-4 pe-5"
-                    type="text"
-                    placeholder="Your email"
+                    type="date"
+                    className="booking-input"
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    required
                   />
-                  <button
-                    type="button"
-                    className="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2"
-                  >
-                    SignUp
-                  </button>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="container">
-            <div className="copyright">
-              <div className="row">
-                <div className="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                  &copy; <Link to="/">SangEat</Link>, All Right Reserved.
-                </div>
-                <div className="col-md-6 text-center text-md-end">
-                  <div className="footer-menu">
-                    <Link to="/">Home</Link>
-                    <Link to="/">Cookies</Link>
-                    <Link to="/">Help</Link>
-                    <Link to="/">FQAs</Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-         {/* Admin Panel Modal */}
-        {showAdminPanel && (
-          <AdminPanel
-            menuItems={menuItems}
-            onAddItem={addMenuItem}
-            onEditItem={editMenuItem}
-            onDeleteItem={deleteMenuItem}
-            onClose={() => setShowAdminPanel(false)}
-          />
+                <div className="booking-form-group">
+                  <label className="booking-label">
+                    <i className="fas fa-clock me-2"></i>Select Time
+                  </label>
+                  <div className="time-slots-grid">
+                    {['11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00'].map((time) => (
+                  <button
+                        key={time}
+                    type="button"
+                        className={`time-slot-btn ${selectedTime === time ? 'active' : ''}`}
+                        onClick={() => setSelectedTime(time)}
+                  >
+                        {time}
+                  </button>
+                    ))}
+                </div>
+              </div>
+
+                <div className="booking-form-group">
+                  <label className="booking-label">
+                    <i className="fas fa-user me-2"></i>Number of Guests
+                  </label>
+                  <input
+                    type="number"
+                    className="booking-input"
+                    min="1"
+                    max="20"
+                    value={numberOfGuests}
+                    onChange={(e) => setNumberOfGuests(parseInt(e.target.value))}
+                    required
+                  />
+            </div>
+
+                <div className="booking-form-row">
+                  <div className="booking-form-group">
+                    <label className="booking-label">Full Name</label>
+                    <input
+                      type="text"
+                      className="booking-input"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      required
+                    />
+          </div>
+                  <div className="booking-form-group">
+                    <label className="booking-label">Email</label>
+                    <input
+                      type="email"
+                      className="booking-input"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                </div>
+                  </div>
+
+                <div className="booking-form-group">
+                  <label className="booking-label">Phone Number</label>
+                  <input
+                    type="tel"
+                    className="booking-input"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="booking-form-group">
+                  <label className="booking-label">Special Requests (Optional)</label>
+                  <textarea
+                    className="booking-textarea"
+                    rows="4"
+                    placeholder="Any dietary restrictions, allergies, or special occasions?"
+                    value={specialRequests}
+                    onChange={(e) => setSpecialRequests(e.target.value)}
+                  />
+              </div>
+
+                <button type="submit" className="booking-submit-btn">
+                  Confirm Booking
+                </button>
+              </form>
+            </div>
+          </div>
         )}
+
       </div>
     </>
   );

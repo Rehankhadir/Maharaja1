@@ -1,5 +1,8 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
+import Admin from './components/Admin';
+import Booking from './components/Booking';
 // import AboutSection from './components/AboutSection';
 // import CuisineSection from './components/CuisineSection';
 import NavigationMenu from './components/NavigationMenu';
@@ -9,8 +12,12 @@ import NavigationMenu from './components/NavigationMenu';
 function App() {
   return (
     <>
-    <NavigationMenu />
-      <LandingPage />
+      <NavigationMenu />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/booking" element={<Booking />} />
+      </Routes>
        
       {/* <div id="main-site" style={{ height: '100vh', backgroundColor: '#fff', padding: '40px' }}> */}
         {/* <h2>Main Website Coming Soon...</h2> */}
