@@ -31,7 +31,7 @@ const Footer = ({ onBookTable, scrollToSection: externalScrollToSection }) => {
             {/* <h4 className=" ff-secondary text-start fw-normal mb-4" style={{color: 'rgb(246 226 195/var(--tw-text-opacity,1))', fontFamily: `'Playfair Display', 'Georgia', serif`, fontSize: '1.5rem'}} >
               Sang Eats
             </h4> */}
-            <img src="img/logo1.png" alt="Sangeeth" className="nav-logo-image footer-logo" />
+            <img src="img/logo2.png" alt="Sangeeth" className="nav-logo-image footer-logo" />
 
             <p className="footer-text-color">Experience authentic Indian cuisine in an elegant, royal setting. Where tradition meets modern dining.</p>
             

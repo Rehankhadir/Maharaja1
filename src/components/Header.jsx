@@ -79,7 +79,7 @@ const Header = ({ cart = [], showAdminButton = true, onBookTable, scrollToSectio
             {/* <h1 className="nav-logo-text m-0">
               <i className="far fa-heart me-3"></i>Sang Eat
             </h1> */}
-            <img src="img/logo1.png" alt="Sangeeth" className="nav-logo-image" />
+            <img src="img/logo2.png" alt="Sangeeth" className="nav-logo-image" />
           </Link>
           <button
             className="navbar-toggler"
