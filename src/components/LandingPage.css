@@ -14822,13 +14822,13 @@ html {
   .hero-stats-content-wrapper {
     flex-direction: row;
     gap: 8px;
-    padding: 0 10px;
+    padding: 0px;
   }
   
   .stat-item-exact {
     flex: 1;
     align-items: center;
-    text-align: center;
+    text-align: center !important;
   }
   
   .stat-divider-vertical {
@@ -14839,7 +14839,7 @@ html {
   }
   
   .stat-value-exact {
-    font-size: 1.3rem;
+    font-size: 1.3rem !important;
   }
   
   .stat-star-icon {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import './LandingPage.css';
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
@@ -2150,6 +2150,8 @@ const [_upiId, _setUpiId] = useState('');
 
 
 const [checkoutStep, setCheckoutStep] = useState(1);
+const deliveryOptionsHeaderRef = useRef(null);
+const paymentHeaderRef = useRef(null);
 const [_userLoggedIn, setUserLoggedIn] = useState(false);
 const [noContactDelivery, setNoContactDelivery] = useState(true);
 const [paymentMethod, setPaymentMethod] = useState('upi');
@@ -2207,6 +2209,18 @@ useEffect(() => {
 // eslint-disable-next-line react-hooks/exhaustive-deps -- showAddressForm declared later in component
 }, [showCheckout]);
 
+// On mobile: scroll checkout modal to step header when moving to step 2 or 3
+useEffect(() => {
+  if (checkoutStep !== 2 && checkoutStep !== 3) return;
+  const isMobile = typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches;
+  if (!isMobile) return;
+  const header = checkoutStep === 2 ? deliveryOptionsHeaderRef.current : paymentHeaderRef.current;
+  if (header) {
+    requestAnimationFrame(() => {
+      header.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+}, [checkoutStep]);
 
 // Function to handle closing the checkout modal
 const handleCloseCheckout = () => {
@@ -3484,7 +3498,7 @@ useEffect(() => {
                       {/* Step 2: Delivery Address */}
                       {checkoutStep === 2 && (
                         <div className="checkout-step animate-fade-in">
-                          <h5 className="mb-4 fw-bold">Delivery Options</h5>
+                          <h5 ref={deliveryOptionsHeaderRef} className="mb-4 fw-bold">Delivery Options</h5>
 
                           {/* Self Pickup Option */}
                           <div className="delivery-options mb-4">
@@ -3714,7 +3728,7 @@ useEffect(() => {
                       {/* Step 3: Payment */}
                       {checkoutStep === 3 && (
                         <div className="checkout-step animate-fade-in">
-                          <h5 className="mb-4 fw-bold">Payment</h5>
+                          <h5 ref={paymentHeaderRef} className="mb-4 fw-bold">Payment</h5>
 
                           {/* Payment Methods */}
                           <div className="payment-methods mb-4">
