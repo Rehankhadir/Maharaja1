@@ -99,6 +99,13 @@ const Admin = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  // Scroll to top when admin logs in (dashboard UI is shown)
+  useEffect(() => {
+    if (isLoggedIn) {
+      window.scrollTo(0, 0);
+    }
+  }, [isLoggedIn]);
+
   // Lock body scroll when modal is open
   useEffect(() => {
     if (showFormModal || showDeleteModal) {
