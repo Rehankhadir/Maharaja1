@@ -11694,7 +11694,7 @@ html {
 }
 
 .ingredients-toggle-btn:hover {
-  background: white;
+  /* background: white; */
   transform: scale(1.1);
 }
 
@@ -11810,7 +11810,7 @@ html {
 }
 
 .ingredients-toggle-btn:hover {
-  background: white;
+  /* background: white; */
   transform: scale(1.1);
   color: #007bff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -11981,7 +11981,7 @@ html {
 }
 
 .ingredients-toggle-btn:hover {
-  background: white;
+  /* background: white; */
   transform: scale(1.1);
   color: #007bff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -12150,7 +12150,7 @@ html {
 .ingredients-toggle-btn:hover {
   transform: scale(1.15) rotate(5deg);
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  /* background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); */
 }
 
 .ingredients-popup {
@@ -12481,7 +12481,7 @@ html {
   box-shadow: 
     0 12px 35px rgba(102, 126, 234, 0.6),
     0 0 0 2px rgba(255, 255, 255, 0.5);
-  background: linear-gradient(135deg, #f093fb 0%, #764ba2 50%, #667eea 100%);
+  /* background: linear-gradient(135deg, #f093fb 0%, #764ba2 50%, #667eea 100%); */
   animation: none;
 }
 
