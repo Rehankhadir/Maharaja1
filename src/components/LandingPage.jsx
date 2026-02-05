@@ -34,7 +34,8 @@ export const defaultMenuItems = [
   { id: 11, name: "Spiced chicken 65*", description: "Deep fried chicken cooked with mustrad seed, carry leaves, whole red chillies and tossed  with hot sauce.", price: 9.99, img: "img/chicken65.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 12, name: "Wedge potato ", description: "Crispy potato wedges seasoned with aromatic spices and herbs, served hot with your choice of dipping sauce.", price: 5.99, img: "img/Wedgepotato.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 13, name: "Masala papad", description: "Crispy lentil wafers topped with fresh onions, tomatoes, cilantro, and a blend of tangy spices.", price: 4.99, img: "img/Masalapapad.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 14, name: "Papdi chat", description: "Crispy flour crackers topped with spiced chickpeas, yogurt, tamarind chutney, and fresh herbs for a tangy treat.", price: 6.99, img: "img/Papdichat.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 101, name: "Chilli paneer", description: "Cubes of paneer sauteed with onion and bell peppers in a tangy sauce.", price: 12.99, img: "img/chilli-paneer.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  // { id: 14, name: "Papdi chat", description: "Crispy flour crackers topped with spiced chickpeas, yogurt, tamarind chutney, and fresh herbs for a tangy treat.", price: 6.99, img: "img/Papdichat.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
 
 
   { id: 15, name: "Heirloom Tomato soup", description: "Tomato extract in cream sauce.", price: 5.99, img: "img/HeirloomTomatosoup.jpg", hasSpicyOption: true, category: "soups",ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
@@ -140,8 +141,8 @@ export const defaultMenuItems = [
   { id: 90, name: "tandoori fish ", description: "Salmon marinated in aromatic herbs and spices, then broiled in the tandoor.", price: 16.99, img: "img/TandooriFish.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 91, name: "Tandoori shrimp", description: "Subtly seasoned shrimp with spices and green herbs, simmerd in our clay oven .", price: 16.99, img: "img/Tandoorishrimp.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
   { id: 92, name: "Mix Grill ", description: "An assortment of chicken, lamb and shrimp, individuallyy marinated and reasted.", price: 17.99, img: "img/MixGrill.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 93, name: "Malai kabab", description: "", price: 15.99, img: "img/malai-kabab.webp", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 94, name: "Lamb chop", description: "", price: 21.99, img: "img/lamb-chops.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  // { id: 93, name: "Malai kabab", description: "", price: 15.99, img: "img/malai-kabab.webp", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  // { id: 94, name: "Lamb chop", description: "", price: 21.99, img: "img/lamb-chops.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
 
 
   
@@ -160,12 +161,12 @@ export const defaultMenuItems = [
 
 
 
-  { id: 101, name: "Chilli paneer", description: " Cubes of paneer sauteed with onion and bell peppers in a tangy sauce.", price: 12.99, img: "img/chilli-paneer.jpg", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 102, name: "Vegi manchurian", description: "", price: 12.99, img: "img/veg-manchurian.jpg", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 103, name: "Chilli chicken", description: "Batter fried chicken cubes tossed with diced bell pappers, onoin,ginger and garlic finished with a spicy sauce.", price: 13.99, img: "img/chilli-chicken.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 104, name: "Lamb chilli", description: "", price: 14.99, img: "img/lamb-chilli.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 105, name: "Wok-Tossed chicken fried rice", description: "Basmati rice sauteed with chicken cubes, carrots,cabbage,bell pappeer and garnish with spring onion.", price: 9.99, img: "img/chicken-fried-rice.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-  { id: 106, name: "Wok-Tossed Egg Fried Rice", description: "Basmati rice sauteed with Eggs, carrots,cabbage,bell pappeer and garnish with spring onion.", price: 10.99, img: "img/EggFriedRice.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  // { id: 101, name: "Chilli paneer", description: " Cubes of paneer sauteed with onion and bell peppers in a tangy sauce.", price: 12.99, img: "img/chilli-paneer.jpg", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  // { id: 102, name: "Vegi manchurian", description: "", price: 12.99, img: "img/veg-manchurian.jpg", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  // { id: 103, name: "Chilli chicken", description: "Batter fried chicken cubes tossed with diced bell pappers, onoin,ginger and garlic finished with a spicy sauce.", price: 13.99, img: "img/chilli-chicken.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  // { id: 104, name: "Lamb chilli", description: "", price: 14.99, img: "img/lamb-chilli.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  // { id: 105, name: "Wok-Tossed chicken fried rice", description: "Basmati rice sauteed with chicken cubes, carrots,cabbage,bell pappeer and garnish with spring onion.", price: 9.99, img: "img/chicken-fried-rice.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  // { id: 106, name: "Wok-Tossed Egg Fried Rice", description: "Basmati rice sauteed with Eggs, carrots,cabbage,bell pappeer and garnish with spring onion.", price: 10.99, img: "img/EggFriedRice.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
 
 
 
@@ -1627,15 +1628,15 @@ const menuCategories = useMemo(() => [
     type: 'food',
     items: menuItems.filter(item => item.category === 'seafood')
   },
-  {
-    id: 'indo-chinese',
-    name: 'Indo Chinese Entrees',
-    description: 'Fusion flavors',
-    image: 'img/side-dishes.jpg',
-    icon: 'fas fa-hotdog',
-    type: 'food',
-    items: menuItems.filter(item => item.category === 'indo-chinese')
-  },
+  // {
+  //   id: 'indo-chinese',
+  //   name: 'Indo Chinese Entrees',
+  //   description: 'Fusion flavors',
+  //   image: 'img/side-dishes.jpg',
+  //   icon: 'fas fa-hotdog',
+  //   type: 'food',
+  //   items: menuItems.filter(item => item.category === 'indo-chinese')
+  // },
   {
     id: 'cold-beverages',
     name: 'Cold Beverage',
