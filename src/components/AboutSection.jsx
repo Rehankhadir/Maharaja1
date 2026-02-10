@@ -5,12 +5,12 @@ const AboutSection = () => {
   return (
     <section className="about-container" id="about">
       <div className="about-content">
-        <h2 className="about-title">Sangeeth – An Experience of Royal Indian Dining</h2>
+        <h2 className="about-title">SangEat – An Experience of Royal Indian Dining</h2>
         
         <div className="divider"></div>
 
         <p>
-          At Sangeeth, we bring the flavors of royal Indian cuisine to your table. From fragrant biryanis
+          At SangEat, we bring the flavors of royal Indian cuisine to your table. From fragrant biryanis
           to elaborate thalis, each dish is a celebration of tradition, taste, and hospitality.
         </p>
 

@@ -77,9 +77,9 @@ const Header = ({ cart = [], showAdminButton = true, onBookTable, scrollToSectio
         <div className="container-fluid nav-redesign-container">
           <Link to="/" className="navbar-brand p-0">
             {/* <h1 className="nav-logo-text m-0">
-              <i className="far fa-heart me-3"></i>Sang Eat
+              <i className="far fa-heart me-3"></i>SangEat
             </h1> */}
-            <img src="img/logo2.png" alt="Sangeeth" className="nav-logo-image" />
+            <img src="img/logo2.png" alt="SangEat" className="nav-logo-image" />
           </Link>
           <button
             className="navbar-toggler"

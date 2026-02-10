@@ -29,9 +29,9 @@ const Footer = ({ onBookTable, scrollToSection: externalScrollToSection }) => {
         <div className="row g-5">
           <div className="col-lg-4 col-md-6">
             {/* <h4 className=" ff-secondary text-start fw-normal mb-4" style={{color: 'rgb(246 226 195/var(--tw-text-opacity,1))', fontFamily: `'Playfair Display', 'Georgia', serif`, fontSize: '1.5rem'}} >
-              Sang Eats
+              SangEat
             </h4> */}
-            <img src="img/logo2.png" alt="Sangeeth" className="nav-logo-image footer-logo" />
+            <img src="img/logo2.png" alt="SangEat" className="nav-logo-image footer-logo" />
 
             <p className="footer-text-color">Experience authentic Indian cuisine in an elegant, royal setting. Where tradition meets modern dining.</p>
             
@@ -76,14 +76,13 @@ const Footer = ({ onBookTable, scrollToSection: externalScrollToSection }) => {
               Contact Us
             </h4>
             <p className="mb-2 footer-text-color">
-              <i className="fa fa-map-marker-alt me-3" style={{color: 'rgb(196 30 58/var(--tw-text-opacity,1))'}}></i>123 Street, New
-              York, USA
+              <i className="fa fa-map-marker-alt me-3" style={{color: 'rgb(196 30 58/var(--tw-text-opacity,1))'}}></i>1905 south Neil street Champaign Illinois 61820
             </p>
             <p className="mb-2 footer-text-color">
-              <i className="fa fa-phone-alt me-3" style={{color: 'rgb(196 30 58/var(--tw-text-opacity,1))'}}></i>+012 345 67890
+              <i className="fa fa-phone-alt me-3" style={{color: 'rgb(196 30 58/var(--tw-text-opacity,1))'}}></i>+1 (217) 363-3740
             </p>
             <p className="mb-2 footer-text-color">
-              <i className="fa fa-envelope me-3" style={{color: 'rgb(196 30 58/var(--tw-text-opacity,1))'}}></i>info@example.com
+              <i className="fa fa-envelope me-3" style={{color: 'rgb(196 30 58/var(--tw-text-opacity,1))'}}></i>sangeat1905@gmail.com
             </p>
           </div>
         </div>

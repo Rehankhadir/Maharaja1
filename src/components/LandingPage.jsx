@@ -65,18 +65,12 @@ export const defaultMenuItems = [
   { id: 35, name: "Royal biryani", description: "Lamb, chicken, shrimp, goat, and vegetable cooked with spices with rice.", price: 16.99, img: "img/royal-biryani.jpg", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 36, name: "Jira Rice", description: "", price: 6.99, img: "img/JeeraRice.jpg", hasSpicyOption: true, category: "pulao", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
 
-
-
-
-
-
-
   { id: 37, name: "Mix vegitable", description: "Fresh vegetable cooked with spices onion, green peppers, and tomatoes.", price: 14.99, img: "img/Mixvegitable.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
   { id: 38, name: "Spiced Blossom (Aloo Gobi)", description: "Cauliflower and potatoes cooked with fresh spices and ginger.", price: 14.99, img: "img/SpicedBlossom(AlooGobi).jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 39, name: "Classic punjabi dal Tadka", description: "Yellow lentils with blended spices.", price: 14.99, img: "img/ClassicpunjabiDaltadka.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
   { id: 40, name: "House-Spiced Dal Makhani", description: "Black lentils with aromatic spices in a creamy sauce.", price: 14.99, img: "img/House-SpiccedDalMakhni.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
   { id: 41, name: "Punjab's Finest Chana Masala", description: "Chickpeas cooked with herbs and spices, Punjabi style.", price: 14.99, img: "img/Punjab'sFinestChanaMasala.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: ["Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 42, name: "Bindi masala Punjabi style", description: "", price: 14.99, img: "img/bhindi-masala.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  // { id: 42, name: "Bindi masala Punjabi style", description: "", price: 14.99, img: "img/bhindi-masala.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 43, name: "From the Fire ( baigan ka bartha )", description: "Chopped eggplant cooked with tomatoes, onion, green peas, and tasty spice.", price: 14.99, img: "img/FromtheFireBaigankabartha.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 45, name: "Navratan korma ", description: " Nine fresh vegetable with nuts in a mildly spiced, thick yogurt sauce.", price: 14.99, img: "img/Navratankorma.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 46, name: "Palak Chole, Punjabi Style", description: "Spinach and chickpeas cooked in tomato and onion gravy with light cream.", price: 14.99, img: "img/PalakCholePunjabstyle.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
@@ -85,8 +79,6 @@ export const defaultMenuItems = [
   { id: 49, name: "Restaurant Style Aloo mutter", description: "Potatoes cooked with green peas and spices.", price: 14.99, img: "img/RestaurantStyleAlooMutter.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 50, name: "Punjabi Kadhi, Aromatic & Creamy", description: "Crispy pastry dumplings stuffed with mildly spicy vegetable and cooked in a light yogurt sauce.", price: 14.99, img: "img/PunjabiKadhiAromatic&Creamy.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 51, name: "Veggie makhni", description: " Vegetable cooked in a tomato and cream sauce.", price: 14.99, img: "img/VeggieMakhni.jpg", hasSpicyOption: true, category: "vegetarian", ingredients: [" Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },    
-
-
 
   { id: 52, name: "Royal Paneer butter masala", description: "Cubes of paneer cooked in a mild cream sauce.", price: 15.99, img: "img/RoyalPaneerButterMasala.jpg", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
   { id: 53, name: "Signature Palak Paneer", description: "Fresh spinach cooked with homemade cheese cubed in a special blend of spices.", price: 15.99, img: "img/SignaturePalakPaneer.jpg", hasSpicyOption: true, category: "paneer", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
@@ -108,13 +100,13 @@ export const defaultMenuItems = [
   { id: 65, name: "The chicken kadai ", description: "Chicken sautéed with onion, green peppers, tomatoes, and spices.", price: 15.99, img: "img/Thechickenkadai.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
   { id: 66, name: "Punjab's finest chicken saag ", description: "Chicken cooked with mildly-spiced spinach, cream, and herbs.", price: 15.99, img: "img/Punjab'sfinestchickensaag.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
   { id: 67, name: "Chicken jalfrezi", description: "", price: 15.99, img: "img/Chicken-Jalfrezi.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 68, name: "Chicken leg lovers (curry style)", description: "", price: 15.99, img: "img/Chicken-leg-curry.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  // { id: 68, name: "Chicken leg lovers (curry style)", description: "", price: 15.99, img: "img/Chicken-leg-curry.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
   { id: 69, name: "Aromatic Chicken Rogani", description: "Tender chunks of savory chicken cooked in yogurt , herb and spices", price: 15.99, img: "img/AromaticchickenRogani.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 70, name: "Fine Egg curry", description: "boiled eggs cooked in a blend of onion,tomato, ginger,garlic and spices.", price: 14.99, img: "img/FineEggcurry.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 71, name: "Coconut-Kissed Chicken Madras", description: "Boneless chicken pieces cooked in a coconut sauce.", price: 15.99, img: "img/CoconutKissedChickenMadras.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 72, name: "Fiery Angara Chicken with Aromatic Herbs", description: " Chicken pieces in a special garlic sauce.", price: 15.99, img: "img/angara-chicken.webp", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
-  { id: 73, name: "Chicken pasanda", description: "", price: 15.99, img: "img/chicken-pasanda.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 74, name: "Chef's Special Kashmiri Chicken", description: "", price: 15.99, img: "img/kashmiri-chicken.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  // { id: 73, name: "Chicken pasanda", description: "", price: 15.99, img: "img/chicken-pasanda.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  // { id: 74, name: "Chef's Special Kashmiri Chicken", description: "", price: 15.99, img: "img/kashmiri-chicken.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 75, name: "Mango chicken masala", description: "Chicken cooked with mango pulp.", price: 15.99, img: "img/Mangochickenmasala.jpg", hasSpicyOption: true, category: "chicken", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
 
 
@@ -123,7 +115,7 @@ export const defaultMenuItems = [
   { id: 77, name: "Gourmet lamb tikka masala ", description: "Tender pieces of lamb with garlic, ginger, and herbs.", price: 16.99, img: "img/Gourmetlambtikkamasala.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 78, name: "Butter lamb ", description: "cubed lamb cooked in rich and flavorful sauce.", price: 16.99, img: "img/Butterlamb.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 79, name: "Buna gost", description: "Pieces of lamb cooked with onion ginger, green peas, and spices.", price: 16.99, img: "img/Bunagost.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 80, name: "Lamb psanda ", description: "", price: 16.99, img: "img/Lamb_Pasanda.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  // { id: 80, name: "Lamb psanda ", description: "", price: 16.99, img: "img/Lamb_Pasanda.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
   { id: 81, name: "Lamb kadai ", description: "Lamb sauteed with onion, green peppers,tomatoes, and spices.", price: 16.99, img: "img/LambKadai.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
   { id: 82, name: "Lamb rogan josh ", description: "Tender morsels of lamb cooked in freshly ground spices and mild sauce, with a touch of yogurt.", price: 16.99, img: "img/Lambroganjosh.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
   { id: 83, name: "Lamb korma ", description: "Pieces of lamb cooked in a yogurt sauce with cashews.", price: 16.99, img: "img/Lambkorma.jpg", hasSpicyOption: true, category: "lamb", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
@@ -145,19 +137,13 @@ export const defaultMenuItems = [
   // { id: 94, name: "Lamb chop", description: "", price: 21.99, img: "img/lamb-chops.jpg", hasSpicyOption: true, category: "tandoori", ingredients: ["Grilled chicken", "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
 
 
-  
 
-
-
-
-
-
-  { id: 95, name: "Fish or shrimp curry ", description: " Shrimp or salmon cooked in a mildly spices sauce.", price: 16.99, img: "img/fish-curry.jpg", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 96, name: "Fish or shrimp tikka masala ", description: "Shrimp or salmon cooked with spices in a light cream sauce.", price: 16.99, img: "img/Fish-Tikka-Masala.jpg", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 97, name: "Butter shrimp or fish ", description: "Shrimp or salmon cooked in a rich sauce with mild spices.", price: 16.99, img: "img/butter-fish.webp", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 98, name: "Fish or shrimp vindaloo", description: "Shrimp or salmon cooked in tangy tomato and curry saice with cubed potatoes and fresh spices.", price: 16.99, img: "img/fish-vindaloo.webp", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 99, name: "Fish or shrimp saag", description: "Shrimp or salmon cooked with mildly spiced spinach and touch of cream .", price: 16.99, img: "img/Fish-Sagwala.jpg", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 100, name: "Fish or shrimp korma ", description: "Shrimp or salmon cooked in creamy sauce with cashews.", price: 16.99, img: "img/fish-korma.webp", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
+  { id: 95, name: "Fish or shrimp curry ", description: " Shrimp or salmon cooked in a mildly spices sauce.", price: 16.99, img: "", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 96, name: "Fish or shrimp tikka masala ", description: "Shrimp or salmon cooked with spices in a light cream sauce.", price: 16.99, img: "", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 97, name: "Butter shrimp or fish ", description: "Shrimp or salmon cooked in a rich sauce with mild spices.", price: 16.99, img: "", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 98, name: "Fish or shrimp vindaloo", description: "Shrimp or salmon cooked in tangy tomato and curry saice with cubed potatoes and fresh spices.", price: 16.99, img: "", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 99, name: "Fish or shrimp saag", description: "Shrimp or salmon cooked with mildly spiced spinach and touch of cream .", price: 16.99, img: "", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  { id: 100, name: "Fish or shrimp korma ", description: "Shrimp or salmon cooked in creamy sauce with cashews.", price: 16.99, img: "", hasSpicyOption: true, category: "seafood", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
 
 
 
@@ -167,10 +153,6 @@ export const defaultMenuItems = [
   // { id: 104, name: "Lamb chilli", description: "", price: 14.99, img: "img/lamb-chilli.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
   // { id: 105, name: "Wok-Tossed chicken fried rice", description: "Basmati rice sauteed with chicken cubes, carrots,cabbage,bell pappeer and garnish with spring onion.", price: 9.99, img: "img/chicken-fried-rice.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
   // { id: 106, name: "Wok-Tossed Egg Fried Rice", description: "Basmati rice sauteed with Eggs, carrots,cabbage,bell pappeer and garnish with spring onion.", price: 10.99, img: "img/EggFriedRice.webp", hasSpicyOption: true, category: "indo-chinese", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
-
-
-
-
 
 
   { id: 107, name: "Mango lassi ", description: "A refreshing yogurt drink,with and sugar.", price: 4.99, img: "img/Mangolassi.jpg", hasSpicyOption: false, category: "cold-beverages", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food"},
@@ -199,7 +181,7 @@ export const defaultMenuItems = [
   { id: 126, name: "Badam kheer", description: "Homemade rice pudding flavored with cardamom", price: 3.99, img: "img/Badamkheer.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
   { id: 127, name: "Gajar halwa", description: "Carrot halwa is a classic sweet dish made with carrot,sugar,card-amom powder and milk", price: 4.99, img: "img/Gajarhalwa.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
   { id: 128, name: "Kulfi ", description: "Indian style ice cream with nutty taste of pistachios,almonds and touch of rosewater", price: 3.99, img: "img/Kulfi.jpg", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 129, name: "Pishtasho kulfi", description: "", price: 3.99, img: "img/pistakulfi.webp", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  // { id: 129, name: "Pishtasho kulfi", description: "", price: 3.99, img: "img/pistakulfi.webp", hasSpicyOption: false, category: "desserts", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
 
 
   { id: 130, name: "Raita", description: "Homemade yogurt with cucumber, potatoes and mild spice", price: 2.99, img: "img/Raita.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
@@ -208,7 +190,7 @@ export const defaultMenuItems = [
   { id: 133, name: "Tamred chutney", description: "", price: 1.99, img: "img/Tamarindchutney.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
   { id: 134, name: "Indian pickle ( achar )", description: "", price: 1.99, img: "img/Indianpickle(Achar).jpg", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
   { id: 135, name: "Mango chutney", description: "", price: 2.99, img: "img/MangoChutney.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
-  { id: 136, name: "Coconut chutney", description: "", price: 2.99, img: "img/coconut-chutner.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
+  // { id: 136, name: "Coconut chutney", description: "", price: 2.99, img: "img/coconut-chutner.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
   { id: 137, name: "House Green salad", description: "", price: 5.99, img: "img/HouseGreensalad.jpg", hasSpicyOption: false, category: "salad", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ],type: "food" },
   
   
@@ -396,8 +378,8 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
   return (
     <>
       <div className="chefs-special-card">
-        <div className="chefs-special-image-wrapper">
-          <img className="chefs-special-image" src={item.img} alt={item.name} />
+        <div className={`chefs-special-image-wrapper${!item.img ? ' no-image' : ''}`}>
+          {item.img ? <img className="chefs-special-image" src={item.img} alt={item.name} /> : null}
           {/* Veg/Non-Veg Badge */}
           {(item.isVeg !== undefined) && (
             <span className={item.isVeg ? 'chefs-special-veg-badge' : 'chefs-special-meat-badge'}>
@@ -521,8 +503,8 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
 
             {/* Content – image and body scroll together */}
             <div className="modal-contentt">
-              <div className="ingredients-modal-dish-image-wrap">
-                <img src={item.img} alt={item.name} className="dish-thumbnail" />
+              <div className={`ingredients-modal-dish-image-wrap${!item.img ? ' no-image' : ''}`}>
+                {item.img ? <img src={item.img} alt={item.name} className="dish-thumbnail" /> : null}
               </div>
               <div className="ingredients-section">
                 <div className="dish-details mb-3">
@@ -1365,8 +1347,8 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
         {/* Scrollable Content */}
         <div className="customize-modal-scrollable">
           {/* Dish Image */}
-          <div className="dish-image-container">
-            <img src={item.img} alt={item.name} className="dish-image" />
+          <div className={`dish-image-container${!item.img ? ' no-image' : ''}`}>
+            {item.img ? <img src={item.img} alt={item.name} className="dish-image" /> : null}
               </div>
 
           {/* Dietary + Price */}
@@ -2696,7 +2678,7 @@ useEffect(() => {
               </p>
             </div>
             <div className="row g-4">
-              <div className="col-lg-4 col-md-6">
+              {/* <div className="col-lg-4 col-md-6">
                 <div className="special-offer-card bg-gradient-to-br from-maroon to-maroon-dark ">
                   <div className="special-offer-badge">20% OFF</div>
                   <div className="special-offer-icon">
@@ -2714,8 +2696,8 @@ useEffect(() => {
                     View Menu
                   </button>
                 </div>
-              </div>
-              <div className="col-lg-4 col-md-6">
+              </div> */}
+              {/* <div className="col-lg-4 col-md-6">
                 <div className="special-offer-card special-offer-card-golden to-gold-dark from-gold bg-gradient-to-br">
                   <div className="special-offer-badge special-offer-badge-golden">15% OFF</div>
                   <div className="special-offer-icon special-offer-icon-dark">
@@ -2733,7 +2715,7 @@ useEffect(() => {
                     View Menu
                   </button>
                 </div>
-              </div>
+              </div> */}
               <div className="col-lg-4 col-md-6">
                 <div className="special-offer-card  bg-gradient-to-br from-maroon to-maroon-dark">
                   <div className="special-offer-badge">10% OFF</div>
@@ -2742,27 +2724,27 @@ useEffect(() => {
                   </div>
                   <h3 className="special-offer-card-title">Lunch Special</h3>
                   <p className="special-offer-card-description">
-                    Combo meals starting from $12.99
+                    Everyday lunch special buffet
                   </p>
                   <div className="special-offer-validity">
                     <i className="far fa-clock me-2"></i>
-                    <span>Monday to Friday, 11 AM - 3 PM</span>
+                    <span>Everyday, 11 AM - 3 PM</span>
                   </div>
-                  <button className="special-offer-button special-offer-button-light">
+                  {/* <button className="special-offer-button special-offer-button-light">
                     View Menu
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Why Choose Sang Eat Section */}
+        {/* Why Choose SangEat Section */}
         <div className="why-choose-section">
           <div className="container py-5">
             <div className="row">
               <div className="col-12 text-center mb-5">
-                <h2 className="why-choose-title">Why Choose Sang Eat</h2>
+                <h2 className="why-choose-title">Why Choose SangEat</h2>
                 <p className="why-choose-subtitle">Experience the perfect blend of tradition and innovation</p>
               </div>
             </div>
@@ -4584,10 +4566,10 @@ useEffect(() => {
                 <div className="our-story-content">
                   <h2 className="our-story-title">Our Story</h2>
                   <p className="our-story-text">
-                    Sang Eat was born from a passion for authentic Indian cuisine and a desire to bring the royal flavors of India to food lovers everywhere. Our journey began over 15 years ago when our founder, a master chef from Mumbai, decided to share the rich culinary heritage of India with the world.
+                    SangEat was born from a passion for authentic Indian cuisine and a desire to bring the royal flavors of India to food lovers everywhere. Our journey began over 15 years ago when our founder, a master chef from Mumbai, decided to share the rich culinary heritage of India with the world.
                   </p>
                   <p className="our-story-text">
-                    Every dish at Sangeet tells a story - from the aromatic spices sourced directly from India to the traditional cooking methods passed down through generations. We believe that food is not just nourishment, but an experience that brings people together and creates lasting memories.
+                    Every dish at SangEat tells a story - from the aromatic spices sourced directly from India to the traditional cooking methods passed down through generations. We believe that food is not just nourishment, but an experience that brings people together and creates lasting memories.
                   </p>
                   <p className="our-story-text">
                     Our commitment to authenticity, quality, and excellence has made us a beloved destination for those seeking the true taste of India in an elegant, royal setting.
@@ -4642,21 +4624,21 @@ useEffect(() => {
                       <i className="fas fa-medal me-2"></i>Head Chef
                   </div>
                   </div>
-                  <h3 className="chef-name">Chef Rajesh Kumar</h3>
+                  <h3 className="chef-name">Chef Ranjit Singh</h3>
                   <div className="chef-details">
                     <span className="chef-experience">
-                      <i className="fas fa-clock me-1"></i>20+ Years
+                      <i className="fas fa-clock me-1"></i>13+ Years of Experience
                     </span>
-                    <span className="chef-separator">•</span>
-                    <span className="chef-cuisine">North Indian Cuisine</span>
+                    {/* <span className="chef-separator">•</span>
+                    <span className="chef-cuisine">North Indian Cuisine</span> */}
                 </div>
                   <p className="chef-description">
                     Master chef from Delhi with expertise in traditional tandoor cooking and royal Mughlai dishes.
                   </p>
-                  <div className="chef-awards">
+                  {/* <div className="chef-awards">
                     <span className="award-badge">Michelin Star Experience</span>
                     <span className="award-badge">Master Chef India Winner</span>
-              </div>
+              </div> */}
                   </div>
                   </div>
               <div className="col-lg-4 col-md-6">
@@ -4664,24 +4646,24 @@ useEffect(() => {
                   <div className="chef-image-wrapper">
                     <img className="chef-image" src="img/chef8.jpg" alt="Chef Priya Sharma" />
                     <div className="chef-role-badge">
-                      <i className="fas fa-medal me-2"></i>Sous Chef
+                      <i className="fas fa-medal me-2"></i>Chef
                 </div>
               </div>
-                  <h3 className="chef-name">Chef Priya Sharma</h3>
+                  <h3 className="chef-name">Chef Lakhwinder Singh</h3>
                   <div className="chef-details">
                     <span className="chef-experience">
-                      <i className="fas fa-clock me-1"></i>15+ Years
+                      <i className="fas fa-clock me-1"></i>5+ Years of Experience
                     </span>
-                    <span className="chef-separator">•</span>
-                    <span className="chef-cuisine">South Indian & Vegetarian</span>
+                    {/* <span className="chef-separator">•</span>
+                    <span className="chef-cuisine">South Indian & Vegetarian</span> */}
                   </div>
                   <p className="chef-description">
                     Expert in authentic South Indian flavors and innovative vegetarian cuisine, bringing traditional recipes to life.
                   </p>
-                  <div className="chef-awards">
+                  {/* <div className="chef-awards">
                     <span className="award-badge">Best Vegetarian Chef Award</span>
                     <span className="award-badge">Regional Cuisine Expert</span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="col-lg-4 col-md-6">
@@ -4689,24 +4671,24 @@ useEffect(() => {
                   <div className="chef-image-wrapper">
                     <img className="chef-image" src="img/chef7.jpg" alt="Chef Arjun Patel" />
                     <div className="chef-role-badge">
-                      <i className="fas fa-medal me-2"></i>Pastry Chef
+                      <i className="fas fa-medal me-2"></i>Chef
                   </div>
                   </div>
-                  <h3 className="chef-name">Chef Arjun Patel</h3>
+                  <h3 className="chef-name">Chef Narinder Singh</h3>
                   <div className="chef-details">
                     <span className="chef-experience">
-                      <i className="fas fa-clock me-1"></i>12+ Years
+                      <i className="fas fa-clock me-1"></i>5+ Years of  Experience
                     </span>
-                    <span className="chef-separator">•</span>
-                    <span className="chef-cuisine">Indian Desserts</span>
+                    {/* <span className="chef-separator">•</span>
+                    <span className="chef-cuisine">Indian Desserts</span> */}
                   </div>
                   <p className="chef-description">
                     Specialized in traditional Indian sweets and modern dessert fusion, creating unforgettable sweet experiences.
                   </p>
-                  <div className="chef-awards">
+                  {/* <div className="chef-awards">
                     <span className="award-badge">Dessert Innovation Award</span>
                     <span className="award-badge">Sweet Master</span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -4784,7 +4766,7 @@ useEffect(() => {
                   <div className="testimonial-quote-wrapper">
                     {/* <span className="testimonial-quote-mark">"</span> */}
                     <p className="testimonial-quote">
-                      As someone who loves Indian cuisine, Sangeet exceeded all expectations. The naan bread is to die for!
+                      As someone who loves Indian cuisine, SangEat exceeded all expectations. The naan bread is to die for!
                     </p>
                     </div>
                   <h5 className="testimonial-name">Sarah Johnson</h5>
