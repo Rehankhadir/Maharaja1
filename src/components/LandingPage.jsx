@@ -387,7 +387,7 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
             </span>
           )}
           {/* Ingredients Toggle Button */}
-          {item.ingredients && item.ingredients.length > 0 && (
+          {/* {item.ingredients && item.ingredients.length > 0 && (
             <button 
               className="ingredients-toggle-btn btn-primary"
               onClick={(e) => {
@@ -398,7 +398,7 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
             >
               <i className="fas fa-list-alt"></i>
             </button>
-          )}
+          )} */}
         </div>
         <div className="chefs-special-card-content">
           <h3 className="chefs-special-dish-title">{item.name}</h3>
@@ -1242,6 +1242,7 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
   const [selectedSpicyLevel, setSelectedSpicyLevel] = useState(spicyLevels[0]); // Default to Mild
   const [selectedExtras, setSelectedExtras] = useState([]);
   const [removedIngredients, setRemovedIngredients] = useState([]);
+  const [specialInstructions, setSpecialInstructions] = useState("");
   
   // Reset state when modal opens/closes
   useEffect(() => {
@@ -1249,6 +1250,7 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
       setSelectedSpicyLevel(spicyLevels[0]);
       setSelectedExtras([]);
       setRemovedIngredients([]);
+      setSpecialInstructions("");
     }
   }, [show]);
 
@@ -1290,7 +1292,8 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
     onConfirm({
       spicyLevel: selectedSpicyLevel,
       extras: selectedExtras,
-      removedIngredients: removedIngredients
+      removedIngredients: removedIngredients,
+      instructions: specialInstructions.trim()
     });
     onClose();
   };
@@ -1332,39 +1335,47 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
 
   return (
     <div className="customize-modal-overlay" onClick={handleOverlayClick}>
-      <div 
-        className="customize-modal-content" 
+      <div
+        className="customize-modal-content"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="customize-modal-header">
           <h2 className="dish-name">{item.name}</h2>
-          <button type="button" className="btn-close-customize" onClick={onClose}>
+          <button
+            type="button"
+            className="btn-close-customize"
+            onClick={onClose}
+          >
             <i className="fas fa-times"></i>
           </button>
         </div>
-        
+
         {/* Scrollable Content */}
         <div className="customize-modal-scrollable">
           {/* Dish Image */}
-          <div className={`dish-image-container${!item.img ? ' no-image' : ''}`}>
-            {item.img ? <img src={item.img} alt={item.name} className="dish-image" /> : null}
-              </div>
+          <div
+            className={`dish-image-container${!item.img ? " no-image" : ""}`}
+          >
+            {item.img ? (
+              <img src={item.img} alt={item.name} className="dish-image" />
+            ) : null}
+          </div>
 
           {/* Dietary + Price */}
           <div className="dietary-row">
             <div className="dietary-tag">
-              <i className={`fas ${isVegetarian ? 'fa-leaf' : 'fa-drumstick-bite'}`}></i>
-              <span>{isVegetarian ? 'Vegetarian' : 'Non-Vegetarian'}</span>
-                </div>
-            <div className="dish-price">${item.price}</div>
+              <i
+                className={`fas ${isVegetarian ? "fa-leaf" : "fa-drumstick-bite"}`}
+              ></i>
+              <span>{isVegetarian ? "Vegetarian" : "Non-Vegetarian"}</span>
             </div>
-            
+            <div className="dish-price">${item.price}</div>
+          </div>
+
           {/* Dish Description */}
           {item.description && (
-            <div className="dish-description">
-              {item.description}
-                </div>
+            <div className="dish-description">{item.description}</div>
           )}
 
           {/* Customize Spice Level Section */}
@@ -1372,59 +1383,96 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
             <div className="section-header">
               <h3>Customize Spice Level</h3>
               <span className="required-badge">Required</span>
-                </div>
+            </div>
             <p className="section-instruction">
-              Choose your preferred spice intensity. You can customize this for any dish.
+              Choose your preferred spice intensity. You can customize this for
+              any dish.
             </p>
 
             <div className="spice-options-horizontal">
-                {spicyLevels.map(level => (
+              {spicyLevels.map((level) => (
                 <button
-                    key={level.id}
-                  className={`spice-option-btn level-${level.id} ${selectedSpicyLevel.id === level.id ? 'selected' : ''} ${level.id === 6 ? 'disabled' : ''}`}
+                  key={level.id}
+                  className={`spice-option-btn level-${level.id} ${selectedSpicyLevel.id === level.id ? "selected" : ""} ${level.id === 6 ? "disabled" : ""}`}
                   onClick={() => level.id !== 6 && setSelectedSpicyLevel(level)}
                   disabled={level.id === 6}
-                    style={{
-                    backgroundColor: selectedSpicyLevel.id === level.id ? getSpicyLevelColor(level.id) : 'rgba(255,255,255,0.05)',
-                    borderColor: selectedSpicyLevel.id === level.id ? getSpicyLevelColor(level.id) : '#444',
-                    color: selectedSpicyLevel.id === level.id ? '#fff' : (level.id === 6 ? '#666' : getSpicyLevelColor(level.id)),
-                    opacity: level.id === 6 ? 0.35 : 1
+                  style={{
+                    backgroundColor:
+                      selectedSpicyLevel.id === level.id
+                        ? getSpicyLevelColor(level.id)
+                        : "rgba(255,255,255,0.05)",
+                    borderColor:
+                      selectedSpicyLevel.id === level.id
+                        ? getSpicyLevelColor(level.id)
+                        : "#444",
+                    color:
+                      selectedSpicyLevel.id === level.id
+                        ? "#fff"
+                        : level.id === 6
+                          ? "#666"
+                          : getSpicyLevelColor(level.id),
+                    opacity: level.id === 6 ? 0.35 : 1,
                   }}
                 >
                   <span className="spice-icon">{getSpicyIcon(level.id)}</span>
                   <span className="spice-name">{level.name}</span>
                 </button>
               ))}
-                      </div>
-            
+            </div>
+
             <div className="spice-notes">
               <p>Note: Some spice levels may not be available for this dish.</p>
-              <p>Select your preferred spice level. This customization is available for all dishes.</p>
-                      </div>
-                    </div>
-                    
+              <p>
+                Select your preferred spice level. This customization is
+                available for all dishes.
+              </p>
+            </div>
+          </div>
+
           {/* Customize Your Dish Section */}
           <div className="customize-section">
-            <h3 style={{color: 'rgb(245 245 245/var(--tw-text-opacity,1))', fontFamily: '"Playfair Display","Playfair Display Fallback", serif', fontSize: '1.125rem',lineHeight: '1.75rem'}}>Customize Your Dish</h3>
-            
+            <h3
+              style={{
+                color: "rgb(245 245 245/var(--tw-text-opacity,1))",
+                fontFamily:
+                  '"Playfair Display","Playfair Display Fallback", serif',
+                fontSize: "1.125rem",
+                lineHeight: "1.75rem",
+              }}
+            >
+              Customize Your Dish
+            </h3>
+
             {/* Add Extras */}
             <div className="customize-subsection">
               <h4>Add Extras</h4>
               <div className="customize-options">
-                {availableExtras.map(extra => (
+                {availableExtras.map((extra) => (
                   <button
                     key={extra}
-                    className={`customize-option-btn ${selectedExtras.includes(extra) ? 'selected' : ''}`}
+                    className={`customize-option-btn ${selectedExtras.includes(extra) ? "selected" : ""}`}
                     onClick={() => toggleExtra(extra)}
                   >
                     {extra}
                   </button>
-                        ))}
-                      </div>
-                    </div>
-                    
-            {/* Remove Ingredients */}
+                ))}
+              </div>
+            </div>
+
+            {/* Special Instructions */}
             <div className="customize-subsection">
+              <h4>Special Instructions</h4>
+              <textarea
+                className="customize-instructions-textarea"
+                placeholder="e.g. No onions, extra sauce on the side, allergies..."
+                value={specialInstructions}
+                onChange={(e) => setSpecialInstructions(e.target.value)}
+                rows={3}
+              />
+            </div>
+
+            {/* Remove Ingredients */}
+            {/* <div className="customize-subsection">
               <h4>Remove Ingredients</h4>
               <div className="customize-options">
                 {availableIngredients.map(ingredient => (
@@ -1437,22 +1485,16 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
                   </button>
                 ))}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
-        
+
         {/* Footer */}
         <div className="customize-modal-footer">
-          <button 
-            className="btn-add-to-cart"
-            onClick={handleConfirm}
-          >
+          <button className="btn-add-to-cart" onClick={handleConfirm}>
             Add to Cart - ${item.price}
           </button>
-          <button 
-            className="btn-close-modal"
-            onClick={onClose}
-          >
+          <button className="btn-close-modal" onClick={onClose}>
             Close
           </button>
         </div>
@@ -1827,7 +1869,8 @@ const handleMenuTypeChange = (type) => {
 
 
 // In addToCart function, you might want to specify which price is being added
-const addToCart = (item, spicyLevel = null, selectedPrice = 'price') => {
+// customizationOptions: { extras, removedIngredients, instructions } from SpicyLevelModal
+const addToCart = (item, spicyLevel = null, selectedPrice = 'price', customizationOptions = null) => {
   const selectedPriceValue = selectedPrice === 'price2' ? item.price2 : item.price;
   
   setCart((prevCart) => {
@@ -1851,7 +1894,12 @@ const addToCart = (item, spicyLevel = null, selectedPrice = 'price') => {
         qty: 1,
         spicyLevel: item.hasSpicyOption ? (spicyLevel || spicyLevels[2]) : null,
         selectedPrice: selectedPrice,
-        finalPrice: selectedPriceValue
+        finalPrice: selectedPriceValue,
+        ...(customizationOptions && {
+          extras: customizationOptions.extras,
+          removedIngredients: customizationOptions.removedIngredients,
+          instructions: customizationOptions.instructions
+        })
       };
       return [...prevCart, cartItem];
     }
@@ -3079,7 +3127,10 @@ useEffect(() => {
         item={selectedItem}
         onConfirm={(customization) => {
           if (selectedItem) {
-            addToCart(selectedItem, customization?.spicyLevel || customization, selectedItem.selectedPrice); 
+            const opts = customization && typeof customization === 'object' && !customization.id
+              ? { extras: customization.extras, removedIngredients: customization.removedIngredients, instructions: customization.instructions }
+              : null;
+            addToCart(selectedItem, customization?.spicyLevel || customization, selectedItem.selectedPrice, opts);
           }
         }}
       />
@@ -3136,6 +3187,11 @@ useEffect(() => {
         {item.selectedPrice === 'price2' && (
           <small className="text-success d-block">
             <i className="fas fa-wine-bottle me-1"></i> Bottle
+          </small>
+        )}
+        {item.instructions && (
+          <small className="text-muted d-block">
+            <i className="fas fa-comment-alt me-1"></i> {item.instructions}
           </small>
         )}
         <div className="d-flex align-items-center">
@@ -3803,16 +3859,6 @@ useEffect(() => {
                             </div>
                           </div>
 
-                          {/* Suggestions */}
-                          <div className="suggestions mb-4">
-                    <h6 className="mb-3">Any suggestions? We will pass it on...</h6>
-                            <textarea
-                              className="form-control"
-                              placeholder="Add preparation instructions (if any)"
-                              rows="3"
-                            ></textarea>
-                          </div>
-
                           <div className="d-flex justify-content-start mt-4">
                             <button
                               className="btn btn-outline-secondary"
@@ -3880,6 +3926,13 @@ useEffect(() => {
                                           <i className="fas fa-pepper-hot me-1"></i>
                                           {item.spicyLevel.name} Spice
                                         </span>
+                                      </div>
+                                    )}
+
+                                    {item.instructions && (
+                                      <div className="mb-2 small text-muted">
+                                        <i className="fas fa-comment-alt me-1"></i>
+                                        {item.instructions}
                                       </div>
                                     )}
                                     
