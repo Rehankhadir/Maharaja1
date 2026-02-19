@@ -8,11 +8,15 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="robots" content="index, follow" />
+    <meta name="description" content="SangEat – Authentic Indian restaurant in Champaign. Savor freshly prepared dishes. Dine in, takeout, or delivery. Order online or book a table." />
+    <meta name="keywords" content="Indian restaurant, Champaign, SangEat, Indian food, Neil Street, Champaign IL, 61820, dine in, takeout, delivery, book a table" />
+    <meta name="geo.region" content="US-IL" />
+    <meta name="geo.placename" content="Champaign" />
+    <meta name="geo.position" content="40.1164;-88.2434" />
+    <meta name="ICBM" content="40.1164, -88.2434" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="%PUBLIC_URL%/sitemap.xml" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -51,7 +55,57 @@
     <link href="css/style.css" rel="stylesheet">
 
 
-    <title>React App</title>
+    <title>SangEat | Authentic Indian Restaurant in Champaign</title>
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="SangEat | Authentic Indian Restaurant in Champaign" />
+    <meta property="og:description" content="Savor the rich flavors of India with our freshly prepared dishes. Dine in, takeout, or delivery." />
+    <meta property="og:image" content="%PUBLIC_URL%/img/logo2.png" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:street-address" content="1905 South Neil Street" />
+    <meta property="og:locality" content="Champaign" />
+    <meta property="og:region" content="Illinois" />
+    <meta property="og:postal-code" content="61820" />
+    <meta property="og:country-name" content="United States" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="SangEat | Authentic Indian Restaurant in Champaign" />
+    <meta name="twitter:description" content="Savor the rich flavors of India with our freshly prepared dishes. Dine in, takeout, or delivery." />
+    <!-- JSON-LD Restaurant with full address for local SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "name": "SangEat",
+      "description": "Authentic Indian restaurant in Champaign, Illinois. Savor freshly prepared dishes at 1905 South Neil Street. Dine in, takeout, or delivery.",
+      "servesCuisine": "Indian",
+      "url": "https://www.sangeat.com",
+      "image": "img/logo2.png",
+      "priceRange": "$$",
+      "acceptsReservations": true,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1905 South Neil Street",
+        "addressLocality": "Champaign",
+        "addressRegion": "IL",
+        "postalCode": "61820",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 40.1164,
+        "longitude": -88.2434
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Champaign",
+        "containedInPlace": {
+          "@type": "State",
+          "name": "Illinois"
+        }
+      }
+    }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

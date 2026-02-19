@@ -3,6 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import './LandingPage.css';
 import './Booking.css';
+import { setPageSEO } from '../utils/usePageSEO';
 
 const TIME_SLOTS = [
   '11:00', '11:30', '12:00', '12:30', '13:00',
@@ -22,6 +23,14 @@ const Booking = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    setPageSEO({
+      title: 'Book a Table | SangEat Restaurant',
+      description: 'Reserve a table at SangEat – authentic Indian restaurant in Champaign. Book online for dine-in.'
+    });
+    return () => setPageSEO({});
   }, []);
 
   const [selectedTime, setSelectedTime] = useState('');

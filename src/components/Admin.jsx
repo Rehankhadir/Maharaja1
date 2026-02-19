@@ -5,6 +5,7 @@ import './LandingPage.css';
 import { defaultMenuItems } from './LandingPage';
 import Header from './Header';
 import Footer from './Footer';
+import { setPageSEO } from '../utils/usePageSEO';
 
 // Get initial menu items from localStorage or use defaults
 const getInitialMenuItems = () => {
@@ -97,6 +98,14 @@ const Admin = () => {
   // Scroll to top when navigating to Admin (e.g. from header or footer)
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    setPageSEO({
+      title: 'Admin | SangEat Restaurant',
+      description: 'SangEat restaurant admin – manage menu items and settings.'
+    });
+    return () => setPageSEO({});
   }, []);
 
   // Scroll to top when admin logs in (dashboard UI is shown)

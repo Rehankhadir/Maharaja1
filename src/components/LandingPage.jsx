@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Header from './Header';
 import Footer from './Footer';
+import { setPageSEO } from '../utils/usePageSEO';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -1548,6 +1549,15 @@ const [searchQuery, setSearchQuery] = useState('');
   useEffect(() => {
     localStorage.setItem('menuItems', JSON.stringify(menuItems));
   }, [menuItems]);
+
+  // Page SEO (title and meta description)
+  useEffect(() => {
+    setPageSEO({
+      title: 'SangEat | Authentic Indian Restaurant in Champaign',
+      description: 'SangEat – Authentic Indian restaurant in Champaign. Savor freshly prepared dishes. Dine in, takeout, or delivery. Order online or book a table.'
+    });
+    return () => setPageSEO({});
+  }, []);
   
   // Booking modal state
   const [showBookingModal, setShowBookingModal] = useState(false);
@@ -2577,7 +2587,7 @@ useEffect(() => {
           />
 
           {/* Hero Section - Image Style */}
-          <div className="hero-section-image-exact" id="home">
+          <div className="hero-section-image-exact" id="home" aria-label="Hero">
             <div className="hero-background-layers">
               <img 
                 alt="Authentic Indian Food" 
@@ -2658,7 +2668,7 @@ useEffect(() => {
         </div>
 
         {/* Chef's Special Section */}
-        <div className="chefs-special-section">
+        <div className="chefs-special-section" aria-label="Chef's Special">
           <div className="container-fluid py-5">
             <div className="text-center mb-5">
               <h2 className="chefs-special-title"> Chef's Special </h2>
@@ -2717,7 +2727,7 @@ useEffect(() => {
         </div>
 
         {/* Special Offers Section */}
-        <div className="special-offers-section">
+        <div className="special-offers-section" aria-label="Special Offers">
           <div className="container-fluid py-5">
             <div className="text-center mb-5">
               <h2 className="special-offers-title">Special Offers</h2>
@@ -2788,7 +2798,7 @@ useEffect(() => {
         </div>
 
         {/* Why Choose SangEat Section */}
-        <div className="why-choose-section">
+        <div className="why-choose-section" aria-label="Why Choose SangEat">
           <div className="container py-5">
             <div className="row">
               <div className="col-12 text-center mb-5">
@@ -2856,7 +2866,7 @@ useEffect(() => {
                       className="img-fluid rounded w-100 wow zoomIn"
                       data-wow-delay="0.1s"
                       src="img/about-1.jpg"
-                      alt=""
+                      alt="SangEat restaurant interior and dining ambiance"
                       />
                     </div>
                   <div className="col-6 text-start">
@@ -2864,7 +2874,7 @@ useEffect(() => {
                       className="img-fluid rounded w-75 wow zoomIn "
                       data-wow-delay="0.3s"
                       src="img/about-2.jpg"
-                      alt=""
+                      alt="Indian cuisine dishes at SangEat"
                       style={{ marginTop: "25%" }}
                     />
                   </div>
@@ -2873,7 +2883,7 @@ useEffect(() => {
                       className="img-fluid rounded w-75 wow zoomIn "
                         data-wow-delay="0.5s"
                         src="img/about-3.jpg"
-                      alt=""
+                      alt="Fresh ingredients and authentic Indian cooking"
                       />
                     </div>
                   <div className="col-6 text-end">
@@ -2881,7 +2891,7 @@ useEffect(() => {
                       className="img-fluid rounded w-100 wow zoomIn "
                         data-wow-delay="0.7s"
                         src="img/about-4.jpg"
-                      alt=""
+                      alt="SangEat dining experience and royal Indian flavors"
                       />
                   </div>
                 </div>
@@ -2890,14 +2900,14 @@ useEffect(() => {
                   <h5 className="section-title ff-secondary text-start text-primary fw-normal">
                     About Us
                   </h5>
-                <h1 className="mb-4">
+                <h2 className="mb-4">
                     Welcome to{" "}
                     <i className="fa fa-utensils text-primary me-2"></i>
                   SangEat
-                  </h1>
-                <h1 className="mb-4">
+                  </h2>
+                <h2 className="mb-4">
                     An Experience of Royal Indian Dining
-                </h1>
+                </h2>
                 <div className="divider"></div>
                 <p className="mb-4" style={{color: '#000'}}>
                     At SangEat, we bring the flavors of royal Indian cuisine to
@@ -2920,12 +2930,14 @@ useEffect(() => {
                 <div className="row g-4 mb-4">
                     <div className="col-sm-6">
                     <div className="d-flex align-items-center border-start border-5 border-primary px-3">
-                        <h1
+                        <span
                         className="flex-shrink-0 display-5 text-primary mb-0"
                           data-toggle="counter-up"
+                          role="text"
+                          aria-label="15 years"
                         >
                           15
-                        </h1>
+                        </span>
                         <div className="ps-4">
                         <p className="mb-0"  style={{color: '#000'}}>Years of</p>
                         <h6 className="text-uppercase mb-0">Experience</h6>
@@ -2934,12 +2946,14 @@ useEffect(() => {
                     </div>
                     <div className="col-sm-6">
                     <div className="d-flex align-items-center border-start border-5 border-primary px-3">
-                        <h1
+                        <span
                         className="flex-shrink-0 display-5 text-primary mb-0"
                           data-toggle="counter-up"
+                          role="text"
+                          aria-label="50 chefs"
                         >
                           50
-                        </h1>
+                        </span>
                         <div className="ps-4">
                         <p className="mb-0"  style={{color: '#000'}}>Popular</p>
                         <h6 className="text-uppercase mb-0">Master Chefs</h6>
@@ -3099,7 +3113,7 @@ useEffect(() => {
 </div>
 
 {/* Gallery Section */}
-<div className="gallery-section">
+<div className="gallery-section" aria-label="Gallery">
   <div className="container py-5">
     <div className="text-center mb-5">
       <h2 className="gallery-title">Our Gallery</h2>
@@ -4374,7 +4388,7 @@ useEffect(() => {
         <h5 className="section-title ff-secondary text-start text-primary fw-normal">
           Reservation
         </h5>
-        <h1 className="text-white mb-4">Book A Table Online</h1>
+        <h2 className="text-white mb-4">Book A Table Online</h2>
         <p className="text-white mb-4">Experience fine dining with our easy online booking system</p>
         
         <div className="reservation-features mb-4">
@@ -4663,7 +4677,7 @@ useEffect(() => {
               {/* <div className="chef-hat-icon mb-3">
                 <span style={{color: '#FFD700', fontSize: '3rem', display: 'inline-block'}}>👨‍🍳</span>
               </div> */}
-              <h1 className="master-chefs-title">Meet Our Master Chefs</h1>
+              <h2 className="master-chefs-title">Meet Our Master Chefs</h2>
               <p className="master-chefs-subtitle">
                 The culinary artists behind every dish, bringing authentic Indian flavors to your table
               </p>
@@ -4754,7 +4768,7 @@ useEffect(() => {
         <div className="testimonials-section" id="testimonials">
           <div className="container py-3">
             <div className="text-center mb-5">
-              <h1 className="testimonials-title">What Our Guests Say</h1>
+              <h2 className="testimonials-title">What Our Guests Say</h2>
               <p className="testimonials-subtitle">
                 Real experiences from our valued customers
               </p>
@@ -4906,7 +4920,7 @@ useEffect(() => {
               <h5 className="section-title ff-secondary text-center text-primary fw-normal">
                 Contact Us
               </h5>
-              <h1 className="mb-3">Get In Touch</h1>
+              <h2 className="mb-3">Get In Touch</h2>
             </div>
             <div className="row g-4">
               <div className="col-12">
