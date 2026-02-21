@@ -3994,17 +3994,13 @@ useEffect(() => {
                             <span>${total}</span>
                           </div>
                           <div className="bill-item d-flex justify-content-between mb-2">
-                            <span>Delivery Fee | 6.0 kms</span>
-                            <span className="text-success">$30</span>
-                          </div>
-                          <div className="bill-item d-flex justify-content-between mb-2">
                             <span>GST & Restaurant Charges</span>
                             <span>${Math.round(total * 0.05)}</span>
                           </div>
                           <hr />
                           <div className="bill-total d-flex justify-content-between fw-bold fs-5 mb-3">
                             <span>TO PAY</span>
-                            <span>${(total + 30 + Math.round(total * 0.05)).toFixed(2)}</span>
+                            <span>${(total + Math.round(total * 0.05)).toFixed(2)}</span>
                           </div>
                           {checkoutStep === 3 && (
                             <button className="btn btn-success w-100 py-3 fw-bold" onClick={handlePlaceOrder}>
@@ -4340,7 +4336,7 @@ useEffect(() => {
           </div>
           <div className="detail-item">
             <span className="label">Total Amount:</span>
-            <span className="value">${total + 30 + Math.round(total * 0.05)}</span>
+            <span className="value">${total + Math.round(total * 0.05)}</span>
           </div>
         </div>
       </div>

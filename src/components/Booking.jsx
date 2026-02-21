@@ -5,11 +5,23 @@ import './LandingPage.css';
 import './Booking.css';
 import { setPageSEO } from '../utils/usePageSEO';
 
-const TIME_SLOTS = [
-  '11:00', '11:30', '12:00', '12:30', '13:00',
-  '13:30', '17:00', '17:30', '18:00', '18:30',
-  '19:00', '19:30', '20:00', '20:30', '21:00'
+const TIME_SLOTS_UNTIL_0930 = [
+  '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '01:00 PM',
+  '01:30 PM', '02:00 PM', '02:30 PM', '03:00 PM', '04:30 PM',
+  '05:00 PM', '05:30 PM', '06:00 PM', '06:30 PM', '07:00 PM', '07:30 PM',
+  '08:00 PM', '08:30 PM', '09:00 PM', '09:30 PM',
 ];
+const TIME_SLOTS_UNTIL_1030 = [
+  ...TIME_SLOTS_UNTIL_0930,
+  '10:00 PM', '10:30 PM',
+];
+
+const getTimeSlotsForDate = (dateStr) => {
+  if (!dateStr) return TIME_SLOTS_UNTIL_0930;
+  const d = new Date(dateStr + 'T12:00:00');
+  const day = d.getDay();
+  return (day === 5 || day === 6) ? TIME_SLOTS_UNTIL_1030 : TIME_SLOTS_UNTIL_0930;
+};
 
 const formatDisplayDate = (dateStr) => {
   if (!dateStr) return '';
@@ -19,7 +31,10 @@ const formatDisplayDate = (dateStr) => {
 
 const Booking = () => {
   const dateInputRef = useRef(null);
+  const timeDropdownRef = useRef(null);
+  const timeListRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState('');
+  const [timeDropdownOpen, setTimeDropdownOpen] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -40,6 +55,37 @@ const Booking = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [specialRequests, setSpecialRequests] = useState('');
   const [showConfirmation, setShowConfirmation] = useState(false);
+
+  useEffect(() => {
+    if (selectedTime && !getTimeSlotsForDate(selectedDate).includes(selectedTime)) {
+      setSelectedTime('');
+    }
+  }, [selectedDate, selectedTime]);
+
+  useEffect(() => {
+    if (!timeDropdownOpen) return;
+    const handleClickOutside = (e) => {
+      if (timeDropdownRef.current && !timeDropdownRef.current.contains(e.target)) {
+        setTimeDropdownOpen(false);
+      }
+    };
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') setTimeDropdownOpen(false);
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [timeDropdownOpen]);
+
+  useEffect(() => {
+    if (timeDropdownOpen && selectedTime && timeListRef.current) {
+      const active = timeListRef.current.querySelector('[data-selected="true"]');
+      active?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  }, [timeDropdownOpen, selectedTime]);
 
   const openDatePicker = () => {
     const el = dateInputRef.current;
@@ -133,23 +179,73 @@ const Booking = () => {
                 </div>
               </div>
 
-              <div className="booking-page-form-group">
-                <label className="booking-page-label">
+              <div className="booking-page-form-group booking-time-picker-wrap" ref={timeDropdownRef}>
+                <label className="booking-page-label" id="booking-time-label">
                   <i className="fas fa-clock booking-page-label-icon" aria-hidden="true" />
                   Select Time
                 </label>
-                <div className="booking-page-time-grid">
-                  {TIME_SLOTS.map((time) => (
+                {!selectedDate ? (
+                  <div className="booking-time-trigger booking-time-trigger--disabled" aria-disabled="true">
+                    <span className="booking-time-trigger-text">Select a date first</span>
+                    <i className="fas fa-chevron-down booking-time-trigger-icon" aria-hidden="true" />
+                  </div>
+                ) : (
+                  <>
+                    <input
+                      type="text"
+                      name="bookingTime"
+                      value={selectedTime}
+                      readOnly
+                      required
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      className="booking-time-hidden-input"
+                    />
                     <button
-                      key={time}
                       type="button"
-                      className={`booking-page-time-btn ${selectedTime === time ? 'active' : ''}`}
-                      onClick={() => setSelectedTime(time)}
+                      className={`booking-time-trigger ${timeDropdownOpen ? 'booking-time-trigger--open' : ''}`}
+                      onClick={() => setTimeDropdownOpen((open) => !open)}
+                      aria-haspopup="listbox"
+                      aria-expanded={timeDropdownOpen}
+                      aria-labelledby="booking-time-label"
+                      id="booking-time-trigger"
                     >
-                      {time}
+                      <span className="booking-time-trigger-text">
+                        {selectedTime || 'Choose time'}
+                      </span>
+                      <i className={`fas fa-chevron-down booking-time-trigger-icon ${timeDropdownOpen ? 'booking-time-trigger-icon--open' : ''}`} aria-hidden="true" />
                     </button>
-                  ))}
-                </div>
+                    {timeDropdownOpen && (
+                      <div
+                        className="booking-time-dropdown"
+                        role="listbox"
+                        aria-labelledby="booking-time-trigger"
+                        ref={timeListRef}
+                      >
+                        {getTimeSlotsForDate(selectedDate).map((time) => (
+                          <button
+                            key={time}
+                            type="button"
+                            role="option"
+                            aria-selected={selectedTime === time}
+                            data-selected={selectedTime === time}
+                            tabIndex={-1}
+                            className={`booking-time-option ${selectedTime === time ? 'booking-time-option--selected' : ''}`}
+                            onClick={() => {
+                              setSelectedTime(time);
+                              setTimeDropdownOpen(false);
+                            }}
+                          >
+                            <span className="booking-time-option-label">{time}</span>
+                            {selectedTime === time && (
+                              <i className="fas fa-check booking-time-option-check" aria-hidden="true" />
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
 
               <div className="booking-page-form-group">

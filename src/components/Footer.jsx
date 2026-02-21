@@ -36,8 +36,12 @@ const Footer = ({ onBookTable, scrollToSection: externalScrollToSection }) => {
             <p className="footer-text-color">Experience authentic Indian cuisine in an elegant, royal setting. Where tradition meets modern dining.</p>
             
             <div className="d-flex pt-2">
-              <Link className="btn btn-social" to="/">
-                <i className="fab fa-twitter footer-text-color"></i>
+              <Link className="btn btn-social" to="/" aria-label="X (Twitter)">
+                <span className="footer-x-logo footer-text-color">
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg>
+                </span>
               </Link>
               <Link className="btn btn-social" to="/">
                 <i className="fab fa-facebook-f footer-text-color"></i>
@@ -46,7 +50,7 @@ const Footer = ({ onBookTable, scrollToSection: externalScrollToSection }) => {
                 <i className="fab fa-youtube footer-text-color"></i>
               </Link>
               <Link className="btn btn-social" to="/">
-                <i className="fab fa-linkedin-in footer-text-color"></i>
+                <i className="fab fa-instagram footer-text-color"></i>
               </Link>
             </div>
           </div>
