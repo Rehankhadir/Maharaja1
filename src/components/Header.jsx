@@ -144,7 +144,7 @@ const Header = ({ cart = [], showAdminButton = true, onBookTable, scrollToSectio
                   🛒{" "} <span className="badge bg-light text-dark">{cart.length}</span>
                 </button>
               )}
-              {adminButton}
+              {/* {adminButton} */}
             </div>
           </div>
         </div>

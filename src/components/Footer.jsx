@@ -67,9 +67,9 @@ const Footer = ({ onBookTable, scrollToSection: externalScrollToSection }) => {
             <Link className="btn btn-link" to="/booking">
               Book A Table
             </Link>
-            <Link className="btn btn-link" to="/admin">
+            {/* <Link className="btn btn-link" to="/admin">
               Admin Panel
-            </Link>
+            </Link> */}
           </div>
           <div className="col-lg-4 col-md-6">
             <h4 className="ff-secondary text-start fw-normal mb-4"  style={{color: '#fff', fontFamily: `'Playfair Display', 'Georgia', serif`, fontSize: '1.125rem'}}>
