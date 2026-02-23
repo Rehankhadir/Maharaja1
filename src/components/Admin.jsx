@@ -357,6 +357,8 @@ const Admin = () => {
         <Header 
           cart={[]} 
           showAdminButton={true}
+          showCart={false}
+          isAdmin={true}
           scrollToSection={scrollToSection}
         />
         <div className="admin-login-container">
@@ -428,6 +430,8 @@ const Admin = () => {
       <Header 
         cart={[]} 
         showAdminButton={true}
+        showCart={false}
+        isAdmin={true}
         scrollToSection={scrollToSection}
       />
 

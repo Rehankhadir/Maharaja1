@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 
-const Header = ({ cart = [], showAdminButton = true, onBookTable, scrollToSection: externalScrollToSection }) => {
+const Header = ({ cart = [], showAdminButton = true, showCart = true, isAdmin = false, onBookTable, scrollToSection: externalScrollToSection }) => {
   const navigate = useNavigate();
 
   const closeNavbar = () => {
@@ -81,6 +81,7 @@ const Header = ({ cart = [], showAdminButton = true, onBookTable, scrollToSectio
             </h1> */}
             <img src="img/logo2.png" alt="SangEat" className="nav-logo-image" />
           </Link>
+          {!isAdmin && (
           <button
             className="navbar-toggler"
             type="button"
@@ -89,52 +90,43 @@ const Header = ({ cart = [], showAdminButton = true, onBookTable, scrollToSectio
           >
             <span className="fa fa-bars"></span>
           </button>
+          )}
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <div className="navbar-nav ms-auto py-0 align-items-center">
-              <button
-                type="button"
-                className="nav-item nav-link-redesign btn btn-link p-0 mobile-margin"
-                onClick={() => scrollToSection("home")}
-              >
-                Home
-              </button>
-              <button
-                type="button"
-                className="nav-item nav-link-redesign btn btn-link p-0 mobile-margin"
-                onClick={() => scrollToSection("about")}
-              >
-                About
-              </button>
-              {/* <button
-                type="button"
-                className="nav-item nav-link-redesign btn btn-link p-0 mobile-margin"
-                onClick={() => scrollToSection("order")}
-              >
-                Menu
-              </button> */}
-              {/* <button
-                type="button"
-                className="nav-item nav-link-redesign btn btn-link p-0 mobile-margin"
-                onClick={() => scrollToSection("contact")}
-              >
-                Visit
-              </button> */}
-              <button
-                type="button"
-                className="btn btn-view-menu mobile-margin"
-                onClick={() => scrollToSection("order")}
-              >
-                View Menu
-              </button>
-              <button
-                type="button"
-                className="nav-item nav-link-redesign btn btn-link py-2 px-2 mr-2 mobile-margin"
-                style={{ margin: "0px" }}
-                onClick={handleBookTable}
-              >
-                Book A Table
-              </button>
-              {cart && cart.length >= 0 && (
+              {!isAdmin && (
+                <>
+                  <button
+                    type="button"
+                    className="nav-item nav-link-redesign btn btn-link p-0 mobile-margin"
+                    onClick={() => scrollToSection("home")}
+                  >
+                    Home
+                  </button>
+                  <button
+                    type="button"
+                    className="nav-item nav-link-redesign btn btn-link p-0 mobile-margin"
+                    onClick={() => scrollToSection("about")}
+                  >
+                    About
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-view-menu mobile-margin"
+                    onClick={() => scrollToSection("order")}
+                  >
+                    View Menu
+                  </button>
+                  <button
+                    type="button"
+                    className="nav-item nav-link-redesign btn btn-link py-2 px-2 mr-2 mobile-margin"
+                    style={{ margin: "0px" }}
+                    onClick={handleBookTable}
+                  >
+                    Book A Table
+                  </button>
+                </>
+              )}
+              {showCart && cart && cart.length >= 0 && (
                 <button
                   className="btn py-2 px-2 mobile-margin"
                   data-bs-toggle="offcanvas"

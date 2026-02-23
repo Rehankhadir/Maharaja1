@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
 import Admin from './components/Admin';
 import Booking from './components/Booking';
@@ -8,14 +8,28 @@ import Booking from './components/Booking';
 import NavigationMenu from './components/NavigationMenu';
 // import "../public/js/main.js";
 
+// When the app is opened from the admin subdomain (e.g. admin.yourdomain.com), show only the Admin app.
+const isAdminSubdomain = () => {
+  if (typeof window === 'undefined') return false;
+  const hostname = window.location.hostname;
+  return hostname.startsWith('admin.');
+};
 
 function App() {
+  if (isAdminSubdomain()) {
+    return (
+      <Routes>
+        <Route path="*" element={<Admin />} />
+      </Routes>
+    );
+  }
+
   return (
     <>
       <NavigationMenu />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<Navigate to="/" replace />} />
         <Route path="/booking" element={<Booking />} />
       </Routes>
        

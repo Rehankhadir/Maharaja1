@@ -2361,6 +2361,25 @@ html {
 }
 /* Floating Cart Button css starts*/
 
+/* Cart sidebar – layout: Total + Checkout fixed at bottom */
+.cart-sidebar-offcanvas {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.cart-sidebar-offcanvas .offcanvas-body.cart-sidebar-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.cart-sidebar-footer {
+  flex-shrink: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  background: #fff;
+}
+
 /* Cart sidebar – Checkout button (light shade bg, dark text) */
 .cart-checkout-btn {
   background: rgba(92, 0, 23, 0.12) !important;

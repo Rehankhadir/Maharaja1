@@ -61,6 +61,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/m
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
+### Admin subdomain
+
+The admin panel can be served on a subdomain of your main site (e.g. `admin.yourdomain.com`). When the app is opened from a hostname that starts with `admin.`, only the Admin app is shown; the main site is not rendered.
+
+- **Production (e.g. Vercel):** In your hosting dashboard, add the subdomain (e.g. `admin.yourdomain.com`) to the same project. Both the main domain and `admin.*` will use the same build; the app switches based on `window.location.hostname`.
+- **Local:** Use the path `/admin` on `localhost`. To test the subdomain locally you can use `admin.localhost` (if your browser supports it) or add an entry in your `hosts` file.
+
+### Deploying on your own server (Nginx + GoDaddy)
+
+**1. Build the app**
+
+```bash
+npm run build
+```
+
 ### Deployment
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)

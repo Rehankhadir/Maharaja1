@@ -3152,7 +3152,7 @@ useEffect(() => {
 
 
         {/* Cart Sidebar */}
-        <div className="offcanvas offcanvas-end" tabIndex="-1" id="cartSidebar">
+        <div className="offcanvas offcanvas-end cart-sidebar-offcanvas" tabIndex="-1" id="cartSidebar">
           <div className="offcanvas-header">
             <h5 className="offcanvas-title">Your Cart</h5>
             <button
@@ -3161,7 +3161,7 @@ useEffect(() => {
               data-bs-dismiss="offcanvas"
             ></button>
           </div>
-          <div className="offcanvas-body">
+          <div className="offcanvas-body cart-sidebar-body">
             {cart.length === 0 ? (
               <div>
                 <div className="text-center mb-3">
@@ -3244,22 +3244,23 @@ useEffect(() => {
     </div>
   </div>
 ))}
-                
               </>
             )}
           </div>
-          <div className="border-top p-3 mt-3">
-                  <div className="d-flex justify-content-between">
-                    <h5>Total:</h5>
-                    <h5>${total}</h5>
-                  </div>
-                  <button className="btn btn-primary cart-checkout-btn w-100 mt-3"  data-bs-dismiss="offcanvas" onClick={() => {
-                      resetCheckoutState();
-                      setShowCheckout(true);
-                    }}>
-                    Checkout
-                  </button>
-                </div>
+          {cart.length > 0 && (
+            <div className="cart-sidebar-footer">
+              <div className="d-flex justify-content-between">
+                <h5 className="mb-0">Total:</h5>
+                <h5 className="mb-0">${total.toFixed(2)}</h5>
+              </div>
+              <button className="btn btn-primary cart-checkout-btn w-100 mt-3" data-bs-dismiss="offcanvas" onClick={() => {
+                resetCheckoutState();
+                setShowCheckout(true);
+              }}>
+                Checkout
+              </button>
+            </div>
+          )}
         </div>
 
         {/* // Update your checkout modal JSX */}
