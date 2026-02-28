@@ -33,8 +33,8 @@ export const defaultMenuItems = [
   // { id: 9, name: "Mixed platter", description: "A delightful assortment of our finest appetizers including samosas, pakoras, and tikkis served with dipping sauces.", price: 8.99, img: "img/platter.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 10, name: "Gourmet Chili Gobi", description: "Deep fried crispy cauliflower  cooked with hot & tangy sauce.", price: 9.99, img: "img/GourmetChilliGobi.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
   { id: 11, name: "Spiced chicken 65*", description: "Deep fried chicken cooked with mustrad seed, carry leaves, whole red chillies and tossed  with hot sauce.", price: 9.99, img: "img/chicken65.jpeg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 12, name: "Wedge potato ", description: "Crispy potato wedges seasoned with aromatic spices and herbs, served hot with your choice of dipping sauce.", price: 5.99, img: "img/Wedgepotato.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
-  { id: 13, name: "Masala papad", description: "Crispy lentil wafers topped with fresh onions, tomatoes, cilantro, and a blend of tangy spices.", price: 4.99, img: "img/Masalapapad.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
+  // { id: 12, name: "Wedge potato ", description: "Crispy potato wedges seasoned with aromatic spices and herbs, served hot with your choice of dipping sauce.", price: 5.99, img: "img/Wedgepotato.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
+  { id: 13, name: "Roasted papad", description: "Crispy lentil wafers topped with fresh onions, tomatoes, cilantro, and a blend of tangy spices.", price: 4.99, img: "img/Masalapapad.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"] ,type: "food"},
   { id: 101, name: "Chilli paneer", description: "Cubes of paneer sauteed with onion and bell peppers in a tangy sauce.", price: 12.99, img: "img/chilli-paneer.jpg", hasSpicyOption: true, category: "appetizers", ingredients: ["Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient","Ingredient", ] ,type: "food"},
   // { id: 14, name: "Papdi chat", description: "Crispy flour crackers topped with spiced chickpeas, yogurt, tamarind chutney, and fresh herbs for a tangy treat.", price: 6.99, img: "img/Papdichat.jpg", hasSpicyOption: true, category: "appetizers", ingredients: [ "Fresh basil pesto", "Cherry tomatoes", "Mixed greens", "Parmesan cheese", "Pine nuts"],type: "food" },
 
@@ -423,7 +423,7 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
                 selectedPrice={selectedPrice}
               />
             </span>
-            {totalQuantity === 0 ? (
+            {/* {totalQuantity === 0 ? (
               <button
                 className="add-to-cart-btn"
                 onClick={() => {
@@ -478,7 +478,7 @@ const MenuCard = ({ item, cart, addToCart, setCart, onAddWithSpicyLevel ,setShow
                   +
                 </button>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>
@@ -2609,12 +2609,19 @@ useEffect(() => {
                       Savor the rich flavors of India with our freshly prepared dishes. Dine in, takeout, or delivery.
                     </p>
                     <div className="hero-buttons-exact">
-                      <button
+                      {/* <button
                         className="btn btn-order-online-exact"
                         onClick={() => scrollToSection("order")}
                       >
                         <i className="fas fa-shopping-cart me-2"></i>
                         Order Online
+                      </button> */}
+                      <button
+                        className="btn btn-order-online-exact"
+                        onClick={() => scrollToSection("menu")}
+                      >
+                        <i className="fas fa-shopping-cart me-2"></i>
+                        View Menu
                       </button>
                       <button
                         className="btn btn-get-directions-exact"
@@ -2680,12 +2687,13 @@ useEffect(() => {
               {defaultMenuItems.slice(0, 3).map((item) => {
                 const isVeg = ['vegetarian', 'paneer'].includes(item.category);
                 const handleCardClick = () => {
-                  if (item.hasSpicyOption) {
-                    setSelectedItem({ ...item, selectedPrice: 'price' });
-                    setShowSpicyModal(true);
-                  } else {
-                    addToCart(item, null, 'price');
-                  }
+                  // Add to cart on click disabled for now
+                  // if (item.hasSpicyOption) {
+                  //   setSelectedItem({ ...item, selectedPrice: 'price' });
+                  //   setShowSpicyModal(true);
+                  // } else {
+                  //   addToCart(item, null, 'price');
+                  // }
                 };
                 return (
                   <div key={item.id} className="col-lg-4 col-md-6">
@@ -2776,7 +2784,7 @@ useEffect(() => {
               </div> */}
               <div className="col-lg-4 col-md-6">
                 <div className="special-offer-card  bg-gradient-to-br from-maroon to-maroon-dark">
-                  <div className="special-offer-badge">10% OFF</div>
+                  <div className="special-offer-badge">5% OFF</div>
                   <div className="special-offer-icon">
                     <i className="fas fa-tag"></i>
                   </div>
@@ -2969,7 +2977,7 @@ useEffect(() => {
           </div>
         </div> */}
 
-<div className="container-fluid py-5 menu-section-redesign" id="order" style={{ position: 'relative' }}>
+<div className="container-fluid py-5 menu-section-redesign" id="menu" style={{ position: 'relative' }}>
   <div className="container">
     {/* Header Section */}
     <div className="text-center mb-5">
@@ -3174,7 +3182,7 @@ useEffect(() => {
                 <div className="text-center">
                   <button
                     className="btn btn-primary text-center"
-                    data-bs-dismiss="offcanvas"  onClick={() => scrollToSection("order")}
+                    data-bs-dismiss="offcanvas"  onClick={() => scrollToSection("menu")}
                   >
                     Browse Food
                   </button>

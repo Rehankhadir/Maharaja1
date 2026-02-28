@@ -10,10 +10,10 @@ const Footer = ({ onBookTable, scrollToSection: externalScrollToSection }) => {
       externalScrollToSection(id);
     } else {
       // Default behavior: navigate to home and scroll
-      if (id === 'order') {
+      if (id === 'menu') {
         navigate('/');
         setTimeout(() => {
-          const menuSection = document.getElementById('order');
+          const menuSection = document.getElementById('menu');
           if (menuSection) {
             menuSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
@@ -60,10 +60,10 @@ const Footer = ({ onBookTable, scrollToSection: externalScrollToSection }) => {
             </h4>
             <Link 
               className="btn btn-link"
-              to="#order"
+              to="#menu"
               onClick={(e) => {
                 e.preventDefault();
-                scrollToSection('order');
+                scrollToSection('menu');
               }}
             >
               Menu

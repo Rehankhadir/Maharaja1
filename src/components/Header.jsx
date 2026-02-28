@@ -112,7 +112,7 @@ const Header = ({ cart = [], showAdminButton = true, showCart = true, isAdmin = 
                   <button
                     type="button"
                     className="btn btn-view-menu mobile-margin"
-                    onClick={() => scrollToSection("order")}
+                    onClick={() => scrollToSection("menu")}
                   >
                     View Menu
                   </button>
@@ -126,7 +126,7 @@ const Header = ({ cart = [], showAdminButton = true, showCart = true, isAdmin = 
                   </button>
                 </>
               )}
-              {showCart && cart && cart.length >= 0 && (
+              {/* {showCart && cart && cart.length >= 0 && (
                 <button
                   className="btn py-2 px-2 mobile-margin"
                   data-bs-toggle="offcanvas"
@@ -135,7 +135,7 @@ const Header = ({ cart = [], showAdminButton = true, showCart = true, isAdmin = 
                 >
                   🛒{" "} <span className="badge bg-light text-dark">{cart.length}</span>
                 </button>
-              )}
+              )} */}
               {/* {adminButton} */}
             </div>
           </div>
