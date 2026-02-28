@@ -7322,7 +7322,8 @@ html {
   font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.95);
   line-height: 1.8;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
+  margin-top: 10px;
   text-align: left;
   font-weight: 400;
   font-size: 1.5rem;

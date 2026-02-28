@@ -116,14 +116,14 @@ const Header = ({ cart = [], showAdminButton = true, showCart = true, isAdmin = 
                   >
                     View Menu
                   </button>
-                  <button
+                  {/* <button
                     type="button"
                     className="nav-item nav-link-redesign btn btn-link py-2 px-2 mr-2 mobile-margin"
                     style={{ margin: "0px" }}
                     onClick={handleBookTable}
                   >
                     Book A Table
-                  </button>
+                  </button> */}
                 </>
               )}
               {/* {showCart && cart && cart.length >= 0 && (

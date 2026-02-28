@@ -2608,7 +2608,7 @@ useEffect(() => {
                     <p className="hero-description-exact">
                       Savor the rich flavors of India with our freshly prepared dishes. Dine in, takeout, or delivery.
                     </p>
-                    <div className="hero-buttons-exact">
+                    {/* <div className="hero-buttons-exact"> */}
                       {/* <button
                         className="btn btn-order-online-exact"
                         onClick={() => scrollToSection("order")}
@@ -2616,21 +2616,21 @@ useEffect(() => {
                         <i className="fas fa-shopping-cart me-2"></i>
                         Order Online
                       </button> */}
-                      <button
+                      {/* <button
                         className="btn btn-order-online-exact"
                         onClick={() => scrollToSection("menu")}
                       >
                         <i className="fas fa-shopping-cart me-2"></i>
                         View Menu
-                      </button>
-                      <button
+                      </button> */}
+                      {/* <button
                         className="btn btn-get-directions-exact"
                         onClick={() => navigate('/booking')}
                       >
                         <i className="fas fa-utensils me-2"></i>
                         Book a Table
-                      </button>
-                    </div>
+                      </button> */}
+                    {/* </div> */}
                     <div className="hero-stats-exact">
                       <div className="hero-stats-top-line"></div>
                       <div className="hero-stats-content-wrapper">
@@ -4901,7 +4901,7 @@ useEffect(() => {
         </div>
 
         {/* Ready to Experience Section */}
-        <div className="ready-experience-section">
+        {/* <div className="ready-experience-section">
           <div className="container py-5">
             <div className="ready-experience-content">
               <h2 className="ready-experience-title">Ready to Experience Royal Dining?</h2>
@@ -4916,7 +4916,7 @@ useEffect(() => {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Contact Section */}
         {/* <div className="container-xxl py-3 panel contact-mobile" id="contact"  style={{background: '#f1f1f1' }}>

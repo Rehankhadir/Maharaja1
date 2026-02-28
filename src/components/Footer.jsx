@@ -68,9 +68,9 @@ const Footer = ({ onBookTable, scrollToSection: externalScrollToSection }) => {
             >
               Menu
             </Link>
-            <Link className="btn btn-link" to="/booking">
+            {/* <Link className="btn btn-link" to="/booking">
               Book A Table
-            </Link>
+            </Link> */}
             {/* <Link className="btn btn-link" to="/admin">
               Admin Panel
             </Link> */}
