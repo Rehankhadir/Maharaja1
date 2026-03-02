@@ -22,12 +22,14 @@ const Header = ({ cart = [], showAdminButton = true, showCart = true, isAdmin = 
       externalScrollToSection(id);
     } else {
       // Default behavior: navigate to home and scroll
-      if (id === 'home' || id === 'about' || id === 'order' || id === 'contact' || id === 'bookTable') {
-        navigate('/');
-        setTimeout(() => {
-          const el = document.getElementById(id);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
+      if (id === 'home' || id === 'about' || id === 'order' || id === 'order-in' || id === 'contact' || id === 'bookTable') {
+        navigate('/', id === 'order-in' ? { state: { scrollTo: 'order-in' } } : {});
+        if (id !== 'order-in') {
+          setTimeout(() => {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
       }
     }
     closeNavbar();
@@ -109,13 +111,28 @@ const Header = ({ cart = [], showAdminButton = true, showCart = true, isAdmin = 
                   >
                     About
                   </button>
-                  <button
+                  {/* <button
                     type="button"
                     className="btn btn-view-menu mobile-margin"
                     onClick={() => scrollToSection("menu")}
                   >
                     View Menu
+                  </button> */}
+                  <button
+                    type="button"
+                    className="btn btn-view-menu btn-order-here-highlight mobile-margin"
+                    onClick={() => scrollToSection('order-in')}
+                    
+                  >
+                    Order here
                   </button>
+                  {/* <button
+                    type="button"
+                    className="btn btn-view-menu mobile-margin"
+                    onClick={() => scrollToSection('order-in')}
+                  >
+                    Order IN
+                  </button> */}
                   {/* <button
                     type="button"
                     className="nav-item nav-link-redesign btn btn-link py-2 px-2 mr-2 mobile-margin"

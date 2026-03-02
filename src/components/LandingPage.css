@@ -216,6 +216,71 @@ background: linear-gradient(rgba(15, 23, 43, .9), rgba(15, 23, 43, .9)), url('..
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Order here – eye-catching CTA: pull every customer’s attention */
+.btn-order-here-highlight {
+  background: linear-gradient(135deg, #FFD700 0%, #FFC700 50%, #FFA500 100%) !important;
+  color: #5c0017 !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.02em !important;
+  padding: 10px 22px !important;
+  border-radius: 50px !important;
+  position: relative;
+  overflow: visible;
+  border: 2px solid rgba(255, 255, 255, 0.5) !important;
+  /* Strong glow so it stands out on the nav */
+  box-shadow:
+    0 0 0 2px rgba(255, 215, 0, 0.9),
+    0 0 0 6px rgba(255, 215, 0, 0.25),
+    0 0 24px 6px rgba(255, 215, 0, 0.6),
+    0 0 48px 12px rgba(255, 215, 0, 0.4),
+    0 4px 20px rgba(0, 0, 0, 0.25) !important;
+  animation: btn-order-here-attract 2.5s ease-in-out infinite;
+}
+.btn-order-here-highlight {
+  background: linear-gradient(135deg, #FFC700 0%, #FFA500 100%) !important;
+  color: #5c0017 !important;
+  border-color: rgba(255, 255, 255, 0.7) !important;
+  box-shadow:
+    0 0 0 3px rgba(255, 215, 0, 1),
+    0 0 0 8px rgba(255, 215, 0, 0.3),
+    0 0 32px 8px rgba(255, 215, 0, 0.7),
+    0 0 60px 16px rgba(255, 215, 0, 0.5),
+    0 6px 24px rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(-2px) scale(1.02);
+  animation: btn-order-here-attract-hover 1.5s ease-in-out infinite;
+}
+@keyframes btn-order-here-attract {
+  0%, 100% {
+    filter: brightness(1);
+    box-shadow:
+      0 0 0 2px rgba(255, 215, 0, 0.9),
+      0 0 0 6px rgba(255, 215, 0, 0.25),
+      0 0 24px 6px rgba(255, 215, 0, 0.6),
+      0 0 48px 12px rgba(255, 215, 0, 0.4),
+      0 4px 20px rgba(0, 0, 0, 0.25);
+  }
+  50% {
+    filter: brightness(1.15);
+    box-shadow:
+      0 0 0 3px rgba(255, 215, 0, 1),
+      0 0 0 8px rgba(255, 215, 0, 0.35),
+      0 0 32px 10px rgba(255, 215, 0, 0.7),
+      0 0 56px 16px rgba(255, 215, 0, 0.5),
+      0 4px 24px rgba(0, 0, 0, 0.2);
+  }
+}
+@keyframes btn-order-here-attract-hover {
+  0%, 100% {
+    filter: brightness(1.08);
+    transform: translateY(-2px) scale(1.02);
+  }
+  50% {
+    filter: brightness(1.2);
+    transform: translateY(-3px) scale(1.04);
+  }
+}
+
 .nav-globe-icon {
   color: #fff;
   font-size: 1.2rem;

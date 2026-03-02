@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import './LandingPage.css';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Header from './Header';
@@ -1508,6 +1508,7 @@ const SpicyLevelModal = ({ show, onClose, item, onConfirm }) => {
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [cart, setCart] = useState([]);
   const [_scrollPosition, _setScrollPosition] = useState(0);
 
@@ -1530,6 +1531,10 @@ const [searchQuery, setSearchQuery] = useState('');
   // New state for spicy level modal
   const [showSpicyModal, setShowSpicyModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+
+  // Show order iframe only when user scrolls to menu section or clicks Order IN in header
+  const [showOrderInIframe, setShowOrderInIframe] = useState(false);
+  const orderInSectionRef = useRef(null);
 
   // Load menuItems from localStorage or use default
   const [menuItems, setMenuItems] = useState(() => {
@@ -1558,7 +1563,50 @@ const [searchQuery, setSearchQuery] = useState('');
     });
     return () => setPageSEO({});
   }, []);
-  
+
+  // Never auto-scroll to iframe on load; only "Order IN" button should scroll there
+  useEffect(() => {
+    if (window.location.hash === '#order-in') {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
+
+    const forceScrollTop = () => window.scrollTo(0, 0);
+    forceScrollTop();
+    const t1 = setTimeout(forceScrollTop, 50);
+    const t2 = setTimeout(forceScrollTop, 200);
+    const t3 = setTimeout(forceScrollTop, 500);
+    const t4 = setTimeout(forceScrollTop, 1200);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+  }, []);
+
+  // When user scrolls to menu section (order-in area), show the iframe
+  useEffect(() => {
+    const el = orderInSectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) setShowOrderInIframe(true);
+      },
+      { rootMargin: '50px', threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // When user navigated from another page to open Order IN (e.g. from Header on Booking page)
+  useEffect(() => {
+    if (location.state?.scrollTo === 'order-in') {
+      setShowOrderInIframe(true);
+      const t = setTimeout(() => {
+        const el = document.querySelector('[data-scroll-target="order-in"]');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 200);
+      navigate(location.pathname, { replace: true, state: {} });
+      return () => clearTimeout(t);
+    }
+  }, [location.state, navigate, location.pathname]);
+
   // Booking modal state
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
@@ -1932,6 +1980,14 @@ const handleAddWithSpicyLevel = (item, selectedPrice = 'price') => {
   const total = cart.reduce((sum, item) => sum + item.finalPrice * item.qty, 0);
 
   const scrollToSection = (id) => {
+    if (id === 'order-in') {
+      setShowOrderInIframe(true);
+      setTimeout(() => {
+        const el = document.querySelector('[data-scroll-target="order-in"]');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 150);
+      return;
+    }
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
@@ -2978,7 +3034,7 @@ useEffect(() => {
         </div> */}
 
 <div className="container-fluid py-5 menu-section-redesign" id="menu" style={{ position: 'relative' }}>
-  <div className="container">
+  <div className="container-fluid">
     {/* Header Section */}
     <div className="text-center mb-5">
       <h2 className="menu-section-title">Our Menu</h2>
@@ -2988,7 +3044,7 @@ useEffect(() => {
     </div>
 
     {/* Modern Menu Type Filter */}
-    <div className="menu-type-filter-container mb-5">
+    {/* <div className="menu-type-filter-container mb-5">
       <div className="menu-type-buttons">
         <button
           className={`menu-type-btn ${menuType === 'food' ? 'active' : ''}`}
@@ -3005,10 +3061,10 @@ useEffect(() => {
           Bar Menu
         </button>
       </div>
-    </div>
+    </div> */}
 
     {/* Search bar for mobile */}
-    <div className="row mb-4 d-lg-none">
+    {/* <div className="row mb-4 d-lg-none">
       <div className="col-12">
         <div className="menu-search-container">
           <i className="fas fa-search"></i>
@@ -3030,10 +3086,30 @@ useEffect(() => {
         </div>
        
       </div>
+    </div> */}
+
+    {/* Order IN – iframe shows when user scrolls to this section or clicks Order IN in header */}
+    <div
+      ref={orderInSectionRef}
+      data-scroll-target="order-in"
+      className="mb-5"
+      style={{ width: '100%', minHeight: showOrderInIframe ? '600px' : '140px' }}
+      tabIndex={-1}
+    >
+      {showOrderInIframe ? (
+        <iframe
+          src="https://online.skytab.com/27ced30e5963511f0850adbfa766dd64/"
+          title="Order Online - SkyTab"
+          style={{ width: '100%', height: '700px', border: 'none', borderRadius: '8px' }}
+          tabIndex={-1}
+        />
+      ) : (
+        <div style={{ minHeight: '120px' }} aria-hidden="true" />
+      )}
     </div>
 
     {/* Category Filter Buttons */}
-    <div className="menu-category-filters mb-4">
+    {/* <div className="menu-category-filters mb-4">
       <div className="category-filter-buttons">
           <button
             className={`category-filter-btn ${activeCategory === 'all' ? 'active' : ''}`}
@@ -3057,17 +3133,17 @@ useEffect(() => {
               </button>
             ))}
           </div>
-        </div>
+        </div> */}
         
     {/* Category Section Header */}
     <div className="menu-category-section-header mb-4">
-      <h3 className="menu-category-title">
+      {/* <h3 className="menu-category-title">
         {activeCategory === 'all' ? 'All' : menuCategories1.find(c => c.id === activeCategory)?.name}
-      </h3>
+      </h3> */}
           </div>
 
     {/* Menu Items Grid */}
-          {filteredItems.length > 0 ? (
+          {/* {filteredItems.length > 0 ? (
       <div className="menu-items-grid-redesign">
               {filteredItems.map(item => (
                 <MenuCard 
@@ -3101,7 +3177,7 @@ useEffect(() => {
                 </button>
               )}
             </div>
-          )}
+          )} */}
     </div>
 
     {/* Floating View Cart Button */}

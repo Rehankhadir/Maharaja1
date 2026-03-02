@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script>
+      // Prevent automatic scroll to iframe: strip #order-in so only "Order IN" button scrolls there
+      if (window.location.hash === '#order-in') {
+        history.replaceState(null, '', location.pathname + location.search);
+      }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
 
