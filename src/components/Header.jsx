@@ -126,6 +126,16 @@ const Header = ({ cart = [], showAdminButton = true, showCart = true, isAdmin = 
                   >
                     Order here
                   </button>
+                  <button
+                    type="button"
+                    className="btn btn-view-menu btn-order-here-highlight mobile-margin"
+                    onClick={() => {
+                      window.open('https://www.smorefood.com/9it9m0j4/sangeat-indian-restaurant-and-bar-champaign-61820/order-online?menu=All+Day+Menu&category=Appetizer+%26+Chat', '_blank', 'noopener,noreferrer');
+                      closeNavbar();
+                    }}
+                  >
+                    Beyond Menu
+                  </button>
                   {/* <button
                     type="button"
                     className="btn btn-view-menu mobile-margin"
