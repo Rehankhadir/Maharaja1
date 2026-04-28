@@ -136,6 +136,16 @@ const Header = ({ cart = [], showAdminButton = true, showCart = true, isAdmin = 
                   >
                     Beyond Menu
                   </button>
+                  <button
+                    type="button"
+                    className="btn btn-view-menu btn-order-here-highlight mobile-margin"
+                    onClick={() => {
+                      window.open('https://www.ezcater.com/catering/pvt/sangeat-indian-restaurant-and-bar-3?aff&utm_medium=email&_hsenc=p2ANqtz--8-XZJ4MMKkqKtUWiTKUSH2fBxbl3okqMmI-10kQj9NVK9s-xQX95G3xBOovVDyYtA3u1wSQJYQpoXhDG22boZDWYq4A&_hsmi=362433796&utm_content=362433796&utm_source=hs_automation', '_blank', 'noopener,noreferrer');
+                      closeNavbar();
+                    }}
+                  >
+                    Catering
+                  </button>
                   {/* <button
                     type="button"
                     className="btn btn-view-menu mobile-margin"
